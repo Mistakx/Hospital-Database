@@ -1,12 +1,11 @@
+import java.lang.*;
 
-protected void medicMenu(){
-
-}
-
+public class Main {
 public static void main(String[] args) {
     
     
 
 
 
+}
 }

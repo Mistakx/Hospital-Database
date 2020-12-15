@@ -1,6 +1,7 @@
-import nurse.java*;
+import nurse.ChiefNurse;
+import nurse.SpecialistNurse;
 
-public static class administratorMenu {
+public class administratorMenu {
     final private int YEARS_TILL_PROMOTION = 20;
 
     public void addMedic(){
@@ -15,17 +16,19 @@ public static class administratorMenu {
     public void addPacient(){
         // TODO
     }
-    public SpecialistNurse promoteSpecialistNurse(SpecialistNurse nurse){
-        // TODO
+    public ChiefNurse promoteSpecialistNurse(SpecialistNurse nurse){
+        // TODO: Test
 
-        int careerYears = nurse.getCareerYears()
+        int careerYears = nurse.getCareerYears();
 
         if (careerYears >= YEARS_TILL_PROMOTION) {
-            SpecialistNurse promotedNurse;
+            ChiefNurse promotedNurse = new ChiefNurse();
             promotedNurse.setCareerYears(careerYears);
-            promotedNurse.setName(nurse.getName);
-            System.out.prinln("O enfermeiro não têm anos de carreira suficientes.")
+            promotedNurse.setName(nurse.getName());
+            System.out.println("O enfermeiro não têm anos de carreira suficientes.");
         }
+
+        return promoteSpecialistNurse(nurse);
     }
 
 
