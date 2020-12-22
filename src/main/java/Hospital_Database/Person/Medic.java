@@ -7,8 +7,8 @@ public class Medic extends Person {
     private List<SpecialistNurse> specialistNurses;
     private List<AuxiliaryNurse> auxiliaryNurses;
 
-    public Medic(int ID){setID(ID);}
-
+    public Medic(int ID) {setID(ID);}
+        
     // Pacient
     protected void addPacient(Pacient pacient) {
         pacients.add(pacient);
@@ -17,8 +17,6 @@ public class Medic extends Person {
     protected List<Pacient> getPacients() {
         return pacients;
     }
-    
-    // TODO: If necessary, add a remove pacient
 
     // Auxiliary Nurse
     public List<AuxiliaryNurse> getAuxiliaryNurses() {

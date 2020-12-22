@@ -19,22 +19,42 @@ public class administratorMenu {
         // ID
         Medic newMedic = new Medic(Hospital.getLastIDAttributed() + 1);
         Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
-        
+
         medics.add(newMedic);
     }
 
     public void addSpecialistNurse() {
-        List<Employee> employees = Hospital.getEmployees();
-        SpecialistNurse newSpecialistNurse = new SpecialistNurse(employees.size());
-        employees.add(newSpecialistNurse);
-        // TODO: Maybe add specialist nurse to specific list?
+
+        List<SpecialistNurse> specialistNurses = Hospital.getSpecialistNurses();
+        String specialistNurseName;
+
+        // Name
+        System.out.println("Insira o nome do enfermeiro especialista: ");
+        specialistNurseName = scannerObject.nextLine();
+
+        // ID
+        SpecialistNurse newSpecialistNurse = new SpecialistNurse(Hospital.getLastIDAttributed() + 1,
+                specialistNurseName);
+        Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
+
+        specialistNurses.add(newSpecialistNurse);
+
     }
 
     public void addAuxiliaryNurse() {
-        List<Employee> employees = Hospital.getEmployees();
-        AuxiliaryNurse newAuxiliaryNurse = new AuxiliaryNurse(employees.size());
-        employees.add(newAuxiliaryNurse);
-        // TODO: Maybe add auxiliary nurse to specific list?
+        List<AuxiliaryNurse> auxiliaryNurses = Hospital.getAuxiliaryNurses();
+        String auxiliaryNurseName;
+
+        // Name
+        System.out.println("Insira o nome do enfermeiro auxiliar: ");
+        auxiliaryNurseName = scannerObject.nextLine();
+
+        // ID
+        AuxiliaryNurse newAuxiliaryNurse = new AuxiliaryNurse(Hospital.getLastIDAttributed(), auxiliaryNurseName);
+        Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
+
+        auxiliaryNurses.add(newAuxiliaryNurse);
+
     }
 
     public void addNewPacient() {
@@ -48,20 +68,59 @@ public class administratorMenu {
         pacients.add(newPacient);
     }
 
-    public ChiefNurse promoteSpecialistNurse(SpecialistNurse nurse) {
-        // TODO: Test
+    public void promoteSpecialistNurse() {
+        List<SpecialistNurse> specialistNurses = Hospital.getSpecialistNurses();
 
-        int careerYears = nurse.getCareerYears();
-        int YEARS_TILL_PROMOTION = Hospital.getYEARS_TILL_PROMOTION();
+        int specialistNurseID;
+        System.out.println("ID do enfermeiro especialista que deseja promover a chefe: ");
+        specialistNurseID = Integer.parseInt(scannerObject.nextLine());
 
-        if (careerYears >= YEARS_TILL_PROMOTION) {
-            ChiefNurse promotedNurse = new ChiefNurse();
-            promotedNurse.setCareerYears(careerYears);
-            promotedNurse.setName(nurse.getName());
-            System.out.println("O enfermeiro não têm anos de carreira suficientes.");
+        // If ID exists
+        if (specialistNurseID <= Hospital.getLastIDAttributed()) {
+
+            // Check if a specialist nurse with the ID exists
+            boolean specialistNurseExists = false;
+
+            for (int i = 0; i < specialistNurses.size(); i++) {
+
+                SpecialistNurse tempSpecialistNurse = specialistNurses.get(i);
+
+                if (tempSpecialistNurse.getID() == specialistNurseID) {
+                    specialistNurseExists = true;
+
+                    // Promote specialist nurse to chief nurse
+                    
+
+                    int nurseCareerYears = tempSpecialistNurse.getCareerYears();
+                    String nurseName = tempSpecialistNurse.getName();
+                    int nurseID = tempSpecialistNurse.getID();
+                    int YEARS_TILL_PROMOTION = Hospital.getYEARS_TILL_PROMOTION();
+            
+                    if (nurseCareerYears >= YEARS_TILL_PROMOTION) {
+                        ChiefNurse promotedNurse = new ChiefNurse(nurseID, nurseName, nurseCareerYears);
+
+                    } else {
+                        System.out.println("O enfermeiro especialista não tem anos de carreira suficientes.");
+                    }
+            
+                    return promoteSpecialistNurse(nurse);
+                    break;
+                }
+
+            }
+
+            if (!specialistNurseExists) {
+                System.out.println("Não existe um enfermeiro especialista com o ID " + specialistNurseID + ".");
+            }
+
         }
 
-        return promoteSpecialistNurse(nurse);
+        // If ID doesn't exist
+        else {
+            System.out.println("Não existe nenhuma pessoa com o ID " + specialistNurseID + ".");
+        }
+
+
     }
 
 }
