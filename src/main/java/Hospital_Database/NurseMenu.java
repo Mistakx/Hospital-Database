@@ -19,7 +19,7 @@ import Hospital_Database.Person.SpecialistNurse;
 public class NurseMenu {
     static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
 
-    public static void nurseMenuInterface() {
+    public static void nurseMenuUserInterface() {
         Scanner scannerObject = new Scanner(System.in);
         int option = 0;
 

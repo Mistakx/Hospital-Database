@@ -22,10 +22,10 @@ public class Main {
                     MedicMenu.medicMenuUserInterface();
                     break;
                 case 2:
-                // Função menu Enfermeiro
+                    NurseMenu.nurseMenuUserInterface();
                     break;
                 case 3:
-                // Função Menu Admin
+                    AdministratorMenu.administratorMenuUserInterface();
                     break;
             
                 default :

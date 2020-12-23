@@ -6,6 +6,8 @@ import Hospital_Database.Person.AuxiliaryNurse;
 import Hospital_Database.Person.ChiefNurse;
 import Hospital_Database.Person.Medic;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Hospital {
@@ -14,11 +16,11 @@ public class Hospital {
 
     // ! IDs start at 0 by design
     private static int lastIDAttributed = 0; // TODO: Maybe add a list with all the people? 
-    private static List<Pacient> pacients;
-    private static List<Medic> medics;
-    private static List<SpecialistNurse> specialistNurses;
-    private static List<AuxiliaryNurse> auxiliaryNurses;
-    private static List<ChiefNurse> chiefNurses;
+    private static List<Pacient> pacients = Collections.emptyList();
+    private static List<Medic> medics = Collections.emptyList();
+    private static List<SpecialistNurse> specialistNurses = Collections.emptyList();
+    private static List<AuxiliaryNurse> auxiliaryNurses = Collections.emptyList();
+    private static List<ChiefNurse> chiefNurses = Collections.emptyList();
 
     // Todo: What if method isn't static?
 

@@ -13,7 +13,7 @@ public class AdministratorMenu {
 
     static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
 
-    public static void administratorMenuInterface() {
+    public static void administratorMenuUserInterface() {
         int option;
 
         System.out.println("Escolha a opção que deseja.");
