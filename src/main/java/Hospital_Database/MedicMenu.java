@@ -5,96 +5,80 @@
  */
 package Hospital_Database;
 
-import java.util.List;
 import java.util.Scanner;
-
-import Hospital_Database.Person.AuxiliaryNurse;
-import Hospital_Database.Person.Medic;
-import Hospital_Database.Person.SpecialistNurse;
 
 /**
  *
  * @author mistakx
  */
-public class medicMenu {
+public class MedicMenu {
 
-    Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
+    static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
 
-    private void listMedicNurses() {
-        List<Medic> medics = Hospital.getMedics();
+    public static void medicMenuUserInterface() {
 
-        int medicID;
-        System.out.println("Nº do médico: ");
-        medicID = Integer.parseInt(scannerObject.nextLine());
+        System.out.println("Escolha a opção que deseja.");
+        System.out.println("1 - Listar pacientes em espera no hospital.");
+        System.out.println("2 - Listar pacientes a aguardar alta.");
+        System.out.println("3 - Diagnóstico ao paciente.");
+        System.out.println("4 - Dar alta hospitalar.");
+        System.out.println("5 - Requerimento de auxiliares.\n");
 
-        // If ID exists
-        if (medicID <= Hospital.getLastIDAttributed()) {
+        int option;
 
-            // Check if a medic with the ID exists
-            boolean medicExists = false;
+        do {
 
-            for (int i = 0; i < medics.size(); i++) {
+            option = scannerObject.nextInt();
 
-                Medic tempMedic = medics.get(i);
+            switch (option) {
 
-                if (tempMedic.getID() == medicID) {
-                    medicExists = true;
-                    List<AuxiliaryNurse> medicAuxiliaryNurses = tempMedic.getAuxiliaryNurses();
-                    List<SpecialistNurse> medicSpecialistNurses = tempMedic.getSpecialistNurses();
-
-                    System.out.println("Médico (ID: " + medicID + ").\n");
-                    System.out.println("Enfermeiros auxiliares\n");
-
-                    for (int y = 0; y < medicAuxiliaryNurses.size(); y++) {
-
-                        AuxiliaryNurse tempAuxiliaryNurse = medicAuxiliaryNurses.get(y);
-                        System.out.println(tempAuxiliaryNurse.getID() + ": " + tempAuxiliaryNurse.getName());
-
-                    }
-
-                    System.out.println("Enfermeiros especialistas\n");
-
-                    for (int y = 0; y < medicSpecialistNurses.size(); y++) {
-
-                        SpecialistNurse tempSpecialistNurse = medicSpecialistNurses.get(y);
-                        System.out.println(tempSpecialistNurse.getID() + ": " + tempSpecialistNurse.getName());
-
-                    }
-
+                case 1:
+                    listPacientsInHospitalQueue();
+                    // Show all Pacients waiting on the hospital
                     break;
-                }
+                case 2:
+                    listPacientsAwaitingDischarge();;
+                    // Show all pacients waiting to receive good news from the doctor
+                    break;
+                case 3:
+                    pacientDiagnostic();
+                    // Show the diagnostic of a certain person, needs to choose the right ID
+                    break;
+                case 4:
+                    dischargePacient();
+                    // Give good news, Need To see all the details on the enunciado
+                    break;
+                case 5:
+                    requisitAuxiliaryNurses();
+                    // Doctor needs help, send some auxiliary nurses immediatly
+                    break;
+                default:
+                    System.out.println("Opção inválida\n");
+                    scannerObject.close();
 
             }
-
-            if (!medicExists) {
-                System.out.println("Não existe um médico com o ID " + medicID + ".");
-            }
-
-        }
-
-        // If ID doesn't exist
-        else {
-            System.out.println("Não existe nenhuma pessoa com o ID " + medicID + ".");
-        }
+        } while (option >= 1 && option <= 5);
 
     }
 
-    private void attributeSpecialistNurseToMedic() 
-    {
-        // TODO: DALHE HUGO
-        int specialistNurseNumber;
-        int medicNumber;
+    public static void listPacientsInHospitalQueue() {
+        // TODO
+    }
 
-        System.out.println("Nº do enfermeiro especialista a atribuir: ");
-        specialistNurseNumber = Integer.parseInt(scannerObject.nextLine());
-        System.out.println("Nº do médico: ");
-        medicNumber = Integer.parseInt(scannerObject.nextLine());
-        
-        Medic medic;
-        medic.getAuxiliaryNurses().add(e);
+    private static void listPacientsAwaitingDischarge() {
+        // TODO
+    }
 
-        
+    private static void pacientDiagnostic() {
+        // TODO
+    }
 
+    private static void dischargePacient() {
+        // TODO
+    }
+
+    private static void requisitAuxiliaryNurses() {
+        // TODO
     }
 
 }

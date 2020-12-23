@@ -14,7 +14,6 @@ public class SpecialistNurse extends Nurse {
     protected void addPacient(Pacient pacient){pacients.add(pacient);}
 
     protected List<Pacient> getPacients(){return pacients;}
-    // TODO: If necessary, add a remove pacient
 
 
 } 

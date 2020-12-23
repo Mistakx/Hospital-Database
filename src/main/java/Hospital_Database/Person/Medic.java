@@ -9,7 +9,7 @@ public class Medic extends Person {
 
     public Medic(int ID) {setID(ID);}
         
-    // Pacient
+    // Pacient 
     protected void addPacient(Pacient pacient) {
         pacients.add(pacient);
     }
