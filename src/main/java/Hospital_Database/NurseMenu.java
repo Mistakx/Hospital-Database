@@ -16,21 +16,25 @@ import Hospital_Database.Person.SpecialistNurse;
  *
  * @author mistakx
  */
+
 public class NurseMenu {
     static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
 
     public static void nurseMenuUserInterface() {
-        Scanner scannerObject = new Scanner(System.in);
-        int option = 0;
 
-        System.out.println("Selecione uma opção!");
-        System.out.println("1 - Listar enfermeiros de um médico.");
-        System.out.println("2 - Listar pacientes a aguardar curativo.");
-        System.out.println("3- Atribuir enfermeiro-especialista a médico.");
-        System.out.println("4- Aplicar curativo a um paciente.");
+        while (true) {
+    
+            System.out.println("Selecione uma opção!");
+            System.out.println("1 - Listar enfermeiros de um médico.");
+            System.out.println("2 - Listar pacientes a aguardar curativo.");
+            System.out.println("3 - Atribuir enfermeiro-especialista a médico.");
+            System.out.println("4 - Aplicar curativo a um paciente.");
+            System.out.println("0 - Voltar ao menu anterior.");
 
-        do {
+            boolean exitMenuUserInterface = false;
+            int option = 0;
             option = scannerObject.nextInt();
+
             switch (option) {
                 case 1:
                     listMedicNurses();
@@ -44,12 +48,19 @@ public class NurseMenu {
                 case 4:
                     applyCureToPacient();
                     break;
+                case 5:
+                    exitMenuUserInterface = true;
+                    scannerObject.close();
+                    break;
+
                 default:
                     System.out.println("Opção Inválida!");
-                    scannerObject.close();
+                    break;
 
             }
-        } while (option >= 1 && option <= 4);
+
+            if (exitMenuUserInterface) {break;}
+        }
 
     }
 
@@ -126,7 +137,7 @@ public class NurseMenu {
         specialistNurseID = Integer.parseInt(scannerObject.nextLine());
 
         boolean specialistNurseExists = false;
-        SpecialistNurse specialistNurse;
+        SpecialistNurse specialistNurse = null; // TODO: Bernardo - Talk about this situation
 
         // If specialist nurse ID exists
         if (specialistNurseID <= Hospital.getLastIDAttributed()) {

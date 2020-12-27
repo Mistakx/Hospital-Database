@@ -5,80 +5,106 @@
  */
 package Hospital_Database;
 
+import java.util.Queue;
 import java.util.Scanner;
+
+import Hospital_Database.Person.Pacient;
 
 /**
  *
  * @author mistakx
  */
+
 public class MedicMenu {
 
     static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
 
     public static void medicMenuUserInterface() {
 
-        System.out.println("Escolha a opção que deseja.");
-        System.out.println("1 - Listar pacientes em espera no hospital.");
-        System.out.println("2 - Listar pacientes a aguardar alta.");
-        System.out.println("3 - Diagnóstico ao paciente.");
-        System.out.println("4 - Dar alta hospitalar.");
-        System.out.println("5 - Requerimento de auxiliares.\n");
+        while (true) {
 
-        int option;
+            ClearConsole.clearConsole();
+            System.out.println("Escolha a opção que deseja.");
+            System.out.println("1 - Listar pacientes em espera no hospital.");
+            System.out.println("2 - Listar pacientes a aguardar alta.");
+            System.out.println("3 - Diagnóstico ao paciente.");
+            System.out.println("4 - Dar alta hospitalar.");
+            System.out.println("5 - Requerimento de auxiliares.");
+            System.out.println("0 - Voltar ao menu anterior.\n");
 
-        do {
-
+            boolean exitMenuUserInterface = false;
+            int option;
             option = scannerObject.nextInt();
 
             switch (option) {
 
                 case 1:
                     listPacientsInHospitalQueue();
-                    // Show all Pacients waiting on the hospital
                     break;
                 case 2:
-                    listPacientsAwaitingDischarge();;
-                    // Show all pacients waiting to receive good news from the doctor
+                    listPacientsAwaitingDischarge();
+                    ;
                     break;
                 case 3:
                     pacientDiagnostic();
-                    // Show the diagnostic of a certain person, needs to choose the right ID
                     break;
                 case 4:
                     dischargePacient();
-                    // Give good news, Need To see all the details on the enunciado
                     break;
                 case 5:
                     requisitAuxiliaryNurses();
-                    // Doctor needs help, send some auxiliary nurses immediatly
+                    break;
+                case 0:
+                    exitMenuUserInterface = true;
+                    scannerObject.close();
                     break;
                 default:
                     System.out.println("Opção inválida\n");
-                    scannerObject.close();
+                    // TODO: Add input
 
             }
-        } while (option >= 1 && option <= 5);
+
+            if (exitMenuUserInterface) {
+                break;
+            }
+
+        }
 
     }
 
     public static void listPacientsInHospitalQueue() {
-        // TODO
+        Queue<Pacient> pacientQueue = Hospital.getPacientQueue();
+
+        for (Pacient pacient : pacientQueue) {
+            System.out.println(pacient.getID() + ": " + pacient.getName() + " - " + pacient.getDisease());
+        }
+
     }
 
     private static void listPacientsAwaitingDischarge() {
-        // TODO
+        Queue<Pacient> pacientsAwaitingDischargeQueue = Hospital.getPacientsAwaitingDischargeQueue();
+
+        for (Pacient pacient : pacientsAwaitingDischargeQueue){
+            System.out.println(pacient.getID() + ": " + pacient.getName());
+        } 
+
     }
 
+    // TODO
     private static void pacientDiagnostic() {
-        // TODO
+
     }
 
-    private static void dischargePacient() {
-        // TODO
+    // TODO
+    private static void dischargePacient() { // FIFO = FIRST IN FIRST OUT, Como tem alta vai para o historico do hospital
+        Queue<Pacient> pacientsAwaitingDischargeQueue = Hospital.getPacientsAwaitingDischargeQueue();
+        pacientsAwaitingDischargeQueue.remove();                        
+        
     }
 
+    // TODO
     private static void requisitAuxiliaryNurses() {
-        // TODO
+        
     }
 
 }

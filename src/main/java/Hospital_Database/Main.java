@@ -1,21 +1,46 @@
 package Hospital_Database;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Scanner scannerObject = new Scanner (System.in);
-        int option;
+        // //! DEBUG
+        // System.out.println("DEBUG 1");
+        // List<String> testStrings = new ArrayList<>();
+        // System.out.println("DEBUG 2");
+        // testStrings.add("TEST");
+        // System.out.println("DEBUG 3");
+        // System.out.println(testStrings.get(0));
+        // //! DEBUG END
 
-        do {
+
+
+        Scanner scannerObject = new Scanner (System.in);
+
+        //! DEBUG 2
+        // String test = scannerObject.nextLine();
+        // System.out.println(test);
+        // System.out.println("debug: ");
+        // test = scannerObject.nextLine();
+        // System.out.println(test);
+        // System.out.println("END DEBUG");
+        //! DEBUG 2 END
+
+        while (true) {
+            
+            ClearConsole.clearConsole();
             System.out.println("Selecione o menu que deseja:");
             System.out.println("1 - Menu Médico");
             System.out.println("2 - Menu Enfermeiro");
             System.out.println("3 - Menu Administrador\n");
 
+            int option;
             option = scannerObject.nextInt();
+
             switch(option) {
                 
                 case 1 :
@@ -33,7 +58,7 @@ public class Main {
                     scannerObject.close();
                     break;
             }
-        }  while(option >= 1 && option <= 3 );
+        }
     
     }
 

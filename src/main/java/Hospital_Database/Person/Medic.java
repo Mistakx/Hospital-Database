@@ -7,7 +7,7 @@ public class Medic extends Person {
     private List<SpecialistNurse> specialistNurses;
     private List<AuxiliaryNurse> auxiliaryNurses;
 
-    public Medic(int ID) {setID(ID);}
+    public Medic(int ID, String name) {setID(ID); setName(name);}
         
     // Pacient 
     protected void addPacient(Pacient pacient) {

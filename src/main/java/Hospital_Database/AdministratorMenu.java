@@ -13,26 +13,33 @@ public class AdministratorMenu {
 
     static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
 
+    private AdministratorMenu() {
+    } // TODO: Bernardo: Private constructor because the class isn't instanciable.
+
     public static void administratorMenuUserInterface() {
-        int option;
 
-        System.out.println("Escolha a opção que deseja.");
-        System.out.println("1 - Criar Médico.");
-        System.out.println("2 - Criar Enfeirmeiro-especialista");
-        System.out.println("3 - Criar Enfermeiro-Auxiliar.");
-        System.out.println("4 - Criar novo paciente.");
-        System.out.println("5 - Promover a enfermeiro-chefe.");
-        System.out.println("6 - Aumentar anos de carreira de todos os enfermeiros.");
-        System.out.println("7 - Listar Enfermeiros.");
-        System.out.println("8 - Listar médicos.");
-        System.out.println("9 -Listar pedidos para enfermeiros-especialistas .");
-        System.out.println("10 - Listar pacientes em espera no hospital.");
-        System.out.println("11 - Atirar pedidos para enfermeiros-aulixiares para trituradora");
-        System.out.println("12 - Virus Outbreak.");
-        System.out.println("13 - N-ésimo relatório hospitalar.");
-        System.out.println("14 - Sair da aplicação\n");
+        while (true) {
 
-        do {
+            ClearConsole.clearConsole();
+            System.out.println("Escolha a opção que deseja.");
+            System.out.println("1 - Criar Médico.");
+            System.out.println("2 - Criar Enfeirmeiro-especialista.");
+            System.out.println("3 - Criar Enfermeiro-Auxiliar.");
+            System.out.println("4 - Criar novo paciente.");
+            System.out.println("5 - Promover a enfermeiro-chefe.");
+            System.out.println("6 - Aumentar anos de carreira de todos os enfermeiros.");
+            System.out.println("7 - Listar Enfermeiros.");
+            System.out.println("8 - Listar médicos.");
+            System.out.println("9 - Listar pedidos para enfermeiros-especialistas.");
+            System.out.println("10 - Listar pacientes em espera no hospital.");
+            System.out.println("11 - Atirar pedidos para enfermeiros-aulixiares para trituradora.");
+            System.out.println("12 - Virus Outbreak.");
+            System.out.println("13 - N-ésimo relatório hospitalar.");
+            System.out.println("14 - Sair da aplicação");
+            System.out.println("0 - Voltar ao menu anterior.\n");
+
+            boolean exitMenuUserInterface = false;
+            int option;
             option = scannerObject.nextInt();
             switch (option) {
                 case 1:
@@ -42,7 +49,7 @@ public class AdministratorMenu {
                     addSpecialistNurse();
                     break;
                 case 3:
-                    addAuxiliaryNurse();    // create aux-nurse, just like the jack 3,5mm
+                    addAuxiliaryNurse(); // create aux-nurse, just like the jack 3,5mm
                     break;
                 case 4:
                     addNewPacient();
@@ -54,7 +61,7 @@ public class AdministratorMenu {
                     // Add one more year to all the nurses, get them old
                     break;
                 case 7:
-                     // List all nurses, showing their Job, exprience year and which medic their
+                    // List all nurses, showing their Job, exprience year and which medic their
                     // associated
                     break;
                 case 8:
@@ -62,7 +69,7 @@ public class AdministratorMenu {
                     break;
                 case 9:
                     listRequestsForAuxiliaryNurses();
-                    
+
                     break;
                 case 10:
                     // List all pacientes holding for help, Just like the one on the medic menu
@@ -74,18 +81,26 @@ public class AdministratorMenu {
                     virusOutbreak();// Virus outbreak, good question how to dos this
                     break;
                 case 13:
-                     hospitalReports(); // Generate hospital relatory
+                    hospitalReports(); // Generate hospital relatory
                     break;
                 case 14:
                     // Leave this shit
                     break;
+                case 0:
+                    exitMenuUserInterface = true;
+                    scannerObject.close();
+                    break;
 
                 default:
                     System.out.println("Opção inválida\n");
-                    scannerObject.close();
+                    break;
 
             }
-        } while (option >= 1 && option <= 14);
+
+            if (exitMenuUserInterface) {
+                break;
+            }
+        }
 
     }
 
@@ -93,25 +108,60 @@ public class AdministratorMenu {
     // TODO: For example, if a pacient was a medic.
 
     public static void addMedic() {
-        List<Medic> medics = Hospital.getMedics();
 
-        // ID
-        Medic newMedic = new Medic(Hospital.getLastIDAttributed() + 1);
-        Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
+        while (true) {
+            System.out.println("1 - Pessoa existente no sistema.");
+            System.out.println("2 - Nova pessoa.");
+            System.out.println("0 - Voltar ao menu anterior");
 
-        medics.add(newMedic);
+            boolean exitMenuUserInterface = false;
+            int option = 0;
+            option = scannerObject.nextInt();
+
+            switch (option) {
+                case 1:
+                    // TODO
+                    break;
+
+                case 2:
+                    List<Medic> medics = Hospital.getMedics();
+                    System.out.println("Nome do médico: ");
+                    String medicName = "";
+                    while (medicName.isEmpty()) {
+                        medicName = scannerObject.nextLine();
+                    }
+                    System.out.println(medicName);
+
+                    Medic newMedic = new Medic(Hospital.getLastIDAttributed() + 1, medicName);
+                    Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
+                    medics.add(newMedic);
+                    break;
+
+                case 0:
+                    exitMenuUserInterface = true;
+                    break;
+
+            }
+
+            if (exitMenuUserInterface) {
+                break;
+            }
+        }
+
     }
 
     public static void addSpecialistNurse() {
 
         List<SpecialistNurse> specialistNurses = Hospital.getSpecialistNurses();
-        String specialistNurseName;
 
         // Name
-        System.out.println("Insira o nome do enfermeiro especialista: ");
+        System.out.println("Nome do enfermeiro especialista: ");
+        String specialistNurseName = "";
         specialistNurseName = scannerObject.nextLine();
+        while (specialistNurseName.isEmpty()) {
+            specialistNurseName = scannerObject.nextLine();
+        }
 
-        // ID
         SpecialistNurse newSpecialistNurse = new SpecialistNurse(Hospital.getLastIDAttributed() + 1,
                 specialistNurseName);
         Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
@@ -122,13 +172,12 @@ public class AdministratorMenu {
 
     public static void addAuxiliaryNurse() {
         List<AuxiliaryNurse> auxiliaryNurses = Hospital.getAuxiliaryNurses();
-        String auxiliaryNurseName;
 
         // Name
         System.out.println("Insira o nome do enfermeiro auxiliar: ");
-        auxiliaryNurseName = scannerObject.nextLine();
-
-        // ID
+        String auxiliaryNurseName = "";
+        while (auxiliaryNurseName.isEmpty()) {auxiliaryNurseName = scannerObject.nextLine();}
+        
         AuxiliaryNurse newAuxiliaryNurse = new AuxiliaryNurse(Hospital.getLastIDAttributed(), auxiliaryNurseName);
         Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
 
@@ -138,6 +187,8 @@ public class AdministratorMenu {
 
     public static void addNewPacient() {
         List<Pacient> pacients = Hospital.getPacients();
+
+        
 
         System.out.println("Ano de nascimento do novo paciente: ");
         String newPacientBirthdayYear = scannerObject.nextLine();
@@ -273,10 +324,21 @@ public class AdministratorMenu {
 
     public static void listMedics() {
         List<Medic> medics = Hospital.getMedics();
+
         for (int i = 0; i < medics.size(); i++) {
             Medic tempMedic = medics.get(i);
-            System.out.println(tempMedic.getID());
+            System.out.println(tempMedic.getID() + ": " + tempMedic.getName());
             // TODO: Maybe list each medic associated pacients as well
+        }
+
+        while (true) {
+            String line = scannerObject.nextLine();
+
+            if (line.isEmpty()) {
+                System.out.println("Nothing was entered. Please try again\n");
+            } else {
+                System.out.println("Test");
+            }
         }
     }
 
@@ -292,11 +354,13 @@ public class AdministratorMenu {
         // TODO
     }
 
+    // TODO
     public static void virusOutbreak() {
-        // TODO
+
     }
 
+    // TODO
     public static void hospitalReports() {
-        // TODO
+
     }
 }

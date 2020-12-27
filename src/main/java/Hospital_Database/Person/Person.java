@@ -11,12 +11,24 @@ package Hospital_Database.Person;
  */
 public class Person {
     private int ID;
+    private String name;
+
+    // ID
+    public void setID(int iD) {
+        this.ID = iD;
+    }
 
     public int getID() {
         return ID;
     }
 
-    public void setID(int iD) {
-        this.ID = iD;
+    // Name
+    public String getName() {
+        return name;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }
