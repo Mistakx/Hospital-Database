@@ -17,10 +17,12 @@ import Hospital_Database.Person.SpecialistNurse;
  * @author mistakx
  */
 
-public class NurseMenu {
+public class NurseMenu extends Hospital {
     static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
 
-    public static void nurseMenuUserInterface() {
+    
+
+    public void nurseMenuUserInterface() {
 
         while (true) {
     
@@ -64,7 +66,7 @@ public class NurseMenu {
 
     }
 
-    private static void listMedicNurses() {
+    private void listMedicNurses() {
         List<Medic> medics = Hospital.getMedics();
 
         int medicID;
@@ -123,11 +125,11 @@ public class NurseMenu {
 
     }
 
-    private static void listPacientsWaitingForCure() {
+    private void listPacientsWaitingForCure() {
         // TODO
     }
 
-    private static void attributeSpecialistNurseToMedic() {
+    private void attributeSpecialistNurseToMedic() {
 
         // ! Specialist Nurse
         List<SpecialistNurse> specialistNurses = Hospital.getSpecialistNurses();
@@ -208,7 +210,7 @@ public class NurseMenu {
 
     }
 
-    private static void applyCureToPacient() {
+    private void applyCureToPacient() {
         // TODO
     }
 

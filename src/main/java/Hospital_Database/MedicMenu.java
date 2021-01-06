@@ -18,7 +18,7 @@ import Hospital_Database.Person.Person;
  * @author mistakx
  */
 
-public class MedicMenu {
+public class MedicMenu extends Hospital {
 
     static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
 

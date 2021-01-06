@@ -6,7 +6,9 @@ public class Main {
 
     public static void main(String[] args) {
         String hospitalDatabaseFilePath = "HospitalDB.txt";
-        Hospital.getInstance(hospitalDatabaseFilePath);
+        Scanner scanner = new Scanner(System.in);
+        Hospital.getInstance(hospitalDatabaseFilePath, scanner);
+        Hospital.getInstance(hospitalDatabaseFilePath, scanner).administratorMenu();
 
         // //! DEBUG
         // System.out.println("DEBUG 1");
@@ -18,20 +20,17 @@ public class Main {
         // //! DEBUG END
 
 
-
-        Scanner scannerObject = new Scanner (System.in);
-
-        //! DEBUG 2
+        // ! DEBUG 2
         // String test = scannerObject.nextLine();
         // System.out.println(test);
         // System.out.println("debug: ");
         // test = scannerObject.nextLine();
         // System.out.println(test);
         // System.out.println("END DEBUG");
-        //! DEBUG 2 END
+        // ! DEBUG 2 END
 
         while (true) {
-            
+
             ClearConsole.clearConsole();
             System.out.println("Selecione o menu que deseja:");
             System.out.println("1 - Menu Médico");
@@ -39,11 +38,11 @@ public class Main {
             System.out.println("3 - Menu Administrador\n");
 
             int option;
-            option = scannerObject.nextInt();
+            option = scanner.nextInt();
 
-            switch(option) {
-                
-                case 1 :
+            switch (option) {
+
+                case 1:
                     MedicMenu.medicMenuUserInterface();
                     break;
                 case 2:
@@ -52,14 +51,14 @@ public class Main {
                 case 3:
                     AdministratorMenu.administratorMenuUserInterface();
                     break;
-            
-                default :
+
+                default:
                     System.out.println("A opção inserida é inválida!");
-                    scannerObject.close();
+                    scanner.close();
                     break;
             }
         }
-    
+
     }
 
 }

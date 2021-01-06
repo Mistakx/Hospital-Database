@@ -10,12 +10,12 @@ import Hospital_Database.Person.Pacient;
 import Hospital_Database.Person.Person;
 import Hospital_Database.Person.SpecialistNurse;
 
-public class AdministratorMenu {
+public class AdministratorMenu{
 
     static Scanner scannerObject = new Scanner(System.in); // Create a Scanner object
+    Hospital hospital;
 
-    private AdministratorMenu() {
-    } // TODO: Bernardo: Private constructor because the class isn't instanciable.
+
 
     public static void administratorMenuUserInterface() {
 
