@@ -7,6 +7,7 @@ import Hospital_Database.Person.AuxiliaryNurse;
 import Hospital_Database.Person.ChiefNurse;
 import Hospital_Database.Person.Medic;
 import Hospital_Database.Person.Pacient;
+import Hospital_Database.Person.Person;
 import Hospital_Database.Person.SpecialistNurse;
 
 public class AdministratorMenu {
@@ -108,6 +109,87 @@ public class AdministratorMenu {
     // TODO: For example, if a pacient was a medic.
 
     public static void addMedic() {
+        ClearConsole.clearConsole();
+        System.out.println("1 - Pessoa existente no sistema.");
+        System.out.println("2 - Nova pessoa.");
+        System.out.println("0 - Voltar ao menu anterior");
+
+        int option = 0;
+        option = scannerObject.nextInt();
+
+        switch (option) {
+
+            case 1:
+                ClearConsole.clearConsole();
+                System.out.println("1 - Adicionar a partir de um ficheiro.");
+                System.out.println("2 - Adicionar manualmente.");
+                System.out.println("0 - Voltar ao menu anterior");
+
+                option = scannerObject.nextInt();
+
+                switch (option) {
+                    case 1: // TODO: Existing medic - File
+                    case 2:
+                        List<Person> people = Hospital.getPeople();
+                        List<Medic> availableMedics = Hospital.getAvailableMedics();
+                        System.out.println("ID da pessoa:");
+                        int personID = scannerObject.nextInt();
+                        
+                        boolean personExists = false;
+                        
+                        for (Person tempPerson : people) {
+                            if (personID ==  tempPerson.getID()){
+                                personExists = true;
+                                Medic newMedic = new Medic(personID, tempPerson.getName(), tempPerson.getBirthdayYear());
+                                people.set(personID, newMedic);
+                                availableMedics.add(newMedic);
+                                
+                            }
+                        }
+
+                        if (!personExists) {System.out.println("A pessoa introduzida não existe.");}
+                        break;
+                        
+                    case 0:
+                }
+                break;
+
+            case 2:
+                ClearConsole.clearConsole();
+                System.out.println("1 - Adicionar a partir de um ficheiro.");
+                System.out.println("2 - Adicionar manualmente.");
+                System.out.println("0 - Voltar ao menu anterior");
+
+                option = scannerObject.nextInt();
+                switch (option) {
+                    case 1:
+                    case 2:
+                        List<Medic> availableMedics = Hospital.getAvailableMedics();
+
+                        System.out.println("Nome do médico: ");
+                        String medicName;
+                        medicName = scannerObject.next();
+
+                        System.out.println("Ano de nascimento do médico: ");
+                        int medicBirthdayYear;
+                        medicBirthdayYear = scannerObject.nextInt();
+
+                        Medic newMedic = new Medic(Hospital.getLastIDAttributed() + 1, medicName, medicBirthdayYear);
+                        Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
+                        availableMedics.add(newMedic);
+                        break;
+                    case 0:
+                        break;
+                }
+
+            case 0:
+                break;
+
+        }
+
+    }
+
+    public static void addSpecialistNurse() {
 
         while (true) {
             System.out.println("1 - Pessoa existente no sistema.");
@@ -118,56 +200,25 @@ public class AdministratorMenu {
             int option = 0;
             option = scannerObject.nextInt();
 
-            switch (option) {
-                case 1:
-                    // TODO
-                    break;
+            List<SpecialistNurse> specialistNurses = Hospital.getAvailableSpecialistNurses();
 
-                case 2:
-                    List<Medic> medics = Hospital.getMedics();
-                    System.out.println("Nome do médico: ");
-                    String medicName = "";
-                    while (medicName.isEmpty()) {
-                        medicName = scannerObject.nextLine();
-                    }
-                    System.out.println(medicName);
-
-                    Medic newMedic = new Medic(Hospital.getLastIDAttributed() + 1, medicName);
-                    Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
-                    medics.add(newMedic);
-                    break;
-
-                case 0:
-                    exitMenuUserInterface = true;
-                    break;
-
+            // Name
+            System.out.println("Nome do enfermeiro especialista: ");
+            String specialistNurseName = "";
+            specialistNurseName = scannerObject.nextLine();
+            while (specialistNurseName.isEmpty()) {
+                specialistNurseName = scannerObject.nextLine();
             }
 
+            SpecialistNurse newSpecialistNurse = new SpecialistNurse(Hospital.getLastIDAttributed() + 1,
+                    specialistNurseName);
+            Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
+
+            specialistNurses.add(newSpecialistNurse);
             if (exitMenuUserInterface) {
                 break;
             }
         }
-
-    }
-
-    public static void addSpecialistNurse() {
-
-        List<SpecialistNurse> specialistNurses = Hospital.getSpecialistNurses();
-
-        // Name
-        System.out.println("Nome do enfermeiro especialista: ");
-        String specialistNurseName = "";
-        specialistNurseName = scannerObject.nextLine();
-        while (specialistNurseName.isEmpty()) {
-            specialistNurseName = scannerObject.nextLine();
-        }
-
-        SpecialistNurse newSpecialistNurse = new SpecialistNurse(Hospital.getLastIDAttributed() + 1,
-                specialistNurseName);
-        Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
-
-        specialistNurses.add(newSpecialistNurse);
-
     }
 
     public static void addAuxiliaryNurse() {
@@ -176,8 +227,10 @@ public class AdministratorMenu {
         // Name
         System.out.println("Insira o nome do enfermeiro auxiliar: ");
         String auxiliaryNurseName = "";
-        while (auxiliaryNurseName.isEmpty()) {auxiliaryNurseName = scannerObject.nextLine();}
-        
+        while (auxiliaryNurseName.isEmpty()) {
+            auxiliaryNurseName = scannerObject.nextLine();
+        }
+
         AuxiliaryNurse newAuxiliaryNurse = new AuxiliaryNurse(Hospital.getLastIDAttributed(), auxiliaryNurseName);
         Hospital.setLastIDAttributed(Hospital.getLastIDAttributed() + 1);
 
@@ -187,8 +240,6 @@ public class AdministratorMenu {
 
     public static void addNewPacient() {
         List<Pacient> pacients = Hospital.getPacients();
-
-        
 
         System.out.println("Ano de nascimento do novo paciente: ");
         String newPacientBirthdayYear = scannerObject.nextLine();
@@ -354,6 +405,7 @@ public class AdministratorMenu {
         // TODO
     }
 
+    
     // TODO
     public static void virusOutbreak() {
 

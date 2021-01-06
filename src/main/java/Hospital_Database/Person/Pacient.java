@@ -12,13 +12,11 @@ package Hospital_Database.Person;
  */
 public class Pacient extends Person {
     private String disease;
-    private int birthdayYear;
 
 
-    public Pacient(int ID, String disease, int birthdayYear) {
+    public Pacient(int ID, String disease) {
         setID(ID); // TODO: Bernardo: Setter or protected on the superclass?
         this.disease = disease;
-        this.birthdayYear = birthdayYear;
     }
 
     // Disease
@@ -30,13 +28,5 @@ public class Pacient extends Person {
         this.disease = disease;
     }
 
-    // Birthday year
-    protected int getBirthdayYear() {
-        return birthdayYear;
-    }
-
-    protected void setBirthdayYear(int newBirthdayYear) {
-        birthdayYear = newBirthdayYear;
-    }
 
 }

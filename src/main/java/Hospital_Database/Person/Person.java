@@ -12,8 +12,53 @@ package Hospital_Database.Person;
 public class Person {
     private int ID;
     private String name;
+    private int birthdayYear;
+    private int temperature;
+    private int whiteBloodCellLevels;
+    private boolean gastrointestinalSymptoms;
 
-    // ID
+    public Person(int ID, String name, int birthdayYear, int temperature, int whiteBloodCellLevels,
+            boolean gastrointestinalSymptoms) {
+        this.ID = ID;
+        this.name = name;
+        this.birthdayYear = birthdayYear;
+        this.setTemperature(temperature);
+        this.setWhiteBloodCellLevels(whiteBloodCellLevels);
+        this.setGastrointestinalSymptoms(gastrointestinalSymptoms);
+
+    }
+    
+    public Person(int ID, String name, int birthdayYear) {
+        this.ID = ID;
+        this.name = name;
+        this.birthdayYear = birthdayYear;
+
+    }
+
+    public boolean hasGastrointestinalSymptoms() {
+        return gastrointestinalSymptoms;
+    }
+
+    public void setGastrointestinalSymptoms(boolean gastrointestinalSymptoms) {
+        this.gastrointestinalSymptoms = gastrointestinalSymptoms;
+    }
+
+    public int getWhiteBloodCellLevels() {
+        return whiteBloodCellLevels;
+    }
+
+    public void setWhiteBloodCellLevels(int whiteBloodCellLevels) {
+        this.whiteBloodCellLevels = whiteBloodCellLevels;
+    }
+
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+
     public void setID(int iD) {
         this.ID = iD;
     }
@@ -22,7 +67,14 @@ public class Person {
         return ID;
     }
 
-    // Name
+    public int getBirthdayYear() {
+        return birthdayYear;
+    }
+
+    public void setBirthdayYear(int birthdayYear) {
+        this.birthdayYear = birthdayYear;
+    }
+
     public String getName() {
         return name;
     }

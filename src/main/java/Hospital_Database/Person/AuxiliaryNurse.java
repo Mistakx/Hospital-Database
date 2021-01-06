@@ -2,6 +2,8 @@ package Hospital_Database.Person;
 
 public class AuxiliaryNurse extends Nurse {
 
+    Medication
+
     // TODO: Maybe add the medic to which the nurse is allocated to.
     // TODO: Since both AuxiliaryNurse and SpecialistNurse can be allocated, 
     // TODO: maybe implement the interface allocation?

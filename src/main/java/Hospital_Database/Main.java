@@ -1,12 +1,12 @@
 package Hospital_Database;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+        String hospitalDatabaseFilePath = "HospitalDB.txt";
+        Hospital.getInstance(hospitalDatabaseFilePath);
 
         // //! DEBUG
         // System.out.println("DEBUG 1");

@@ -134,10 +134,10 @@ public class NurseMenu {
         int specialistNurseID;
 
         System.out.println("ID do enfermeiro especialista a atribuir: ");
-        specialistNurseID = Integer.parseInt(scannerObject.nextLine());
+        specialistNurseID = Integer.parseInt(scannerObject.next());
 
         boolean specialistNurseExists = false;
-        SpecialistNurse specialistNurse = null; // TODO: Bernardo - Talk about this situation
+        SpecialistNurse specialistNurse; // TODO: Bernardo - Talk about this situation
 
         // If specialist nurse ID exists
         if (specialistNurseID <= Hospital.getLastIDAttributed()) {
@@ -171,7 +171,7 @@ public class NurseMenu {
             int medicID;
 
             System.out.println("ID do médico: ");
-            medicID = Integer.parseInt(scannerObject.nextLine());
+            medicID = Integer.parseInt(scannerObject.next());
 
             // If medic ID exists
             if (medicID <= Hospital.getLastIDAttributed()) {
@@ -187,8 +187,7 @@ public class NurseMenu {
                         medicExists = true;
 
                         List<SpecialistNurse> medicSpecialistNurses = tempMedic.getSpecialistNurses();
-                        medicSpecialistNurses.add(specialistNurse); // TODO: Bernardo - It's garanteed that it was
-                                                                    // initialized
+                        medicSpecialistNurses.add(specialistNurse);
                         break;
 
                     }

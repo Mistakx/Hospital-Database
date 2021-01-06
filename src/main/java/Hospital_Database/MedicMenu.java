@@ -5,10 +5,13 @@
  */
 package Hospital_Database;
 
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
-import Hospital_Database.Person.Pacient;
+import Hospital_Database.Person.ChiefNurse;
+import Hospital_Database.Person.Medic;
+import Hospital_Database.Person.Person;
 
 /**
  *
@@ -73,38 +76,123 @@ public class MedicMenu {
     }
 
     public static void listPacientsInHospitalQueue() {
-        Queue<Pacient> pacientQueue = Hospital.getPacientQueue();
+        Queue<Person> pacientQueue = Hospital.getPacientQueue();
 
-        for (Pacient pacient : pacientQueue) {
+        for (Person pacient : pacientQueue) {
             System.out.println(pacient.getID() + ": " + pacient.getName() + " - " + pacient.getDisease());
         }
 
     }
 
     private static void listPacientsAwaitingDischarge() {
-        Queue<Pacient> pacientsAwaitingDischargeQueue = Hospital.getPacientsAwaitingDischargeQueue();
+        Queue<Person> pacientsAwaitingDischargeQueue = Hospital.getPacientsAwaitingDischargeQueue();
 
-        for (Pacient pacient : pacientsAwaitingDischargeQueue){
+        for (Person pacient : pacientsAwaitingDischargeQueue) {
             System.out.println(pacient.getID() + ": " + pacient.getName());
-        } 
+        }
 
     }
 
-    // TODO
-    private static void pacientDiagnostic() {
+    private void pacientDiagnostic() {
+        Queue<Person> pacientQueue = Hospital.getPacientQueue();
 
-    }
+        for(Person pacient : pacientQueue) {
+            int temperature = 20 + (int)(Math.random()*(23));
+            double whiteBloodCellLevels = 0.5 + (int)(Math.random()*(101));
+            boolean gastrointestinalSymptoms = Math.random() < 0.5;
 
-    // TODO
-    private static void dischargePacient() { // FIFO = FIRST IN FIRST OUT, Como tem alta vai para o historico do hospital
-        Queue<Pacient> pacientsAwaitingDischargeQueue = Hospital.getPacientsAwaitingDischargeQueue();
-        pacientsAwaitingDischargeQueue.remove();                        
+
+            System.out.println(pacientQueue.poll() + ".\n");
+            System.out.println("Temperatura: " + temperature + "\n");
+            System.out.println("Percentagem de leucócitos: " + whiteBloodCellLevels + "%\n");
+            System.out.println("Sintomas gastrointestinais: " + gastrointestinalSymptoms);
+        }
+
+
+
         
+
+
+        // int temperature;
+        // int whiteBloodCellLevels;
+        // boolean gastrointestinalSymptoms;
+
+    }
+
+    // TODO
+    private static void dischargePacient() { // FIFO = FIRST IN FIRST OUT, Como tem alta vai para o historico do
+                                             // hospital
+        Queue<Person> pacientsAwaitingDischargeQueue = Hospital.getPacientsAwaitingDischargeQueue();
+        pacientsAwaitingDischargeQueue.remove();
+
     }
 
     // TODO
     private static void requisitAuxiliaryNurses() {
+        List<Medic> availableMedics = Hospital.getAvailableMedics();
+        List<Medic> busyMedics = Hospital.getBusyMedics();
+
+        System.out.println("ID do médico: ");
+        int medicID;
+        medicID = Integer.parseInt(scannerObject.next());
+        boolean medicExists = false;
+
+        for (Medic tempMedic : availableMedics) {
+            if(medicID == tempMedic.getID()){
+                medicExists = true;
+            }
+        }
+
+        for (Medic tempMedic : busyMedics){
+            if(medicID == tempMedic.getID()){
+                medicExists = true;
+            }
+        }
         
+        if (!medicExists){
+            System.out.println("Não existe nenhum médico com o ID inserido.");
+            return;
+        }
+
+        
+
+
+
+        System.out.println("ID do chefe enfermeiro: ");
+        int chiefNurseID;
+        chiefNurseID = Integer.parseInt(scannerObject.next());
+        boolean chiefNurseExists = false;
+
+        for (ChiefNurse tempChiefNurse : availableChiefNurses) {
+            if(chiefNurseID == tempChiefNurse.getID()){
+                chiefNurseExists = true;
+            }
+        }
+
+        for (Medic tempChiefNurse : busyChiefNurses){
+            if(chiefNurseID == tempChiefNurse.getID()){
+                chiefNurseExists = true;
+            }
+        }
+        
+        if (!chiefNurseExists){
+            System.out.println("Não existe nenhum enfermeiro chefe com o ID inserido.");
+            return;
+        }
+
+
+        
+
+
+        System.out.println("Quantos enfermeiros auxiliares necessita: ");
+        int auxiliaryNurses;
+        auxiliaryNurses = Integer.parseInt(scannerObject.next());
+        
+        
+
+        
+        ChiefNurse test = new ChiefNurse(1, "teste", 1);
+        test.
     }
 
 }

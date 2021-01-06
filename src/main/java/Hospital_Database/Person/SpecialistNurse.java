@@ -2,18 +2,12 @@ package Hospital_Database.Person;
 import java.util.List;
 
 public class SpecialistNurse extends Nurse {
-    private List<Pacient> pacients;
     
-    public SpecialistNurse(int ID, String name) {
+    public SpecialistNurse(int ID, String name, int birthdayYear) {
         setID(ID);
         setName(name);
+        setBirthdayYear(birthdayYear);
     }
-
-
-    // Pacients
-    protected void addPacient(Pacient pacient){pacients.add(pacient);}
-
-    protected List<Pacient> getPacients(){return pacients;}
 
 
 } 

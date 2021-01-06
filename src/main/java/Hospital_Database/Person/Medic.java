@@ -3,20 +3,10 @@ package Hospital_Database.Person;
 import java.util.List;
 
 public class Medic extends Person {
-    private List<Pacient> pacients;
     private List<SpecialistNurse> specialistNurses;
     private List<AuxiliaryNurse> auxiliaryNurses;
 
-    public Medic(int ID, String name) {setID(ID); setName(name);}
-        
-    // Pacient 
-    protected void addPacient(Pacient pacient) {
-        pacients.add(pacient);
-    }
-
-    protected List<Pacient> getPacients() {
-        return pacients;
-    }
+    public Medic(int ID, String name, int birthdayYear) {setID(ID); setName(name); setBirthdayYear(birthdayYear);}
 
     // Auxiliary Nurse
     public List<AuxiliaryNurse> getAuxiliaryNurses() {
