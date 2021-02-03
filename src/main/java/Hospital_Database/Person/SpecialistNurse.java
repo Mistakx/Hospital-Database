@@ -1,13 +1,9 @@
 package Hospital_Database.Person;
-import java.util.List;
 
-public class SpecialistNurse extends Nurse {
-    
+public class SpecialistNurse extends Nurse implements ChiefNurse {
+
     public SpecialistNurse(int ID, String name, int birthdayYear) {
-        setID(ID);
-        setName(name);
-        setBirthdayYear(birthdayYear);
+        super(ID, name, birthdayYear);
     }
 
-
-} 
+}

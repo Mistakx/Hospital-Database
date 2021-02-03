@@ -1,16 +1,15 @@
 package Hospital_Database.Person;
 
+import java.util.HashMap;
+
 public class AuxiliaryNurse extends Nurse {
 
-    Medication
+    private HashMap< Person, HashMap<String, String> > nurseSchedule = new HashMap<Person, HashMap<String, String>>();
 
-    // TODO: Maybe add the medic to which the nurse is allocated to.
-    // TODO: Since both AuxiliaryNurse and SpecialistNurse can be allocated, 
-    // TODO: maybe implement the interface allocation?
+    public AuxiliaryNurse(int ID, String name, int birthdayYear) {
 
-    public AuxiliaryNurse(int ID, String name) {
-        setID(ID);
-        setName(name);
+
+        super(ID, name, birthdayYear);
     }
 
 }

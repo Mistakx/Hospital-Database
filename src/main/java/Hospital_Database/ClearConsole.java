@@ -12,19 +12,14 @@ package Hospital_Database;
 
 public class ClearConsole {
 
-    private ClearConsole() {
-    }
-
     public static void clearConsole() {
 
         // for (int i = 0; i < 50; i++) {
         //     System.out.println("\n");
         // }
 
-        // System.out.print("\033[H\033[2J");
-        // System.out.flush();
-
-        // clearConsole();
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
 
         // try {
         //     final String os = System.getProperty("os.name");
@@ -35,6 +30,7 @@ public class ClearConsole {
         //         Runtime.getRuntime().exec("clear");
         //     }
         // } catch (final Exception e) {
+        //     System.out.println("DEBUGCLEARCONSOLE");
         //     // Handle any exceptions.
         // }
     }

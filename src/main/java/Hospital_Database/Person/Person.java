@@ -9,7 +9,7 @@ package Hospital_Database.Person;
  *
  * @author mistakx
  */
-public class Person {
+public class Person implements Infectable {
     private int ID;
     private String name;
     private int birthdayYear;
@@ -17,7 +17,7 @@ public class Person {
     private int whiteBloodCellLevels;
     private boolean gastrointestinalSymptoms;
 
-    public Person(int ID, String name, int birthdayYear, int temperature, int whiteBloodCellLevels,
+    public Person(int ID, String name, int birthdayYear, int temperature, int whiteBloodCellLevels, // files usage 
             boolean gastrointestinalSymptoms) {
         this.ID = ID;
         this.name = name;
@@ -28,8 +28,8 @@ public class Person {
 
     }
     
-    public Person(int ID, String name, int birthdayYear) {
-        this.ID = ID;
+    public Person(int ID, String name, int birthdayYear) { // normal usage
+        this.ID = ID; 
         this.name = name;
         this.birthdayYear = birthdayYear;
 
@@ -82,5 +82,5 @@ public class Person {
     public void setName(String name) {
         this.name = name;
     }
-
+ // TODO : Equals e toString
 }
