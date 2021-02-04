@@ -71,6 +71,7 @@ public class Nurse extends Person {
 
     @Override
     public String toString() {
-        return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "Career Years: " + careerYears;
+        // TODO: List what medic the nurse is allocated to
+        return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "\n" + "Anos de carreira: " + careerYears;
     }
 }

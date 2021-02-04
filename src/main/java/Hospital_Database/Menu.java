@@ -50,14 +50,15 @@ public class Menu {
                         break;
 
                     default:
-                        System.out.println("A opção inserida é inválida!");
+                        ClearConsole.clearConsole();
+                        System.out.println("Opção inválida.\n");
                         scanner.next();
                         break;
                 }
 
             } catch (Exception exception) {
                 ClearConsole.clearConsole();
-                exception.printStackTrace();
+                System.out.println(exception.getMessage());
                 scanner.next();
             }
 
@@ -73,7 +74,7 @@ public class Menu {
             try {
 
                 ClearConsole.clearConsole();
-                System.out.println("Escolha a opção que deseja.");
+                System.out.println("Selecione uma opção.");
                 System.out.println("1 - Criar Médico.");
                 System.out.println("2 - Criar Enfeirmeiro-especialista.");
                 System.out.println("3 - Criar Enfermeiro-Auxiliar.");
@@ -144,7 +145,8 @@ public class Menu {
                         break;
 
                     default:
-                        System.out.println("Opção inválida\n");
+                        ClearConsole.clearConsole();
+                        System.out.println("Opção inválida.\n");
                         scanner.next();
                         break;
 
@@ -155,7 +157,7 @@ public class Menu {
                 }
             } catch (Exception exception) {
                 ClearConsole.clearConsole();
-                exception.printStackTrace();
+                System.out.println(exception.getMessage());
                 scanner.next();
             }
         }
@@ -196,7 +198,7 @@ public class Menu {
                 try {
 
                     ClearConsole.clearConsole();
-                    System.out.println("Escolha a opção que deseja.");
+                    System.out.println("Selecione uma opção.");
                     System.out.println("1 - Listar pacientes em espera no hospital.");
                     System.out.println("2 - Listar pacientes a aguardar alta.");
                     System.out.println("3 - Diagnóstico ao paciente.");
@@ -229,7 +231,8 @@ public class Menu {
                             exitMenuUserInterface = true;
                             break;
                         default:
-                            System.out.println("Opção inválida\n");
+                            ClearConsole.clearConsole();
+                            System.out.println("Opção inválida.\n");
                             scanner.next();
                             break;
 
@@ -241,7 +244,7 @@ public class Menu {
 
                 } catch (Exception exception) {
                     ClearConsole.clearConsole();
-                    exception.printStackTrace();
+                    System.out.println(exception.getMessage());
                     scanner.next();
                 }
             }
@@ -252,6 +255,8 @@ public class Menu {
 
     private static void nurseMenuUserInterface(Hospital hospital) throws IDNotFoundException {
         // Prints nurse menu user interface to the console
+
+        ClearConsole.clearConsole();
 
         // Asks the user for ID
         System.out.println("Insira o seu ID: ");
@@ -290,7 +295,7 @@ public class Menu {
 
             try {
 
-                System.out.println("Selecione uma opção!");
+                System.out.println("Selecione uma opção.");
                 System.out.println("1 - Listar enfermeiros de um médico.");
                 System.out.println("2 - Listar pacientes a aguardar curativo.");
                 System.out.println("3 - Atribuir enfermeiro-especialista a médico.");
@@ -319,7 +324,8 @@ public class Menu {
                         break;
 
                     default:
-                        System.out.println("Opção Inválida!");
+                        ClearConsole.clearConsole();
+                        System.out.println("Opção inválida.\n");
                         scanner.next();
                         break;
 
@@ -331,7 +337,7 @@ public class Menu {
 
             } catch (Exception exception) {
                 ClearConsole.clearConsole();
-                exception.printStackTrace();
+                System.out.println(exception.getMessage());
                 scanner.next();
             }
         }

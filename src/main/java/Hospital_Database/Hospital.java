@@ -249,16 +249,16 @@ public class Hospital {
             tempChiefNurse.setCareerYears(tempChiefNurse.getCareerYears() + 1);
         }
 
+        ClearConsole.clearConsole();
         System.out.println("Foi adicionado 1 ano de carreira a todos os enfermeiros existentes.");
         scanner.next();
 
     }
 
+    // Done
     public void listNurses() throws NoNursesExistException { // Prints all nurses in the hospital to the console
 
         ClearConsole.clearConsole();
-
-        // TODO: List what medic the nurse is allocated to
 
         // If no nurses exist in the hospital, throw an exception
         if ((specialistNurses.size() == 0) && (auxiliaryNurses.size() == 0) && (chiefNurses.size() == 0)) {
@@ -271,19 +271,19 @@ public class Hospital {
             // List auxiliary nurses
             System.out.println("Enfermeiros auxiliares\n");
             for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
-                System.out.println(tempAuxiliaryNurse.toString());
+                System.out.println(tempAuxiliaryNurse.toString()+ "\n");
             }
 
             // List specialist nurses
-            System.out.println("\nEnfermeiros especialista\n");
+            System.out.println("\n\nEnfermeiros especialista\n");
             for (SpecialistNurse tempSpecialistNurse : specialistNurses) {
-                System.out.println(tempSpecialistNurse.toString());
+                System.out.println(tempSpecialistNurse.toString() + "\n");
             }
 
             // List chief nurses
-            System.out.println("\nEnfermeiros chefe\n");
+            System.out.println("\n\nEnfermeiros chefe\n");
             for (SpecialistNurse tempChiefNurse : chiefNurses) {
-                System.out.println(tempChiefNurse.toString());
+                System.out.println(tempChiefNurse.toString() + "\n");
             }
 
         }
@@ -307,9 +307,9 @@ public class Hospital {
         else {
 
             // Prints all medics to the console
+            System.out.println("Médicos no hospital\n");
             for (int i = 0; i < medics.size(); i++) {
                 Medic tempMedic = medics.get(i);
-                System.out.println("Medic");
                 System.out.println(tempMedic.toString() + "\n");
             }
         }
@@ -320,7 +320,17 @@ public class Hospital {
     }
 
     public void listRequestsForAuxiliaryNurses() {
-        // TODO
+        // Lists all requests for auxiliary nurses sent to the hospital, instead of a chief nurse
+
+        ClearConsole.clearConsole();
+
+        // If there are no requests in the hospital
+        if (auxiliaryRequests.size() == 0){
+            throw new No
+        }
+
+        System.out.println(auxiliaryRequests.toString());
+        
     }
 
     // TODO
@@ -354,8 +364,10 @@ public class Hospital {
         ClearConsole.clearConsole();
 
         // Prints pacients information to console
+        System.out.println("Pacientes na lista de espera do hospital\n");
         for (Person pacient : pacientsQueue) {
-            System.out.println("Pacient\n" + pacient.toString() + "\n");
+            
+            System.out.println(pacient.toString() + "\n");
         }
         scanner.next();
     }

@@ -59,4 +59,18 @@ public class Medic extends Person {
 
     }
 
+    public boolean equals(Object object) {
+        if (this == object)
+        return true;
+
+        if (object == null)
+        return false;
+
+        if (this.getClass() != object.getClass())
+        return false;
+
+        Medic medic = (Medic) object;
+        return super.getID() == medic.getID(); 
+    }
+
 }
