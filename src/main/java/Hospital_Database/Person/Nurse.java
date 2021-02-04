@@ -69,4 +69,11 @@ public class Nurse extends Person {
     Schedule.put(currentPacient, remediesToApply) ;  
         
     }
+
+    public String toString (){
+        String texto;
+        texto = super.toString() + "\n";
+        texto += "Anos de carreira: " + getCareerYears();
+        return texto;
+    }
 }

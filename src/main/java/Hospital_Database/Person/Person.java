@@ -82,5 +82,26 @@ public class Person implements Infectable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String toString (){
+        String texto;
+        texto = "ID: " + ID + "\n";
+        texto += "Nome: " + name + "\n";
+        texto += "Ano de nascimento: " + birthdayYear + "\n";
+        return texto;
+    }
+
+    public boolean equals (Object object){
+        if (this == object) return true;
+        
+        if (object == null) return false;
+
+        if (this.getClass() != object.getClass()) return false;
+
+        Person person = (Person) object;
+        return ID == person.getID();
+    }
+    
+
  // TODO : Equals e toString
 }

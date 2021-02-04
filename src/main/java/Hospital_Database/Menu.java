@@ -7,6 +7,10 @@ package Hospital_Database;
 
 import java.util.Scanner;
 
+import Hospital_Database.Exceptions.IDNotFoundException;
+import Hospital_Database.Person.Medic;
+import Hospital_Database.Person.Nurse;
+
 /**
  *
  * @author mistakx
@@ -41,7 +45,7 @@ public class Menu {
 
                 default:
                     System.out.println("A opção inserida é inválida!");
-                    // TODO: Stop
+                    scanner.next();
                     break;
             }
         }
@@ -69,7 +73,7 @@ public class Menu {
                 System.out.println("11 - Atirar pedidos para enfermeiros-aulixiares para trituradora.");
                 System.out.println("12 - Virus Outbreak.");
                 System.out.println("13 - N-ésimo relatório hospitalar.");
-                System.out.println("14 - Sair da aplicação");
+                System.out.println("14 - Sair do programa");
                 System.out.println("0 - Voltar ao menu anterior.\n");
 
                 boolean exitMenuUserInterface = false;
@@ -118,16 +122,16 @@ public class Menu {
                         hospital.hospitalReports();
                         break;
                     case 14:
-                        // TODO
-
+                        System.exit(0);
                         break;
+
                     case 0:
                         exitMenuUserInterface = true;
                         break;
 
                     default:
                         System.out.println("Opção inválida\n");
-                        // TODO: Stop
+                        scanner.next();
                         break;
 
                 }
@@ -137,70 +141,114 @@ public class Menu {
                 }
             } catch (Exception exception) {
                 System.out.println(exception);
-                // TODO: Stop
+                scanner.next();
             }
         }
 
     }
 
-    private static void medicMenuUserInterface(Hospital hospital) {
+    private static void medicMenuUserInterface(Hospital hospital) throws IDNotFoundException {
 
-        while (true) {
+        ClearConsole.clearConsole();
 
-            try {
+        // Asks the user for ID
+        System.out.println("Insira o seu ID: ");
+        int medicID = Integer.parseInt(scanner.next());
 
-                ClearConsole.clearConsole();
-                System.out.println("Escolha a opção que deseja.");
-                System.out.println("1 - Listar pacientes em espera no hospital.");
-                System.out.println("2 - Listar pacientes a aguardar alta.");
-                System.out.println("3 - Diagnóstico ao paciente.");
-                System.out.println("4 - Dar alta hospitalar.");
-                System.out.println("5 - Requerimento de auxiliares.");
-                System.out.println("0 - Voltar ao menu anterior.\n");
+        // Checks if a medic with the ID exists
+        Medic medic = null;
+        for (Medic tempMedic : hospital.getMedics()) {
 
-                boolean exitMenuUserInterface = false;
-                option = scanner.nextInt();
-
-                switch (option) {
-
-                    case 1:
-                        hospital.listPacientsInHospitalQueue();
-                        break;
-                    case 2:
-                        hospital.listPacientsAwaitingDischarge();
-                        ;
-                        break;
-                    case 3:
-                        hospital.pacientDiagnostic();
-                        break;
-                    case 4:
-                        hospital.dischargePacient();
-                        break;
-                    case 5:
-                        hospital.requisitAuxiliaryNurses();
-                        break;
-                    case 0:
-                        exitMenuUserInterface = true;
-                        break;
-                    default:
-                        System.out.println("Opção inválida\n");
-                        // TODO: Stop
-                        break;
-
-                }
-
-                if (exitMenuUserInterface) {
-                    break;
-                }
-            } catch (Exception exception) {
-                System.out.println(exception);
-                // TODO: Pause
+            if (tempMedic.getID() == medicID) {
+                medic = tempMedic;
             }
+
         }
 
+        // If medic with the ID exists
+        if (medic != null) {
+
+            while (true) {
+
+                try {
+
+                    ClearConsole.clearConsole();
+                    System.out.println("Escolha a opção que deseja.");
+                    System.out.println("1 - Listar pacientes em espera no hospital.");
+                    System.out.println("2 - Listar pacientes a aguardar alta.");
+                    System.out.println("3 - Diagnóstico ao paciente.");
+                    System.out.println("4 - Dar alta hospitalar.");
+                    System.out.println("5 - Requerimento de auxiliares.");
+                    System.out.println("0 - Voltar ao menu anterior.\n");
+
+                    boolean exitMenuUserInterface = false;
+                    option = scanner.nextInt();
+
+                    switch (option) {
+
+                        case 1:
+                            hospital.listPacientsInHospitalQueue();
+                            break;
+                        case 2:
+                            hospital.listPacientsAwaitingDischarge();
+                            ;
+                            break;
+                        case 3:
+                            hospital.pacientDiagnostic();
+                            break;
+                        case 4:
+                            hospital.dischargePacient();
+                            break;
+                        case 5:
+                            hospital.requisitAuxiliaryNurses();
+                            break;
+                        case 0:
+                            exitMenuUserInterface = true;
+                            break;
+                        default:
+                            System.out.println("Opção inválida\n");
+                            scanner.next();
+                            break;
+
+                    }
+
+                    if (exitMenuUserInterface) {
+                        break;
+                    }
+
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                    scanner.next();
+                }
+            }
+
+        }
+
+        // If medic with the ID doesn't exist
+        else {
+
+            throw new IDNotFoundException("Não existe nenhum médico com o ID " + String.valueOf(medicID) + ".");
+
+        }
     }
 
     private static void nurseMenuUserInterface(Hospital hospital) {
+
+        // Asks the user for ID
+        System.out.println("Insira o seu ID: ");
+        int nurseID = Integer.parseInt(scanner.next());
+
+        // Checks if a nurse with the ID exists
+        Nurse nurse = null;
+        for (Nurse tempNurse : hospital.getMedics()) {
+
+            if (tempNurse.getID() == nurseID) {
+                nurse = tempNurse;
+            }
+
+        }
+
+
 
         while (true) {
 
@@ -235,7 +283,7 @@ public class Menu {
 
                     default:
                         System.out.println("Opção Inválida!");
-                        // TODO: Stop
+                        scanner.next();
                         break;
 
                 }
@@ -245,7 +293,8 @@ public class Menu {
                 }
 
             } catch (Exception exception) {
-                System.out.println(exception);
+                exception.printStackTrace();
+                scanner.next();
             }
         }
 
