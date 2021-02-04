@@ -10,8 +10,11 @@ import java.util.Scanner;
 import java.util.Set;
 
 import Hospital_Database.Exceptions.IDNotFoundException;
+import Hospital_Database.Exceptions.NoMedicsExistException;
+import Hospital_Database.Exceptions.NoNursesExistException;
 import Hospital_Database.Exceptions.NoPacientsAwaitingDischargeException;
 import Hospital_Database.Exceptions.NoPacientsToDiagnoseException;
+import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.Exceptions.NotEnoughCareerYearsException;
 import Hospital_Database.Person.AuxiliaryNurse;
 import Hospital_Database.Person.Medic;
@@ -249,55 +252,68 @@ public class Hospital {
 
     }
 
-    public void listNurses() {
+    public void listNurses() throws NoNursesExistException { // Prints all nurses in the hospital to the console
 
-        // TODO: Print message if empty nurses
+        ClearConsole.clearConsole();
+
         // TODO: List what medic the nurse is allocated to
 
-        // List specialist nurses
-        System.out.println("Enfermeiros especialista\n");
-        for (int i = 0; i < specialistNurses.size(); i++) {
-            SpecialistNurse tempSpecialistNurse = specialistNurses.get(i);
-            int nurseCareerYears = tempSpecialistNurse.getCareerYears();
-            String nurseName = tempSpecialistNurse.getName();
-            int nurseID = tempSpecialistNurse.getID();
-            System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
+        // If no nurses exist in the hospital, throw an exception
+        if ((specialistNurses.size() != 0) && (auxiliaryNurses.size() != 0) && (chiefNurses.size() != 0)) {
+            throw new NoNursesExistException("Não existem enfermeiros no hospital.");
         }
 
-        // List auxiliary nurses
-        System.out.println("\nEnfermeiros auxiliares\n");
-        for (int i = 0; i < auxiliaryNurses.size(); i++) {
-            AuxiliaryNurse tempAuxiliaryNurse = auxiliaryNurses.get(i);
-            int nurseCareerYears = tempAuxiliaryNurse.getCareerYears();
-            String nurseName = tempAuxiliaryNurse.getName();
-            int nurseID = tempAuxiliaryNurse.getID();
-            System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
+        // If there are nurses in the hospital, print them to the console
+        else {
+
+            // List specialist nurses
+            System.out.println("Enfermeiros especialista\n");
+            for (int i = 0; i < specialistNurses.size(); i++) {
+                SpecialistNurse tempSpecialistNurse = specialistNurses.get(i);
+                int nurseCareerYears = tempSpecialistNurse.getCareerYears();
+                String nurseName = tempSpecialistNurse.getName();
+                int nurseID = tempSpecialistNurse.getID();
+                System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
+            }
+
+            // List auxiliary nurses
+            System.out.println("\nEnfermeiros auxiliares\n");
+            for (int i = 0; i < auxiliaryNurses.size(); i++) {
+                AuxiliaryNurse tempAuxiliaryNurse = auxiliaryNurses.get(i);
+                int nurseCareerYears = tempAuxiliaryNurse.getCareerYears();
+                String nurseName = tempAuxiliaryNurse.getName();
+                int nurseID = tempAuxiliaryNurse.getID();
+                System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
+            }
+
+            // List chief nurses
+            System.out.println("\nEnfermeiros chefe\n");
+            for (int i = 0; i < chiefNurses.size(); i++) {
+                SpecialistNurse tempChiefNurse = chiefNurses.get(i);
+                int nurseCareerYears = tempChiefNurse.getCareerYears();
+                String nurseName = tempChiefNurse.getName();
+                int nurseID = tempChiefNurse.getID();
+                System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
+            }
+
         }
 
-        // List chief nurses
-        System.out.println("\nEnfermeiros chefe\n");
-        for (int i = 0; i < chiefNurses.size(); i++) {
-            SpecialistNurse tempChiefNurse = chiefNurses.get(i);
-            int nurseCareerYears = tempChiefNurse.getCareerYears();
-            String nurseName = tempChiefNurse.getName();
-            int nurseID = tempChiefNurse.getID();
-            System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
-        }
-
+        // Waits for user input
         scanner.next();
 
     }
 
-    public void listMedics() { // Prints all medic in the hospital to the console
+    // Done
+    public void listMedics() throws NoMedicsExistException { // Prints all medic in the hospital to the console
 
         ClearConsole.clearConsole();
 
-        // If there are no medics in the hospital
+        // If there are no medics in the hospital, throw an exception
         if (medics.size() == 0) {
-            System.out.println("Não existem médicos no hospital.");
+            throw new NoMedicsExistException("Não existem médicos no hospital.");
         }
 
-        // If there are medics in the hospital
+        // If there are medics in the hospital, print them to the console
         else {
 
             // Prints all medics to the console
@@ -386,7 +402,7 @@ public class Hospital {
     }
 
     // TODO
-    protected void pacientDiagnostic() throws NoPacientsToDiagnoseException {
+    protected void pacientDiagnostic(Medic medic) throws NoPacientsToDiagnoseException {
 
         if (pacientsQueue.size() != 0) {
             Person currentPacient = pacientsQueue.poll();
@@ -399,50 +415,55 @@ public class Hospital {
     }
 
     // TODO
-    protected void dischargePacient() {
+    protected void dischargePacient(Medic medic) {
     }
 
     // TODO
-    protected void requisitAuxiliaryNurses() {
-        System.out.println("ID do médico: ");
-        int medicID;
-        medicID = Integer.parseInt(scanner.next());
-        boolean medicExists = false;
+    protected void requestAuxiliaryNurses(Medic medic) throws IDNotFoundException, NotEnoughAuxiliaryNursesException { // Sends a request for
+                                                                                                  // auxiliary nurses to
+                                                                                                  // a chief nurse
 
-        for (Medic tempMedic : medics) {
-            if (medicID == tempMedic.getID()) {
-                medicExists = true;
-            }
-        }
+        ClearConsole.clearConsole();
 
-        if (!medicExists) {
-            System.out.println("Não existe nenhum médico com o ID inserido.");
-            return;
-        }
-
+        // Input the chief nurse to send the request to
         System.out.println("ID do chefe enfermeiro: ");
         int chiefNurseID;
         chiefNurseID = Integer.parseInt(scanner.next());
-        boolean chiefNurseExists = false;
-
+        
         // Check if the chief nurse exists
+        SpecialistNurse chiefNurse = null;
         for (SpecialistNurse tempChiefNurse : chiefNurses) {
             if (tempChiefNurse.getID() == chiefNurseID) {
-                chiefNurseExists = true;
+                chiefNurse = tempChiefNurse;
             }
         }
 
-        if (!chiefNurseExists) {
-            System.out.println("Não existe nenhum enfermeiro chefe com o ID inserido.");
-            return;
+        // If the chief nurse doesn't exist, throw an exception
+        if (chiefNurse == null) {
+            throw new IDNotFoundException("Não existe nenhum enfermeiro chefe com o ID inserido.");
         }
 
-        System.out.println("Quantos enfermeiros auxiliares necessita: ");
-        int auxiliaryNursesRequested;
-        auxiliaryNursesRequested = Integer.parseInt(scanner.next());
+        // If the chief nurse exists, send the request for auxiliary nurses
+        else {
+            System.out.println("Quantos enfermeiros auxiliares necessita: ");
+            int auxiliaryNursesRequested;
+            auxiliaryNursesRequested = Integer.parseInt(scanner.next());
 
-        if (auxiliaryNursesRequested > auxiliaryNurses.size()) {
-            // TODO: Exception
+
+            // If there are not enough auxiliary nurses to complete the request, throw an exception
+            if (auxiliaryNursesRequested > auxiliaryNurses.size()) {
+                // TODO: Request auxiliary nurses exception behaviour
+                throw new NotEnoughAuxiliaryNursesException("Não existem enfermeiros auxiliares suficientes no hospital.");
+            }
+
+            // If there are enough auxiliary nurses to complete the request, send the request
+            else {
+                // TODO: Continue
+                chiefNurse.getMedicRequests();
+                
+            }
+
+
         }
     }
 

@@ -21,7 +21,10 @@ public class Menu {
     private static int option;
 
     public static void mainMenuUserInterface(Hospital hospital) {
+
         while (true) {
+
+            try {
 
             ClearConsole.clearConsole();
             System.out.println("Selecione o menu que deseja:");
@@ -31,23 +34,30 @@ public class Menu {
 
             option = scanner.nextInt();
 
-            switch (option) {
 
-                case 1:
-                    medicMenuUserInterface(hospital);
-                    break;
-                case 2:
-                    nurseMenuUserInterface(hospital);
-                    break;
-                case 3:
-                    administratorMenuUserInterface(hospital);
-                    break;
+                switch (option) {
 
-                default:
-                    System.out.println("A opção inserida é inválida!");
-                    scanner.next();
-                    break;
+                    case 1:
+                        medicMenuUserInterface(hospital);
+                        break;
+                    case 2:
+                        nurseMenuUserInterface(hospital);
+                        break;
+                    case 3:
+                        administratorMenuUserInterface(hospital);
+                        break;
+
+                    default:
+                        System.out.println("A opção inserida é inválida!");
+                        scanner.next();
+                        break;
+                }
+
+            } catch (Exception exception) {
+                exception.printStackTrace();
+                scanner.next();
             }
+
         }
 
     }
@@ -190,17 +200,17 @@ public class Menu {
                             hospital.listPacientsInHospitalQueue();
                             break;
                         case 2:
-                            hospital.listPacientsAwaitingDischarge();
+                            hospital.listPacientsAwaitingDischarge(medic);
                             ;
                             break;
                         case 3:
-                            hospital.pacientDiagnostic();
+                            hospital.pacientDiagnostic(medic);
                             break;
                         case 4:
-                            hospital.dischargePacient();
+                            hospital.dischargePacient(medic);
                             break;
                         case 5:
-                            hospital.requisitAuxiliaryNurses();
+                            hospital.requestAuxiliaryNurses(medic);
                             break;
                         case 0:
                             exitMenuUserInterface = true;
@@ -240,15 +250,13 @@ public class Menu {
 
         // Checks if a nurse with the ID exists
         Nurse nurse = null;
-        for (Nurse tempNurse : hospital.getMedics()) {
+        // for (Nurse tempNurse : hospital.getMedics()) {
 
-            if (tempNurse.getID() == nurseID) {
-                nurse = tempNurse;
-            }
+        //     if (tempNurse.getID() == nurseID) {
+        //         nurse = tempNurse;
+        //     }
 
-        }
-
-
+        // }
 
         while (true) {
 
@@ -271,6 +279,7 @@ public class Menu {
                     case 2:
                         hospital.listPacientsWaitingForCure();
                         break;
+
                     case 3:
                         hospital.attributeSpecialistNurseToMedic();
                         break;
