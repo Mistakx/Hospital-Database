@@ -14,10 +14,10 @@ public class Nurse extends Person {
     private HashMap<Person, ArrayList<Remedy>> Schedule = new HashMap<Person, ArrayList<Remedy>>();
     private int careerYears = 0;
 
-    public Nurse(int ID, String name, int birthdayYear) {
+    public Nurse(int ID, String name, int birthdayYear, int careerYears) {
         super(ID, name, birthdayYear);
+        this.careerYears = careerYears;
     }
-
 
     public int getCareerYears() {
         return careerYears;
@@ -32,7 +32,7 @@ public class Nurse extends Person {
     }
 
     protected void helpsPacientDiagnostic(Person currentPacient) {
-        
+
         Random random = new Random();
 
         int temperature = 35 + random.nextInt(7);
@@ -42,38 +42,35 @@ public class Nurse extends Person {
         System.out.println(currentPacient + ".");
         System.out.println("Temperatura: " + temperature + ".");
         System.out.println("Nível de glóbulos brancos: " + whiteBloodCellLevels + ".");
-        
+
         if (gastrointestinalSymptoms) {
             System.out.println("Sintomas gastrointestinais: Sim.");
+        } else {
+            System.out.println("Sintomas gastrointestinais: Não.");
         }
-        else {
-            System.out.println("Sintomas gastrointestinais: Não."); 
-        }
-            
+
         // ! Verify the symptons and add the pacient
         ArrayList<Remedy> remediesToApply = new ArrayList<>();
-        
+
         if (temperature > 37.5) {
             remediesToApply.add(new Remedy("Covid"));
         }
-        
-        if (whiteBloodCellLevels < 0.5) {     
-            remediesToApply.add(new Remedy("HIV"));         
+
+        if (whiteBloodCellLevels < 0.5) {
+            remediesToApply.add(new Remedy("HIV"));
         }
-        
-        if (gastrointestinalSymptoms) {    
+
+        if (gastrointestinalSymptoms) {
             remediesToApply.add(new Remedy("Ebola"));
         }
 
-    // TODO: If no diseases found in pacient
-    Schedule.put(currentPacient, remediesToApply) ;  
-        
+        // TODO: If no diseases found in pacient
+        Schedule.put(currentPacient, remediesToApply);
+
     }
 
-    public String toString (){
-        String texto;
-        texto = super.toString() + "\n";
-        texto += "Anos de carreira: " + getCareerYears();
-        return texto;
+    @Override
+    public String toString() {
+        return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "Career Years: " + careerYears;
     }
 }

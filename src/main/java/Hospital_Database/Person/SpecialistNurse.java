@@ -9,8 +9,8 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
     public HashMap<Medic, Integer> medicRequests = new HashMap<>();
 
-    public SpecialistNurse(int ID, String name, int birthdayYear) {
-        super(ID, name, birthdayYear);
+    public SpecialistNurse(int ID, String name, int birthdayYear, int careerYears) {
+        super(ID, name, birthdayYear, careerYears);
     }
 
     @Override

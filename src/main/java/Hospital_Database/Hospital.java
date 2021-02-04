@@ -17,6 +17,7 @@ import Hospital_Database.Exceptions.NoPacientsToDiagnoseException;
 import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.Exceptions.NotEnoughCareerYearsException;
 import Hospital_Database.Person.AuxiliaryNurse;
+import Hospital_Database.Person.ChiefNurse;
 import Hospital_Database.Person.Medic;
 import Hospital_Database.Person.Nurse;
 import Hospital_Database.Person.Person;
@@ -85,12 +86,12 @@ public class Hospital {
         return pacientsQueue;
     }
 
-    // ! Populate
+    // ! Populate hospital method
     protected void populate(String hospitalDatabaseFilePath) {
         Files.populateHospital(hospitalDatabaseFilePath, this);
     }
 
-    // ! Administrator menu
+    // ! Administrator menu related methods
 
     // Done
     public void addMedic() { // Creates and adds new medic to the hospital
@@ -99,13 +100,11 @@ public class Hospital {
 
         // Input medic name
         System.out.println("Nome do médico: ");
-        String name;
-        name = scanner.next();
+        String name = scanner.next();
 
         // Input medic birthday year
         System.out.println("Ano de nascimento do médico: ");
-        int birthdayYear;
-        birthdayYear = scanner.nextInt();
+        int birthdayYear = scanner.nextInt();
 
         // Create medic, add medic to the list, and add 1 to the last ID
         Medic newMedic = new Medic(lastIDAttributed + 1, name, birthdayYear);
@@ -121,16 +120,18 @@ public class Hospital {
 
         // Input specialist nurse name
         System.out.println("Nome do enfermeiro especialista: ");
-        String name = "";
-        name = scanner.nextLine();
+        String name = scanner.next();
 
         // Input specialist nurse birthday year
         System.out.println("Ano de nascimento do enfermeiro especialista: ");
-        int birthdayYear;
-        birthdayYear = scanner.nextInt();
+        int birthdayYear = scanner.nextInt();
+
+        // Input specialist nurse career years
+        System.out.println("Anos de carreira do enfermeiro especialista: ");
+        int careerYears = scanner.nextInt();
 
         // Create new specialist nurse, add it to the list and add 1 to last ID.
-        SpecialistNurse newSpecialistNurse = new SpecialistNurse(lastIDAttributed + 1, name, birthdayYear);
+        SpecialistNurse newSpecialistNurse = new SpecialistNurse(lastIDAttributed + 1, name, birthdayYear, careerYears);
         specialistNurses.add(newSpecialistNurse);
         lastIDAttributed++;
 
@@ -143,16 +144,18 @@ public class Hospital {
 
         // Input auxiliary nurse name
         System.out.println("Insira o nome do enfermeiro auxiliar: ");
-        String name = "";
-        name = scanner.nextLine();
+        String name = scanner.next();
 
         // Input auxiliary nurse birthday year
         System.out.println("Ano de nascimento do enfermeiro auxiliar: ");
-        int birthdayYear;
-        birthdayYear = scanner.nextInt();
+        int birthdayYear = scanner.nextInt();
+
+        // Input auxiliary nurse career years
+        System.out.println("Ano de carreira do enfermeiro auxiliar: ");
+        int careerYears = scanner.nextInt();
 
         // Create new auxiliary nurse, add it to the list, and add 1 to the last ID.
-        AuxiliaryNurse newAuxiliaryNurse = new AuxiliaryNurse(lastIDAttributed + 1, name, birthdayYear);
+        AuxiliaryNurse newAuxiliaryNurse = new AuxiliaryNurse(lastIDAttributed + 1, name, birthdayYear, careerYears);
         auxiliaryNurses.add(newAuxiliaryNurse);
         lastIDAttributed++;
 
@@ -165,8 +168,7 @@ public class Hospital {
 
         // Input pacient name
         System.out.println("Insira o nome do paciente: ");
-        String name = "";
-        name = scanner.nextLine();
+        String name = scanner.next();
 
         // Input pacient birthday year
         System.out.println("Ano de nascimento do novo paciente: ");
@@ -191,7 +193,7 @@ public class Hospital {
         // Input ID of specialist nurse to be promoted
         int specialistNurseID;
         System.out.println("ID do enfermeiro especialista que deseja promover a chefe: ");
-        specialistNurseID = Integer.parseInt(scanner.next());
+        specialistNurseID = scanner.nextInt();
 
         // Check if a specialist nurse with the ID exists
         boolean specialistNurseExists = false;
@@ -259,41 +261,29 @@ public class Hospital {
         // TODO: List what medic the nurse is allocated to
 
         // If no nurses exist in the hospital, throw an exception
-        if ((specialistNurses.size() != 0) && (auxiliaryNurses.size() != 0) && (chiefNurses.size() != 0)) {
+        if ((specialistNurses.size() == 0) && (auxiliaryNurses.size() == 0) && (chiefNurses.size() == 0)) {
             throw new NoNursesExistException("Não existem enfermeiros no hospital.");
         }
 
         // If there are nurses in the hospital, print them to the console
         else {
 
-            // List specialist nurses
-            System.out.println("Enfermeiros especialista\n");
-            for (int i = 0; i < specialistNurses.size(); i++) {
-                SpecialistNurse tempSpecialistNurse = specialistNurses.get(i);
-                int nurseCareerYears = tempSpecialistNurse.getCareerYears();
-                String nurseName = tempSpecialistNurse.getName();
-                int nurseID = tempSpecialistNurse.getID();
-                System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
+            // List auxiliary nurses
+            System.out.println("Enfermeiros auxiliares\n");
+            for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
+                System.out.println(tempAuxiliaryNurse.toString());
             }
 
-            // List auxiliary nurses
-            System.out.println("\nEnfermeiros auxiliares\n");
-            for (int i = 0; i < auxiliaryNurses.size(); i++) {
-                AuxiliaryNurse tempAuxiliaryNurse = auxiliaryNurses.get(i);
-                int nurseCareerYears = tempAuxiliaryNurse.getCareerYears();
-                String nurseName = tempAuxiliaryNurse.getName();
-                int nurseID = tempAuxiliaryNurse.getID();
-                System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
+            // List specialist nurses
+            System.out.println("\nEnfermeiros especialista\n");
+            for (SpecialistNurse tempSpecialistNurse : specialistNurses) {
+                System.out.println(tempSpecialistNurse.toString());
             }
 
             // List chief nurses
             System.out.println("\nEnfermeiros chefe\n");
-            for (int i = 0; i < chiefNurses.size(); i++) {
-                SpecialistNurse tempChiefNurse = chiefNurses.get(i);
-                int nurseCareerYears = tempChiefNurse.getCareerYears();
-                String nurseName = tempChiefNurse.getName();
-                int nurseID = tempChiefNurse.getID();
-                System.out.println(nurseID + ": " + nurseName + " - " + nurseCareerYears);
+            for (SpecialistNurse tempChiefNurse : chiefNurses) {
+                System.out.println(tempChiefNurse.toString());
             }
 
         }
@@ -356,7 +346,8 @@ public class Hospital {
 
     }
 
-    // ! Medic menu
+    // ! Medic menu related methods
+    // Done
     protected void listPacientsInHospitalQueue() {
         // * Also used in the administrator menu
 
@@ -364,13 +355,12 @@ public class Hospital {
 
         // Prints pacients information to console
         for (Person pacient : pacientsQueue) {
-            // TODO: Use toString method instead
-            System.out.println(pacient.getID() + ": " + pacient.getName() + ".");
+            System.out.println("Pacient\n" + pacient.toString() + "\n");
         }
-
         scanner.next();
     }
 
+    // Done
     protected void listPacientsAwaitingDischarge(Medic medic) throws NoPacientsAwaitingDischargeException { // Lists all
                                                                                                             // pacients
                                                                                                             // waiting
@@ -379,6 +369,8 @@ public class Hospital {
                                                                                                             // for a
                                                                                                             // given
                                                                                                             // medic
+
+        ClearConsole.clearConsole();
 
         // If the medic doesn't have pacients awaiting discharge
         if (medic.getPacientsAwaitingDischarge().size() == 0) {
@@ -391,7 +383,7 @@ public class Hospital {
             // Prints all pacients waiting for discharge
             for (Person pacient : medic.getPacientsAwaitingDischarge()) {
 
-                System.out.println("Pacient\n" + pacient.toString());
+                System.out.println("Pacient\n" + pacient.toString() + "\n");
 
             }
 
@@ -419,17 +411,19 @@ public class Hospital {
     }
 
     // TODO
-    protected void requestAuxiliaryNurses(Medic medic) throws IDNotFoundException, NotEnoughAuxiliaryNursesException { // Sends a request for
-                                                                                                  // auxiliary nurses to
-                                                                                                  // a chief nurse
+    protected void requestAuxiliaryNurses(Medic medic) throws IDNotFoundException, NotEnoughAuxiliaryNursesException { // Sends
+                                                                                                                       // a
+                                                                                                                       // request
+                                                                                                                       // for
+        // auxiliary nurses to
+        // a chief nurse
 
         ClearConsole.clearConsole();
 
         // Input the chief nurse to send the request to
         System.out.println("ID do chefe enfermeiro: ");
-        int chiefNurseID;
-        chiefNurseID = Integer.parseInt(scanner.next());
-        
+        int chiefNurseID = scanner.nextInt();
+
         // Check if the chief nurse exists
         SpecialistNurse chiefNurse = null;
         for (SpecialistNurse tempChiefNurse : chiefNurses) {
@@ -446,134 +440,113 @@ public class Hospital {
         // If the chief nurse exists, send the request for auxiliary nurses
         else {
             System.out.println("Quantos enfermeiros auxiliares necessita: ");
-            int auxiliaryNursesRequested;
-            auxiliaryNursesRequested = Integer.parseInt(scanner.next());
+            int auxiliaryNursesRequested = scanner.nextInt();
 
-
-            // If there are not enough auxiliary nurses to complete the request, throw an exception
+            // If there are not enough auxiliary nurses to complete the request, throw an
+            // exception
             if (auxiliaryNursesRequested > auxiliaryNurses.size()) {
                 // TODO: Request auxiliary nurses exception behaviour
-                throw new NotEnoughAuxiliaryNursesException("Não existem enfermeiros auxiliares suficientes no hospital.");
+                throw new NotEnoughAuxiliaryNursesException(
+                        "Não existem enfermeiros auxiliares suficientes no hospital.");
             }
 
-            // If there are enough auxiliary nurses to complete the request, send the request
+            // If there are enough auxiliary nurses to complete the request, send the
+            // request
             else {
                 // TODO: Continue
                 chiefNurse.getMedicRequests();
-                
-            }
 
+            }
 
         }
     }
 
-    // ! Nurse menu
+    // ! Nurse menu related methods
 
+    // Done
     protected void listMedicNurses() throws IDNotFoundException { // Lists all nurses associated with a medic
 
+        ClearConsole.clearConsole();
+
         int medicID;
-        System.out.println("Nº do médico: ");
-        medicID = Integer.parseInt(scanner.nextLine());
+        System.out.println("ID do médico: ");
+        medicID = scanner.nextInt();
 
         // Check if a medic with the ID exists
-        boolean medicExists = false;
-
-        for (int i = 0; i < medics.size(); i++) {
-
-            Medic tempMedic = medics.get(i);
+        Medic medic = null;
+        for (Medic tempMedic : medics) {
 
             if (tempMedic.getID() == medicID) {
-                medicExists = true;
-                List<AuxiliaryNurse> medicAuxiliaryNurses = tempMedic.getAuxiliaryNurses();
-                List<SpecialistNurse> medicSpecialistNurses = tempMedic.getSpecialistNurses();
-
-                System.out.println("Médico (ID: " + medicID + ").\n");
-                System.out.println("Enfermeiros auxiliares\n");
-
-                for (int y = 0; y < medicAuxiliaryNurses.size(); y++) {
-
-                    AuxiliaryNurse tempAuxiliaryNurse = medicAuxiliaryNurses.get(y);
-                    System.out.println(tempAuxiliaryNurse.getID() + ": " + tempAuxiliaryNurse.getName());
-
-                }
-
-                System.out.println("Enfermeiros especialistas\n");
-
-                for (int y = 0; y < medicSpecialistNurses.size(); y++) {
-
-                    SpecialistNurse tempSpecialistNurse = medicSpecialistNurses.get(y);
-                    System.out.println(tempSpecialistNurse.getID() + ": " + tempSpecialistNurse.getName());
-
-                }
-
-                break;
+                medic = tempMedic;
             }
 
         }
 
         // If medic doesn't exist, throws an exception
-        if (!medicExists) {
+        if (medic == null) {
             throw new IDNotFoundException("Não existe um médico com o ID " + medicID + ".");
         }
 
-    }
-
-    protected void listPacientsWaitingForCure() throws IDNotFoundException {
-
-        System.out.println("Insira o ID do enfermeiro: ");
-        int nurseID = Integer.parseInt(scanner.next());
-
-        Nurse nurse = null;
-
-        // TODO: Improve this code so if the nurse is found in a list, it isn't searched
-        // in the others.
-        for (Nurse tempAuxiliaryNurse : auxiliaryNurses) {
-            if (tempAuxiliaryNurse.getID() == nurseID) {
-                nurse = tempAuxiliaryNurse;
-                break;
-            }
-        }
-        for (Nurse tempSpecialistNurse : specialistNurses) {
-            if (tempSpecialistNurse.getID() == nurseID) {
-                nurse = tempSpecialistNurse;
-                break;
-            }
-        }
-        for (Nurse tempChiefNurse : chiefNurses) {
-            if (tempChiefNurse.getID() == nurseID) {
-                nurse = tempChiefNurse;
-                break;
-            }
-        }
-
-        // If the nurse doesn't exist, throw an exception
-        if (nurse == null) {
-            throw new IDNotFoundException("Não existe nenhum enfermeiro com o ID inserido.");
-        }
-
-        // If the nurse exists, list pacients waiting for cure
+        // If medic exists, prints it's nurses to the console
         else {
+            List<AuxiliaryNurse> medicAuxiliaryNurses = medic.getAuxiliaryNurses();
+            List<SpecialistNurse> medicSpecialistNurses = medic.getSpecialistNurses();
 
-            Set<Person> pacientsWaitingCure = nurse.getSchedule().keySet();
+            System.out.println("Médico (ID: " + medicID + ").\n");
+            System.out.println("Enfermeiros auxiliares\n");
 
-            for (Person pacient : pacientsWaitingCure) {
+            for (AuxiliaryNurse tempAuxiliaryNurse : medicAuxiliaryNurses) {
 
-                System.out.println(pacient.getID() + ": " + pacient.getName());
+                System.out.println(tempAuxiliaryNurse.toString() + "\n");
 
             }
+
+            System.out.println("Enfermeiros especialistas\n");
+
+            for (SpecialistNurse tempSpecialistNurse : medicSpecialistNurses) {
+
+                System.out.println(tempSpecialistNurse.toString() + "\n");
+
+            }
+
         }
+
+        // Waits for user input
+        scanner.next();
 
     }
 
-    // TODO: Only the chief nurse can do this
-    protected void attributeSpecialistNurseToMedic() throws IDNotFoundException {
+    // Done
+    protected void listPacientsWaitingForCure(Nurse nurse) throws IDNotFoundException {
+        // Prints the pacients awaiting cure to the console
 
-        // ! Asks the user for the Specialist Nurse to attribute, and checks if it
-        // exists
-        int specialistNurseID;
+        ClearConsole.clearConsole();
 
+        Set<Person> pacientsWaitingCure = nurse.getSchedule().keySet();
+
+        System.out.println("Pacientes a aguardar cura");
+
+        for (Person pacient : pacientsWaitingCure) {
+
+            System.out.println(pacient.toString());
+
+        }
+
+        // Awaits for user input
+        scanner.next();
+
+    }
+
+    // Done
+    protected void attributeSpecialistNurseToMedic(ChiefNurse chiefNurse) throws IDNotFoundException {
+        // Attributes a specialist nurse to a medic. This method can only be called by a
+        // chief nurse.
+
+        ClearConsole.clearConsole();
+
+        // ! Asks the user for the specialist nurse to attribute to a medic
         System.out.println("ID do enfermeiro especialista a atribuir: ");
-        specialistNurseID = Integer.parseInt(scanner.next());
+        int specialistNurseID = scanner.nextInt();
 
         SpecialistNurse specialistNurse = null;
 
@@ -587,24 +560,20 @@ public class Hospital {
 
         }
 
-        // Specialist nurse doesn't exist
+        // If the specialist nurse doesn't exist, throw an exception
         if (specialistNurse == null) {
-            System.out.println("Não existe um enfermeiro especialista com o ID " + specialistNurseID + ".");
+            throw new IDNotFoundException("Não existe um enfermeiro especialista com o ID " + specialistNurseID + ".");
         }
 
+        // ! If the specialist nurse exists, asks the user for Medic and checks if it
+        // exists
         else {
 
-            // ! If the Specialist nurse exists, asks the user for Medic and checks if it
-            // exists
-
-            int medicID;
-
             System.out.println("ID do médico: ");
-            medicID = Integer.parseInt(scanner.next());
-
-            Medic medic = null;
+            int medicID = scanner.nextInt();
 
             // Check if a medic with the ID exists
+            Medic medic = null;
             for (Medic tempMedic : medics) {
 
                 if (tempMedic.getID() == medicID) {
@@ -633,11 +602,10 @@ public class Hospital {
 
         // Input nurse ID
         System.out.println("Insira o ID do enfermeiro a aplicar curativo: ");
-        int nurseID = Integer.parseInt(scanner.next());
-
-        Nurse nurse = null;
+        int nurseID = scanner.nextInt();
 
         // Check if the nurse exists
+        Nurse nurse = null;
         for (Nurse tempAuxiliaryNurse : auxiliaryNurses) {
             if (tempAuxiliaryNurse.getID() == nurseID) {
                 nurse = tempAuxiliaryNurse;

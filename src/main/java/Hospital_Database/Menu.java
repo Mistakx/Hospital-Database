@@ -8,8 +8,10 @@ package Hospital_Database;
 import java.util.Scanner;
 
 import Hospital_Database.Exceptions.IDNotFoundException;
+import Hospital_Database.Person.AuxiliaryNurse;
 import Hospital_Database.Person.Medic;
 import Hospital_Database.Person.Nurse;
+import Hospital_Database.Person.SpecialistNurse;
 
 /**
  *
@@ -21,19 +23,19 @@ public class Menu {
     private static int option;
 
     public static void mainMenuUserInterface(Hospital hospital) {
+        // Prints the main menu user interface to the console
 
         while (true) {
 
             try {
 
-            ClearConsole.clearConsole();
-            System.out.println("Selecione o menu que deseja:");
-            System.out.println("1 - Menu Médico");
-            System.out.println("2 - Menu Enfermeiro");
-            System.out.println("3 - Menu Administrador\n");
+                ClearConsole.clearConsole();
+                System.out.println("Selecione o menu que deseja:");
+                System.out.println("1 - Menu Médico");
+                System.out.println("2 - Menu Enfermeiro");
+                System.out.println("3 - Menu Administrador\n");
 
-            option = scanner.nextInt();
-
+                option = scanner.nextInt();
 
                 switch (option) {
 
@@ -54,6 +56,7 @@ public class Menu {
                 }
 
             } catch (Exception exception) {
+                ClearConsole.clearConsole();
                 exception.printStackTrace();
                 scanner.next();
             }
@@ -63,6 +66,7 @@ public class Menu {
     }
 
     private static void administratorMenuUserInterface(Hospital hospital) {
+        // Prints administrator menu user interface to the console
 
         while (true) {
 
@@ -150,7 +154,8 @@ public class Menu {
                     break;
                 }
             } catch (Exception exception) {
-                System.out.println(exception);
+                ClearConsole.clearConsole();
+                exception.printStackTrace();
                 scanner.next();
             }
         }
@@ -158,6 +163,7 @@ public class Menu {
     }
 
     private static void medicMenuUserInterface(Hospital hospital) throws IDNotFoundException {
+        // Prints medic menu user interface to the console
 
         ClearConsole.clearConsole();
 
@@ -175,8 +181,15 @@ public class Menu {
 
         }
 
+        // If medic with the ID doesn't exist
+        if (medic == null) {
+
+            throw new IDNotFoundException("Não existe nenhum médico com o ID " + String.valueOf(medicID) + ".");
+
+        }
+
         // If medic with the ID exists
-        if (medic != null) {
+        else {
 
             while (true) {
 
@@ -227,6 +240,7 @@ public class Menu {
                     }
 
                 } catch (Exception exception) {
+                    ClearConsole.clearConsole();
                     exception.printStackTrace();
                     scanner.next();
                 }
@@ -234,29 +248,43 @@ public class Menu {
 
         }
 
-        // If medic with the ID doesn't exist
-        else {
-
-            throw new IDNotFoundException("Não existe nenhum médico com o ID " + String.valueOf(medicID) + ".");
-
-        }
     }
 
-    private static void nurseMenuUserInterface(Hospital hospital) {
+    private static void nurseMenuUserInterface(Hospital hospital) throws IDNotFoundException {
+        // Prints nurse menu user interface to the console
 
         // Asks the user for ID
         System.out.println("Insira o seu ID: ");
         int nurseID = Integer.parseInt(scanner.next());
 
-        // Checks if a nurse with the ID exists
+        // TODO: Improve this code so if the nurse is found in a list, it isn't searched
+        // in the others.
+
+        // Search for a nurse with the ID in all the nurses lists
         Nurse nurse = null;
-        // for (Nurse tempNurse : hospital.getMedics()) {
+        for (AuxiliaryNurse tempAuxiliaryNurse : hospital.getAuxiliaryNurses()) {
+            if (tempAuxiliaryNurse.getID() == nurseID) {
+                nurse = tempAuxiliaryNurse;
+                break;
+            }
+        }
+        for (SpecialistNurse tempSpecialistNurse : hospital.getSpecialistNurses()) {
+            if (tempSpecialistNurse.getID() == nurseID) {
+                nurse = tempSpecialistNurse;
+                break;
+            }
+        }
+        for (SpecialistNurse tempChiefNurse : hospital.getChiefNurses()) {
+            if (tempChiefNurse.getID() == nurseID) {
+                nurse = tempChiefNurse;
+                break;
+            }
+        }
 
-        //     if (tempNurse.getID() == nurseID) {
-        //         nurse = tempNurse;
-        //     }
-
-        // }
+        // If the nurse doesn't exist, throw an exception
+        if (nurse == null) {
+            throw new IDNotFoundException("Não existe nenhum enfermeiro com o ID inserido.");
+        }
 
         while (true) {
 
@@ -277,11 +305,11 @@ public class Menu {
                         hospital.listMedicNurses();
                         break;
                     case 2:
-                        hospital.listPacientsWaitingForCure();
+                        hospital.listPacientsWaitingForCure(nurse);
                         break;
 
                     case 3:
-                        hospital.attributeSpecialistNurseToMedic();
+                        // hospital.attributeSpecialistNurseToMedic(SpecialistNurse chiefNurse);
                         break;
                     case 4:
                         hospital.applyCureToPacient();
@@ -302,6 +330,7 @@ public class Menu {
                 }
 
             } catch (Exception exception) {
+                ClearConsole.clearConsole();
                 exception.printStackTrace();
                 scanner.next();
             }

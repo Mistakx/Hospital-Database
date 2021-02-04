@@ -7,7 +7,8 @@ public class Main {
         // TODO: Check references
         // TODO: Check encapsulation
         // TODO: Add override methods like toString
-
+        // TODO: UML
+        
         String hospitalDatabaseFilePath = "HospitalDB.txt";
         Hospital.getInstance().populate(hospitalDatabaseFilePath);
         

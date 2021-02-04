@@ -13,11 +13,11 @@ public class Person implements Infectable {
     private int ID;
     private String name;
     private int birthdayYear;
-    private int temperature;
-    private int whiteBloodCellLevels;
+    private double temperature;
+    private double whiteBloodCellLevels;
     private boolean gastrointestinalSymptoms;
 
-    public Person(int ID, String name, int birthdayYear, int temperature, int whiteBloodCellLevels, // files usage 
+    public Person(int ID, String name, int birthdayYear, double temperature, double whiteBloodCellLevels,
             boolean gastrointestinalSymptoms) {
         this.ID = ID;
         this.name = name;
@@ -27,9 +27,9 @@ public class Person implements Infectable {
         this.setGastrointestinalSymptoms(gastrointestinalSymptoms);
 
     }
-    
-    public Person(int ID, String name, int birthdayYear) { // normal usage
-        this.ID = ID; 
+
+    public Person(int ID, String name, int birthdayYear) {
+        this.ID = ID;
         this.name = name;
         this.birthdayYear = birthdayYear;
 
@@ -43,19 +43,19 @@ public class Person implements Infectable {
         this.gastrointestinalSymptoms = gastrointestinalSymptoms;
     }
 
-    public int getWhiteBloodCellLevels() {
+    public double getWhiteBloodCellLevels() {
         return whiteBloodCellLevels;
     }
 
-    public void setWhiteBloodCellLevels(int whiteBloodCellLevels) {
+    public void setWhiteBloodCellLevels(double whiteBloodCellLevels) {
         this.whiteBloodCellLevels = whiteBloodCellLevels;
     }
 
-    public int getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(int temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 
@@ -83,25 +83,36 @@ public class Person implements Infectable {
         this.name = name;
     }
 
-    public String toString (){
-        String texto;
-        texto = "ID: " + ID + "\n";
-        texto += "Nome: " + name + "\n";
-        texto += "Ano de nascimento: " + birthdayYear + "\n";
-        return texto;
+    @Override
+    public String toString() {
+
+        // Translates the boolean to portuguese, so it can be printed in the console
+        String gastrointestinalSymptomsTranslated;
+        if (gastrointestinalSymptoms) {
+            gastrointestinalSymptomsTranslated = "Verdadeiro";
+        } else {
+            gastrointestinalSymptomsTranslated = "Falso";
+        }
+
+        return "ID: " + ID + "\n" + "Nome: " + name + "\n" + "Ano de nascimento: " + birthdayYear + "\n"
+                + "Temperatura: " + temperature + "\n" + "Nível de glóbulos brancos: " + whiteBloodCellLevels + "\n"
+                + "Sintomas gastrointestinais: " + gastrointestinalSymptomsTranslated;
+
     }
 
-    public boolean equals (Object object){
-        if (this == object) return true;
-        
-        if (object == null) return false;
+    @Override
+    public boolean equals(Object object) {
+        if (this == object)
+            return true;
 
-        if (this.getClass() != object.getClass()) return false;
+        if (object == null)
+            return false;
+
+        if (this.getClass() != object.getClass())
+            return false;
 
         Person person = (Person) object;
         return ID == person.getID();
     }
-    
 
- // TODO : Equals e toString
 }
