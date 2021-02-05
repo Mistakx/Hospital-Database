@@ -155,10 +155,12 @@ public class Medic extends Person {
         // If the medic has pacients awaiting discharge
         else {
 
+            System.out.println("Pacientes à espera de alta\n");
+
             // Prints all pacients waiting for discharge
             for (Person pacient : pacientsAwaitingDischarge) {
 
-                System.out.println("Pacient\n" + pacient.toString() + "\n");
+                System.out.println(pacient.toString() + "\n");
 
             }
 
