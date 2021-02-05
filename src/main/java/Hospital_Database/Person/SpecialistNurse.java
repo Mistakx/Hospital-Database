@@ -24,6 +24,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         medicRequests = new HashMap<>();
     }
 
+    // ! Getter
     @Override
     public HashMap<Medic, Integer> getMedicAuxiliaryRequests() {
         return medicRequests;
@@ -61,11 +62,9 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
     }
 
     @Override
-    public void fulfilMedicAuxiliaryRequest(Hospital hospital) throws IDNotFoundException { // Fulfils a medics request
-                                                                                            // for auxiliary nurses.
-                                                                                            // This
-        // method can only
-        // be called by a chief nurse.
+    public void fulfilMedicAuxiliaryRequest(Hospital hospital) throws IDNotFoundException {
+        // Fulfils a medics request for auxiliary nurses.
+        // This method can only be called by a chief nurse.
 
         // Input medic ID to fulfil request
         int medicID = Menu.scanner.nextInt();
@@ -97,7 +96,6 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
     }
 
-    // Done
     @Override
     public void attributeSpecialistNurseToMedic(Hospital hospital) throws IDNotFoundException { //
         // Attributes a specialist nurse to a medic. This method can only be called by a
@@ -129,7 +127,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         // ! If the specialist nurse exists, asks the user for Medic and checks if it
         // exists
         else {
-
+            ClearConsole.clearConsole();
             System.out.println("ID do médico: ");
             int medicID = Menu.scanner.nextInt();
 
@@ -152,6 +150,8 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
             // If the medic exists, attribute the specialist to the found medic
             else {
                 medic.getSpecialistNurses().add(specialistNurse);
+                System.out.println("Enfermeiro especialista atribuído.");
+                Menu.scanner.next();
             }
 
         }
