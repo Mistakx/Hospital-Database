@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Hospital_Database;
 
 import Hospital_Database.UserInterface.ClearConsole;
@@ -16,11 +11,6 @@ import Hospital_Database.Person.AuxiliaryNurse;
 import Hospital_Database.Person.Medic;
 import Hospital_Database.Person.Person;
 import Hospital_Database.Person.SpecialistNurse;
-
-/**
- *
- * @author mistakx
- */
 
 public class Files {
 

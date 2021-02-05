@@ -69,6 +69,8 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         // Fulfils a medics request for auxiliary nurses.
         // This method can only be called by a chief nurse.
 
+        ClearConsole.clearConsole();
+
         // Input medic ID to fulfil request
         System.out.println("ID do médico que requisitou auxiliares: ");
         int medicID = Menu.scanner.nextInt();
@@ -90,11 +92,11 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
         // If medic exists, fulfils his requests
         else {
-
-            int numberOfRequestedAuxiliaries = hospital.getAuxiliaryRequests().get(medic);
+            int numberOfRequestedAuxiliaries = medicRequests.get(medic);
             int numberOfAuxiliariesAttributed = 0;
 
             for (AuxiliaryNurse tempAuxiliaryNurse : hospital.getAuxiliaryNurses()) {
+
                 // If the associated nurse doesn't have an associated medic already, attributes
                 // it to the medic
                 if (tempAuxiliaryNurse.getAssociatedMedic() == null) {

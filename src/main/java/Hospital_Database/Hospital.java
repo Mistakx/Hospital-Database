@@ -235,7 +235,8 @@ public class Hospital {
     }
 
     public void progressNursesCareerYears() {
-
+        // Add 1 to all nurse career years
+        
         // Progress specialist nurses career years
         for (int i = 0; i < specialistNurses.size(); i++) {
             SpecialistNurse tempSpecialistNurse = specialistNurses.get(i);
@@ -482,6 +483,7 @@ public class Hospital {
     }
 
     public void listPacientsInHospitalQueue() throws NoPacientsInWaitingQueueException {
+        // List all pacients in the hospital queue
 
         ClearConsole.clearConsole();
 
