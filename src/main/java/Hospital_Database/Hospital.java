@@ -426,7 +426,7 @@ public class Hospital {
                 numberOfMedicalDischarges++;
             }
         }
-        
+
         int totalPacients = numberOfDeaths + numberOfMedicalDischarges;
         System.out.println("Total de pacientes recebidos: " + totalPacients + ".\n");
         System.out.println("Altas: " + numberOfMedicalDischarges + ".\n");
@@ -465,7 +465,10 @@ public class Hospital {
     public void fulfilMedicAuxiliaryRequest() throws IDNotFoundException {
         // Fulfils a medics request for auxiliary nurses.
 
+        ClearConsole.clearConsole();
+
         // Input medic ID to fulfil request
+        System.out.println("Introduza o ID do médico: ");
         int medicID = Menu.scanner.nextInt();
 
         Queue<Medic> medicsAwaitingRequests = new LinkedList<>(auxiliaryRequests.keySet());

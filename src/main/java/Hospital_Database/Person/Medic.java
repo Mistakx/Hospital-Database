@@ -12,6 +12,7 @@ import Hospital_Database.Exceptions.MaximumCapacityFilled;
 import Hospital_Database.Exceptions.NoPacientsAwaitingDischargeException;
 import Hospital_Database.Exceptions.NoPacientsInWaitingQueueException;
 import Hospital_Database.Exceptions.NoPacientsToDiagnoseException;
+import Hospital_Database.Exceptions.NoPacientsWaitingForDiagnosticException;
 import Hospital_Database.Exceptions.NoSpecialistNursesAttributedToMedicException;
 import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.UserInterface.AwaitsUserInput;
@@ -90,6 +91,30 @@ public class Medic extends Person {
 
     // ! User interface related methods
 
+    public void listPacientsWaitingForDiagnostic() throws NoPacientsWaitingForDiagnosticException {
+        // Lists all pacients waiting for discharge
+
+        ClearConsole.clearConsole();
+
+        // If there are no pacients waiting for diagnostic, throw exception
+        if (pacientsAwaitingDiagnotic.size() == 0) {
+            throw new NoPacientsWaitingForDiagnosticException("Não existem pacientes à espera de diagnóstico.");
+        }
+        // If there are pacients waiting for diagnostic, print them to the console
+        else {
+
+            System.out.println("Pacientes à espera de diagnóstico\n");
+
+            for (Person pacient : pacientsAwaitingDiagnotic) {
+                System.out.println(pacient.toString());
+            }
+        }
+
+        // Waits for user input
+        AwaitsUserInput.awaitsUserInput();
+
+    }
+
     public void listPacientsInHospitalQueue(Hospital hospital) throws NoPacientsInWaitingQueueException {
         // * Also used in the administrator menu
 
@@ -117,14 +142,8 @@ public class Medic extends Person {
 
     }
 
-    public void listPacientsAwaitingDischarge() throws NoPacientsAwaitingDischargeException { // Lists all
-        // pacients
-        // waiting
-        // for
-        // discharge,
-        // for a
-        // given
-        // medic
+    public void listPacientsAwaitingDischarge() throws NoPacientsAwaitingDischargeException {
+        // Lists all pacients waiting for discharge
 
         ClearConsole.clearConsole();
 
@@ -192,7 +211,8 @@ public class Medic extends Person {
             specialistNurses.get(0).getPacientsWaitingForDiagnostic().add(currentPacient);
 
             ClearConsole.clearConsole();
-            System.out.println("Paciente enviado para diagosticar ao enfermeiro " + specialistNurses.get(0).getID() + ".");
+            System.out.println(
+                    "Paciente enviado para diagosticar ao enfermeiro " + specialistNurses.get(0).getID() + ".");
             Menu.scanner.next();
         }
 
@@ -226,6 +246,11 @@ public class Medic extends Person {
 
             // Sends the pacient to a specialist nurse
             specialistNurses.get(0).getPacientsWaitingForDiagnostic().add(currentPacient);
+            ClearConsole.clearConsole();
+            System.out.println("Paciente enviado de volta para diagosticar ao enfermeiro "
+                    + specialistNurses.get(0).getID() + ", para que possa dar alta.");
+            Menu.scanner.next();
+
         }
 
     }
