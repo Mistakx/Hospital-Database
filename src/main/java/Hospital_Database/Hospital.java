@@ -353,17 +353,8 @@ public class Hospital {
     public void trashRequestsForAuxiliaryNurses() throws NoMedicRequestsExistException {
         // Trash a random amount of requests for auxiliary nurses made to the hospital
 
-        // Count total number of requests made to the hospital
-        int totalNumberOfRequests = 0;
-        ArrayList<Medic> medics = new ArrayList<>(auxiliaryRequests.keySet());
-        for (Medic medic : medics) {
-
-            totalNumberOfRequests += auxiliaryRequests.get(medic);
-
-        }
-
         // If there aren't any requests, throw exception
-        if (totalNumberOfRequests == 0) {
+        if (auxiliaryRequests.size() == 0) {
             throw new NoMedicRequestsExistException("Não existem pedidos de enfermeiros auxiliares.");
         }
 
@@ -372,22 +363,18 @@ public class Hospital {
 
             Random random = new Random();
 
-            int totalRequestsTrashed = 0;
+            ArrayList<Medic> medics = new ArrayList<>(auxiliaryRequests.keySet());
 
-            for (Medic medic : medics) {
+            int requestsToTrash = random.nextInt(auxiliaryRequests.size() - 1 + 1) + 1;
 
-                int amountOfMedicRequests = auxiliaryRequests.get(medic);
-                int requestsToTrash = random.nextInt(amountOfMedicRequests - 1 + 1) + 1;
-                totalRequestsTrashed += requestsToTrash;
+            for (int i = 0; i < requestsToTrash; i++) {
 
-                for (int i = 0; i < requestsToTrash; i++) {
-                    auxiliaryRequests.remove(auxiliaryRequests.keySet().iterator().next());
-                }
+                auxiliaryRequests.remove(medics.get(i));
 
             }
 
             ClearConsole.clearConsole();
-            System.out.println("Foram removidos " + totalRequestsTrashed + " pedidos de auxiliares.\n");
+            System.out.println("Foram removidos " + requestsToTrash + " pedidos de auxiliares.\n");
 
             // Waits for user input
             Menu.scanner.next();

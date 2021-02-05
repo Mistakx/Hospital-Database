@@ -64,7 +64,7 @@ public class Menu {
                 ClearConsole.clearConsole();
                 System.out.println(exception.getMessage());
                 scanner.next();
- 
+
             }
 
         }
@@ -271,6 +271,7 @@ public class Menu {
 
         // Search for a nurse with the ID in all the nurses lists
         Nurse nurse = null;
+        boolean nurseIsChief = false;
         for (AuxiliaryNurse tempAuxiliaryNurse : hospital.getAuxiliaryNurses()) {
             if (tempAuxiliaryNurse.getID() == nurseID) {
                 nurse = tempAuxiliaryNurse;
@@ -286,6 +287,7 @@ public class Menu {
         for (SpecialistNurse tempChiefNurse : hospital.getChiefNurses()) {
             if (tempChiefNurse.getID() == nurseID) {
                 nurse = tempChiefNurse;
+                nurseIsChief = true;
                 break;
             }
         }
@@ -320,11 +322,13 @@ public class Menu {
                         break;
 
                     case 3:
-                        try {
+                        if (nurseIsChief) {
                             ((ChiefNurse) nurse).attributeSpecialistNurseToMedic(hospital);
-                        } catch (ClassCastException exception) {
+
+                        } else {
                             throw new NotEnoughPermissionsException(
                                     "Apenas um enfermeiro chefe pode atribuír um enfermeiro especialista.");
+
                         }
                         break;
                     case 4:
@@ -332,16 +336,17 @@ public class Menu {
 
                         break;
                     case 5:
-                        try {
+                        if (nurseIsChief) {
+
                             ((ChiefNurse) nurse).listMedicAuxiliaryRequests();
-                        } catch (ClassCastException exception) {
+                        } else {
                             throw new NotEnoughPermissionsException(
                                     "Apenas um enfermeiro chefe pode ver os pedidos por auxiliares.");
                         }
                     case 6:
-                        try {
+                        if (nurseIsChief) {
                             ((ChiefNurse) nurse).fulfilMedicAuxiliaryRequest(hospital);
-                        } catch (ClassCastException exception) {
+                        } else {
                             throw new NotEnoughPermissionsException(
                                     "Apenas um enfermeiro chefe pode atender ao pedido de enfermeiros auxiliares.");
                         }
