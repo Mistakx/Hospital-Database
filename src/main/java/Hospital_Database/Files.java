@@ -58,12 +58,8 @@ public class Files {
                         int pacientID = Integer.parseInt(parsedPerson[1]);
                         String pacientName = parsedPerson[2];
                         int pacientBirthdayYear = Integer.parseInt(parsedPerson[3]);
-                        double pacientTemperature = Double.parseDouble(parsedPerson[4]);
-                        double pacientBloodCellLevels = Double.parseDouble(parsedPerson[5]);
-                        boolean pacientGastrointestinalSymptoms = Boolean.parseBoolean(parsedPerson[6]);
 
-                        Person newPerson = new Person(pacientID, pacientName, pacientBirthdayYear, pacientTemperature,
-                                pacientBloodCellLevels, pacientGastrointestinalSymptoms);
+                        Person newPerson = new Person(pacientID, pacientName, pacientBirthdayYear);
 
                         pacientsQueue.add(newPerson);
 

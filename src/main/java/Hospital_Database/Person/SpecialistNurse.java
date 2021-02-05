@@ -12,10 +12,12 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
     // If the specialist nurse is a chief nurse, it can receive requests from a
     // medic for auxiliary nurses
-    public HashMap<Medic, Integer> medicRequests = new HashMap<>();
+    public HashMap<Medic, Integer> medicRequests;
 
+    // ! Constructor
     public SpecialistNurse(int ID, String name, int birthdayYear, int careerYears) {
         super(ID, name, birthdayYear, careerYears);
+        medicRequests = new HashMap<>();
     }
 
     @Override
@@ -23,10 +25,12 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         return medicRequests;
     }
 
+    // ! Overriding the interface methods
+
     @Override
     public void listMedicAuxiliaryRequests() throws NoMedicRequestsExistException { // Prints all medic requests for
-                                                                                    // auxiliares
-        // to the console
+                                                                                    // auxiliares. This method can only
+                                                                                    // be called by a chief nurse.
 
         ClearConsole.clearConsole();
 
@@ -44,8 +48,9 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
     }
 
     @Override
-    public void fulfilMedicAuxiliaryRequest() { // Fulfils a medics request for auxiliary nurses
-        // TODO Auto-generated method stub
+    public void fulfilMedicAuxiliaryRequest(Hospital hospital) { // Fulfils a medics request for auxiliary nurses. This
+                                                                 // method can only
+        // be called by a chief nurse.
 
     }
 
@@ -114,4 +119,8 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         scanner.close();
 
     }
+
+    
+
+
 }

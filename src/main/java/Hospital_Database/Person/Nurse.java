@@ -2,7 +2,9 @@ package Hospital_Database.Person;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -11,6 +13,7 @@ import Hospital_Database.Hospital;
 import Hospital_Database.Remedy;
 import Hospital_Database.Exceptions.IDNotFoundException;
 import Hospital_Database.Exceptions.NoPacientsAwaitingCureException;
+import Hospital_Database.Exceptions.NoPacientsToDiagnoseException;
 import Hospital_Database.UserInterface.AwaitsUserInput;
 import Hospital_Database.UserInterface.ClearConsole;
 
@@ -18,15 +21,18 @@ public class Nurse extends Person {
 
     // TODO: Abstract?
 
-    private Medic associatedMedic; // TODO: Associate medic to nurse
-    private HashMap<Person, ArrayList<Remedy>> Schedule;
+    private Medic associatedMedic;
+    private HashMap<Person, ArrayList<Remedy>> schedule;
     private int careerYears;
+    private Queue<Person> pacientsWaitingForDiagnostic;
 
     // ! Constructor
     public Nurse(int ID, String name, int birthdayYear, int careerYears) {
         super(ID, name, birthdayYear);
         this.careerYears = careerYears;
-        Schedule = new HashMap<Person, ArrayList<Remedy>>();
+        schedule = new HashMap<Person, ArrayList<Remedy>>();
+        pacientsWaitingForDiagnostic = new LinkedList<>();
+
     }
 
     // ! Getters & Setters
@@ -39,68 +45,134 @@ public class Nurse extends Person {
     }
 
     public HashMap<Person, ArrayList<Remedy>> getSchedule() {
-        return Schedule;
+        return schedule;
+    }
+
+    public Medic getAssociatedMedic() {
+        return associatedMedic;
+    }
+
+    public void setAssociatedMedic(Medic newAssociatedMedic) {
+        associatedMedic = newAssociatedMedic;
+    }
+
+    // ! Getters
+    public Queue<Person> getPacientsWaitingForDiagnostic() {
+        return pacientsWaitingForDiagnostic;
     }
 
     // ! Nurse menu related methods
 
-    // TODO
-    public void helpsPacientDiagnostic(Person currentPacient) {
+    public void helpsDiagnostic(Hospital hospital) throws NoPacientsToDiagnoseException {
 
-        Random random = new Random();
-
-        int temperature = 35 + random.nextInt(7);
-        double whiteBloodCellLevels = 0.05 + (Math.random() * (0.96));
-        boolean gastrointestinalSymptoms = Math.random() < 0.5;
-
-        System.out.println(currentPacient + ".");
-        System.out.println("Temperatura: " + temperature + ".");
-        System.out.println("Nível de glóbulos brancos: " + whiteBloodCellLevels + ".");
-
-        if (gastrointestinalSymptoms) {
-            System.out.println("Sintomas gastrointestinais: Sim.");
-        } else {
-            System.out.println("Sintomas gastrointestinais: Não.");
+        // If there aren't any pacients waiting for diagnostic, throw an exception
+        if (pacientsWaitingForDiagnostic.size() == 0) {
+            throw new NoPacientsToDiagnoseException("Não existem paciente à espera de diagnóstico.");
         }
 
-        // ! Verify the symptons and add the pacient
-        ArrayList<Remedy> remediesToApply = new ArrayList<>();
+        // If there are pacients waiting for diagnostic, diagnose the first one
+        else {
+            Person currentPacient = pacientsWaitingForDiagnostic.poll();
 
-        if (temperature > 37.5) {
-            remediesToApply.add(new Remedy("Covid"));
+            System.out.println(currentPacient + ".");
+            System.out.println("Temperatura: " + currentPacient.getTemperature() + ".");
+            System.out.println("Nível de glóbulos brancos: " + currentPacient.getWhiteBloodCellLevels() + ".");
+
+            if (currentPacient.hasGastrointestinalSymptoms()) {
+                System.out.println("Sintomas gastrointestinais: Sim.");
+            } else {
+                System.out.println("Sintomas gastrointestinais: Não.");
+            }
+
+            // Verify the symptoms and add the pacient to the schedule, to apply the various
+            // cures
+            ArrayList<Remedy> remediesToApply = new ArrayList<>();
+            boolean hasSymptoms = false;
+
+            if (currentPacient.getTemperature() > 37.5) {
+                hasSymptoms = true;
+                remediesToApply.add(new Remedy("Covid"));
+            }
+
+            if (currentPacient.getWhiteBloodCellLevels() < 0.5) {
+                hasSymptoms = true;
+
+                remediesToApply.add(new Remedy("HIV"));
+            }
+
+            if (currentPacient.hasGastrointestinalSymptoms()) {
+                hasSymptoms = true;
+                remediesToApply.add(new Remedy("Ebola"));
+            }
+
+            // If the pacient doesn't have symptoms, remove it from the hospital
+            if (!hasSymptoms) {
+                hospital.getRegistry().put(currentPacient, remediesToApply);
+                System.out.println("O paciente não tinha sintomas, e foi removido do hospital\n");
+                AwaitsUserInput.awaitsUserInput();
+            }
+            
+            // If the pacient has symptoms, add it to schedule
+            if(hasSymptoms){
+                schedule.put(currentPacient, remediesToApply);
+                System.out.println("O paciente tem sintomas, e foi adicionado à agenda de curativos.\n");
+                AwaitsUserInput.awaitsUserInput();
+            }
+        
         }
-
-        if (whiteBloodCellLevels < 0.5) {
-            remediesToApply.add(new Remedy("HIV"));
-        }
-
-        if (gastrointestinalSymptoms) {
-            remediesToApply.add(new Remedy("Ebola"));
-        }
-
-        // TODO: If no diseases found in pacient
-        Schedule.put(currentPacient, remediesToApply);
-
     }
 
-    // TODO
-    public void applyCureToPacient() throws NoPacientsAwaitingCureException {
-        // Applies cure to pacient in the nurses waiting schedule
+    public void applyCureToPacient(Hospital hospital) throws NoPacientsAwaitingCureException {
+        // Applies cure to the first pacient in the nurses waiting schedule
 
         ClearConsole.clearConsole();
 
-        Set<Person> pacientsWaitingCure = Schedule.keySet();
+        List<Person> pacientsWaitingCure = new ArrayList<>(schedule.keySet());
 
+        // If there are no pacients waiting for cure, throw an exception
         if (pacientsWaitingCure.size() == 0) {
             throw new NoPacientsAwaitingCureException("Não existe nenhum paciente à espera de cura.\n");
-
-        }
-        for (int i = 0; i < 1; i++) {
-            System.out.println(pacientsWaitingCure.iterator().next());
-            // TODO: Check this out
-            pacientsWaitingCure.remove(i);
         }
 
+        // If there are pacients waiting for cure, apply cure to the first one
+        else {
+
+            Person currentPacient = pacientsWaitingCure.get(0);
+
+            // Apply cure to first pacient
+            System.out.println("Introduza a data do curativo: ");
+            Scanner scanner = new Scanner(System.in);
+            String cureDate = scanner.next();
+
+            // Sets the date of the remedy
+            for (Remedy remedyToApply : schedule.get(currentPacient)) {
+                remedyToApply.setDateApplied(cureDate);
+            }
+
+            Random random = new Random();
+            int probabilityOfDeath = random.nextInt(10 - 1 + 1) + 1;
+
+            // Pacient died after administring cure, save to hospital history
+            if (probabilityOfDeath == 1) {
+                currentPacient.setDead(true);
+
+                hospital.getRegistry().put(currentPacient, schedule.get(currentPacient));
+
+                associatedMedic.getPacientsAwaitingDiagnotic().remove(currentPacient);
+                pacientsWaitingCure.remove(currentPacient);
+
+                System.out.println("O paciente morreu após serem aplicados os curativos.");
+                scanner.next();
+
+            }
+
+            // If the cure is sucessful
+            else {
+                pacientsWaitingCure.remove(currentPacient);
+            }
+            scanner.close();
+
+        }
     }
 
     // Done
@@ -109,11 +181,29 @@ public class Nurse extends Person {
 
         ClearConsole.clearConsole();
 
-        Set<Person> pacientsWaitingCure = Schedule.keySet();
+        Set<Person> pacientsWaitingCure = schedule.keySet();
 
         System.out.println("Pacientes a aguardar cura");
 
         for (Person pacient : pacientsWaitingCure) {
+
+            System.out.println(pacient.toString());
+
+        }
+
+        // Awaits for user input
+        AwaitsUserInput.awaitsUserInput();
+    }
+
+    // Done
+    public void listPacientsWaitingForDiagnostic() {
+        // Prints the pacients awaiting diagnostic to the console
+
+        ClearConsole.clearConsole();
+
+        System.out.println("Pacientes a aguardar diagnóstico");
+
+        for (Person pacient : pacientsWaitingForDiagnostic) {
 
             System.out.println(pacient.toString());
 

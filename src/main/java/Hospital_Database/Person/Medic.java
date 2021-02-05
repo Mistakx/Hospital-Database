@@ -1,13 +1,18 @@
 package Hospital_Database.Person;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Random;
 import java.util.Scanner;
 
 import Hospital_Database.Hospital;
 import Hospital_Database.Exceptions.IDNotFoundException;
+import Hospital_Database.Exceptions.MaximumCapacityFilled;
 import Hospital_Database.Exceptions.NoPacientsAwaitingDischargeException;
 import Hospital_Database.Exceptions.NoPacientsInWaitingQueueException;
 import Hospital_Database.Exceptions.NoPacientsToDiagnoseException;
+import Hospital_Database.Exceptions.NoSpecialistNursesAttributedToMedicException;
 import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.UserInterface.AwaitsUserInput;
 import Hospital_Database.UserInterface.ClearConsole;
@@ -15,16 +20,26 @@ import Hospital_Database.UserInterface.ClearConsole;
 public class Medic extends Person {
 
     // ! Instance variables
-    private ArrayList<SpecialistNurse> specialistNurses = new ArrayList<>();
-    private ArrayList<AuxiliaryNurse> auxiliaryNurses = new ArrayList<>();
-    private ArrayList<Person> pacientsAwaitingDischarge = new ArrayList<>();
+    private ArrayList<SpecialistNurse> specialistNurses;
+    private ArrayList<AuxiliaryNurse> auxiliaryNurses;
+    private Queue<Person> pacientsAwaitingDiagnotic;
+    private Queue<Person> pacientsAwaitingDischarge;
 
     // ! Constructor
     public Medic(int ID, String name, int birthdayYear) {
         super(ID, name, birthdayYear);
+        specialistNurses = new ArrayList<>();
+        auxiliaryNurses = new ArrayList<>();
+        pacientsAwaitingDischarge = new LinkedList<>();
+        pacientsAwaitingDiagnotic = new LinkedList<>();
     }
 
     // ! Getters
+
+    public Queue<Person> getPacientsAwaitingDiagnotic() {
+        return pacientsAwaitingDiagnotic;
+    }
+
     public ArrayList<AuxiliaryNurse> getAuxiliaryNurses() {
         return auxiliaryNurses;
     }
@@ -33,7 +48,7 @@ public class Medic extends Person {
         return specialistNurses;
     }
 
-    public ArrayList<Person> getPacientsAwaitingDischarge() {
+    public Queue<Person> getPacientsAwaitingDischarge() {
         return pacientsAwaitingDischarge;
     }
 
@@ -135,18 +150,47 @@ public class Medic extends Person {
     }
 
     // TODO
-    public void pacientDiagnostic(Hospital hospital) throws NoPacientsToDiagnoseException {
-        // Starts the pacient's diagnostic process
+    public void pacientDiagnostic(Hospital hospital)
+            throws NoPacientsToDiagnoseException, NoSpecialistNursesAttributedToMedicException, MaximumCapacityFilled {
+        // Starts the pacient's diagnostic process. The process needs a specialist
+        // nurse, but its up to the medic to decide if there is a need to request
+        // auxiliary nurses beforehand
 
         // If there are no pacients in the hospital waiting queue, throw an exception
         if (hospital.getPacientQueue().size() == 0) {
             throw new NoPacientsToDiagnoseException("Não há pacientes por diagnosticar.");
+        }
 
+        // If the medic already has 3 pacients associated
+        if (pacientsAwaitingDiagnotic.size() == 3) {
+            throw new MaximumCapacityFilled("O médico já tem 3 pacientes.");
+        }
+
+        // If the medic doesn't have a specialist nurse attributed
+        if (specialistNurses.size() == 0) {
+            throw new NoSpecialistNursesAttributedToMedicException(
+                    "Não tem enfermeiros especialistas atribuídos para começar o diagnóstico.");
         }
 
         // If there are pacients in the hospital waiting queue, diagnose the first
         else {
-            Person currentPacient = hospital.getPacientQueue().poll();
+
+            Person currentPacient = pacientsAwaitingDiagnotic.poll();
+
+            // Generate the person symptoms
+            Random random = new Random();
+
+            int temperature = 35 + random.nextInt(7);
+            double whiteBloodCellLevels = 0.05 + (Math.random() * (0.96));
+            boolean gastrointestinalSymptoms = Math.random() < 0.5;
+
+            currentPacient.setTemperature(temperature);
+            currentPacient.setWhiteBloodCellLevels(whiteBloodCellLevels);
+            currentPacient.setGastrointestinalSymptoms(gastrointestinalSymptoms);
+
+            // Sends the pacient to a specialist nurse, to help with the diagnostic
+            specialistNurses.get(0).getPacientsWaitingForDiagnostic().add(currentPacient);
+
         }
 
     }
@@ -190,13 +234,25 @@ public class Medic extends Person {
             System.out.println("Quantos enfermeiros auxiliares necessita: ");
             int auxiliaryNursesRequested = scanner.nextInt();
 
-            // If there are not enough auxiliary nurses to complete the request, throw an
+            // If there are not enough free auxiliary nurses to complete the request, throw
+            // an
             // exception
-            if (auxiliaryNursesRequested > auxiliaryNurses.size()) {
-                // TODO: Request auxiliary nurses exception behaviour
+            int numberOfFreeAuxiliaries = 0;
+
+            // Counts the number of auxiliary nurses with no medics associated
+            for (AuxiliaryNurse tempAuxiliaryNurse : hospital.getAuxiliaryNurses()) {
+                if (tempAuxiliaryNurse.getAssociatedMedic() != null) {
+                    numberOfFreeAuxiliaries++;
+                }
+            }
+
+            // If there are not enough auxiliary nurses to complete the request, send the
+            // request to the hospital
+            if (auxiliaryNursesRequested > numberOfFreeAuxiliaries) {
                 scanner.close();
+                hospital.getAuxiliaryRequests().put(this, auxiliaryNursesRequested);
                 throw new NotEnoughAuxiliaryNursesException(
-                        "Não existem enfermeiros auxiliares suficientes no hospital.");
+                        "Não existem enfermeiros auxiliares suficientes. O pedido foi enviado para o hospital.");
             }
 
             // If there are enough auxiliary nurses to complete the request, send the

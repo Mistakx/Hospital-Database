@@ -325,7 +325,7 @@ public class Menu {
                         }
                         break;
                     case 4:
-                        nurse.applyCureToPacient();
+                        nurse.applyCureToPacient(hospital);
 
                         break;
                     case 0:

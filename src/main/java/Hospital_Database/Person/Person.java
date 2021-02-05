@@ -16,23 +16,23 @@ public class Person implements Infectable {
     private double temperature;
     private double whiteBloodCellLevels;
     private boolean gastrointestinalSymptoms;
-
-    public Person(int ID, String name, int birthdayYear, double temperature, double whiteBloodCellLevels,
-            boolean gastrointestinalSymptoms) {
-        this.ID = ID;
-        this.name = name;
-        this.birthdayYear = birthdayYear;
-        this.setTemperature(temperature);
-        this.setWhiteBloodCellLevels(whiteBloodCellLevels);
-        this.setGastrointestinalSymptoms(gastrointestinalSymptoms);
-
-    }
+    private boolean dead;
 
     public Person(int ID, String name, int birthdayYear) {
         this.ID = ID;
         this.name = name;
         this.birthdayYear = birthdayYear;
+        this.dead = false;
 
+    }
+
+    // ! Getters and setters
+    public boolean isDead() {
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     public boolean hasGastrointestinalSymptoms() {
@@ -83,6 +83,7 @@ public class Person implements Infectable {
         this.name = name;
     }
 
+    // ! Overriding object methods
     @Override
     public String toString() {
 

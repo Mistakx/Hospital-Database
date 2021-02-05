@@ -27,8 +27,7 @@ public class Hospital {
     private static Hospital INSTANCE;
     private Scanner scanner = new Scanner(System.in);
 
-    private Hospital() {
-    }
+    
 
     public static Hospital getInstance() {
         if (INSTANCE == null) {
@@ -39,19 +38,35 @@ public class Hospital {
     }
 
     // ! Instance variables
+    
     private static int lastIDAttributed = 0;
-
     final private int NECESSARY_YEARS_FOR_PROMOTION = 20;
+    private List<Medic> medics;
+    private List<AuxiliaryNurse> auxiliaryNurses ;
+    private List<SpecialistNurse> specialistNurses;
+    private List<SpecialistNurse> chiefNurses;
+    private Queue<Person> pacientsQueue;
+    private HashMap<Medic, Integer> auxiliaryRequests;
+    private HashMap<Person, ArrayList<Remedy>> registry;
 
-    private List<Medic> medics = new ArrayList<>();
-    private List<AuxiliaryNurse> auxiliaryNurses = new ArrayList<>();
-    private List<SpecialistNurse> specialistNurses = new ArrayList<>();
-    private List<SpecialistNurse> chiefNurses = new ArrayList<>();
+    // ! Contrustor (private because its a singleton)
 
-    private Queue<Person> pacientsQueue = new LinkedList<>();
-    private HashMap<Medic, Integer> auxiliaryRequests = new HashMap<>();
+    private Hospital() {
+        medics = new ArrayList<>();
+        auxiliaryNurses = new ArrayList<>();
+        specialistNurses = new ArrayList<>();
+        chiefNurses = new ArrayList<>();
+        pacientsQueue = new LinkedList<>();
+        auxiliaryRequests = new HashMap<>();
+        registry = new HashMap<>();
+    }
 
     // ! Getters and setters
+
+    public HashMap<Person, ArrayList<Remedy>> getRegistry() {
+        return registry;
+    }
+
     public int getNECESSARY_YEARS_FOR_PROMOTION() {
         return NECESSARY_YEARS_FOR_PROMOTION;
     }
@@ -82,6 +97,10 @@ public class Hospital {
 
     public Queue<Person> getPacientQueue() {
         return pacientsQueue;
+    }
+
+    public HashMap<Medic, Integer> getAuxiliaryRequests() {
+        return auxiliaryRequests;
     }
 
     // ! Populate hospital method
