@@ -410,7 +410,6 @@ public class Hospital {
 
         int numberOfDeaths = 0;
         int numberOfMedicalDischarges = 0;
-        int totalPacients = numberOfDeaths + numberOfMedicalDischarges;
         int numberOfRemediesApplied = 0;
 
         ArrayList<Person> pacientsInRegistry = new ArrayList<>(registry.keySet());
@@ -427,7 +426,8 @@ public class Hospital {
                 numberOfMedicalDischarges++;
             }
         }
-
+        
+        int totalPacients = numberOfDeaths + numberOfMedicalDischarges;
         System.out.println("Total de pacientes recebidos: " + totalPacients + ".\n");
         System.out.println("Altas: " + numberOfMedicalDischarges + ".\n");
         System.out.println("Óbitos: " + numberOfDeaths + ".\n");
@@ -461,4 +461,39 @@ public class Hospital {
         AwaitsUserInput.awaitsUserInput();
 
     }
+
+    public void fulfilMedicAuxiliaryRequest() throws IDNotFoundException {
+        // Fulfils a medics request for auxiliary nurses.
+
+        // Input medic ID to fulfil request
+        int medicID = Menu.scanner.nextInt();
+
+        Queue<Medic> medicsAwaitingRequests = new LinkedList<>(auxiliaryRequests.keySet());
+
+        Medic medic = null;
+        for (Medic tempMedic : medicsAwaitingRequests) {
+            if (tempMedic.getID() == medicID) {
+                medic = tempMedic;
+            }
+        }
+
+        // If medic doesn't exist, throw an exception
+        if (medic == null) {
+            throw new IDNotFoundException("Não existe nenhum médico com o ID introduzido.");
+        }
+
+        // If medic exists, fulfils his requests
+        else {
+            for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
+                // If the associated nurse doesn't have an associated medic already, attributes
+                // it to the medic
+                if (tempAuxiliaryNurse.getAssociatedMedic() == null) {
+                    medic.getAuxiliaryNurses().add(tempAuxiliaryNurse);
+                    tempAuxiliaryNurse.setAssociatedMedic(medic);
+                }
+            }
+        }
+
+    }
+
 }

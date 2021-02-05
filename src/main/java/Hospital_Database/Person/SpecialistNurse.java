@@ -90,6 +90,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
                 // it to the medic
                 if (tempAuxiliaryNurse.getAssociatedMedic() == null) {
                     medic.getAuxiliaryNurses().add(tempAuxiliaryNurse);
+                    tempAuxiliaryNurse.setAssociatedMedic(medic);
                 }
             }
         }
@@ -149,6 +150,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
             // If the medic exists, attribute the specialist to the found medic
             else {
+                specialistNurse.setAssociatedMedic(medic);
                 medic.getSpecialistNurses().add(specialistNurse);
                 ClearConsole.clearConsole();
                 System.out.println("Enfermeiro especialista atribuído.");

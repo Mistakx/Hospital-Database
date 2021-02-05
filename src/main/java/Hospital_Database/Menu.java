@@ -93,7 +93,8 @@ public class Menu {
                 System.out.println("11 - Atirar pedidos para enfermeiros-aulixiares para trituradora.");
                 System.out.println("12 - Virus Outbreak.");
                 System.out.println("13 - Gerar relatório hospitalar.");
-                System.out.println("14 - Sair do programa");
+                System.out.println("14 - Atende ao pedido para enfermeiros-auxiliares");
+                System.out.println("15 - Sair do programa");
                 System.out.println("0 - Voltar ao menu anterior.\n");
 
                 boolean exitMenuUserInterface = false;
@@ -142,6 +143,9 @@ public class Menu {
                         hospital.hospitalReports();
                         break;
                     case 14:
+                        hospital.fulfilMedicAuxiliaryRequest();
+                        break;
+                    case 15:
                         System.exit(0);
                         break;
 

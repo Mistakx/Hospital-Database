@@ -86,19 +86,7 @@ public class Person implements Infectable {
     // ! Overriding object methods
     @Override
     public String toString() {
-
-        // Translates the boolean to portuguese, so it can be printed in the console
-        String gastrointestinalSymptomsTranslated;
-        if (gastrointestinalSymptoms) {
-            gastrointestinalSymptomsTranslated = "Verdadeiro";
-        } else {
-            gastrointestinalSymptomsTranslated = "Falso";
-        }
-
-        return "ID: " + ID + "\n" + "Nome: " + name + "\n" + "Ano de nascimento: " + birthdayYear + "\n"
-                + "Temperatura: " + temperature + "\n" + "Nível de glóbulos brancos: " + whiteBloodCellLevels + "\n"
-                + "Sintomas gastrointestinais: " + gastrointestinalSymptomsTranslated;
-
+        return "ID: " + ID + "\n" + "Nome: " + name + "\n" + "Ano de nascimento: " + birthdayYear + ".";
     }
 
     @Override
