@@ -255,6 +255,7 @@ public class Medic extends Person {
 
         // If the chief nurse exists, send the request for auxiliary nurses
         else {
+            ClearConsole.clearConsole();
             System.out.println("Quantos enfermeiros auxiliares necessita: ");
             int auxiliaryNursesRequested = scanner.nextInt();
 

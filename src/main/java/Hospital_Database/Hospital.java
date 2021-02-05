@@ -108,7 +108,6 @@ public class Hospital {
 
     // ! Administrator menu related methods
 
-    // Done
     public void addMedic() { // Creates and adds new medic to the hospital
 
         ClearConsole.clearConsole();
@@ -128,7 +127,6 @@ public class Hospital {
 
     }
 
-    // Done
     public void addSpecialistNurse() { // Creates and adds specialist nurse to the hospital
 
         ClearConsole.clearConsole();
@@ -152,7 +150,6 @@ public class Hospital {
 
     }
 
-    // Done
     public void addAuxiliaryNurse() { // Creates and adds auxiliary nurse to the hospital
 
         ClearConsole.clearConsole();
@@ -176,7 +173,6 @@ public class Hospital {
 
     }
 
-    // Done
     public void addNewPacient() { // Adds new pacient to the hospital
 
         ClearConsole.clearConsole();
@@ -196,7 +192,6 @@ public class Hospital {
 
     }
 
-    // Done
     public void promoteSpecialistNurseToChief() throws NotEnoughCareerYearsException, IDNotFoundException { // Promotes
                                                                                                             // a
                                                                                                             // specialist
@@ -243,7 +238,6 @@ public class Hospital {
 
     }
 
-    // Done
     public void progressNursesCareerYears() {
 
         // Progress specialist nurses career years
@@ -349,7 +343,6 @@ public class Hospital {
 
     }
 
-    // Done
     public void trashRequestsForAuxiliaryNurses() throws NoMedicRequestsExistException { // Trash 1 to all requests for
                                                                                          // auxiliary nurses
 
@@ -376,7 +369,7 @@ public class Hospital {
         }
     }
 
-    // TODO
+    // TODO: virusOutbreak
     public void virusOutbreak() {
         // Random random = new Random();
         // int randomNumber1 = random.nextInt(2);
@@ -398,12 +391,11 @@ public class Hospital {
         // }
     }
 
-    // TODO
+    // TODO: HospitalReports
     public void hospitalReports() {
 
     }
 
-    // Done
     public void listPacientsInHospitalQueue() throws NoPacientsInWaitingQueueException {
 
         ClearConsole.clearConsole();

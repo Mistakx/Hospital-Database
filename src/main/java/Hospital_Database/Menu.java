@@ -59,7 +59,7 @@ public class Menu {
                         break;
                 }
 
-            } catch (Exception exception) {
+            } catch (IDNotFoundException exception) {
                 ClearConsole.clearConsole();
                 System.out.println(exception.getMessage());
                 scanner.next();
@@ -301,7 +301,7 @@ public class Menu {
                 System.out.println("3 - Atribuir enfermeiro-especialista a médico.");
                 System.out.println("4 - Aplicar curativo a um paciente.");
                 System.out.println("5 - Listar requisitos de enfermeiros auxiliares.");
-                System.out.println("5 - Atender aos requisitos de enfermeiros auxiliares.");
+                System.out.println("6 - Atender aos requisitos de enfermeiros auxiliares.");
                 System.out.println("0 - Voltar ao menu anterior.");
 
                 boolean exitMenuUserInterface = false;
@@ -316,7 +316,6 @@ public class Menu {
                         break;
 
                     case 3:
-                        // Cast to chief nurse
                         try {
                             ((ChiefNurse) nurse).attributeSpecialistNurseToMedic(hospital);
                         } catch (ClassCastException exception) {
@@ -329,20 +328,18 @@ public class Menu {
 
                         break;
                     case 5:
-                        // Cast to chief nurse
                         try {
                             ((ChiefNurse) nurse).listMedicAuxiliaryRequests();
                         } catch (ClassCastException exception) {
                             throw new NotEnoughPermissionsException(
-                                    "Apenas um enfermeiro chefe pode atribuír um enfermeiro especialista.");
+                                    "Apenas um enfermeiro chefe pode ver os pedidos por auxiliares.");
                         }
                     case 6:
-                        // Cast to chief nurse
                         try {
                             ((ChiefNurse) nurse).fulfilMedicAuxiliaryRequest(hospital);
                         } catch (ClassCastException exception) {
                             throw new NotEnoughPermissionsException(
-                                    "Apenas um enfermeiro chefe pode atribuír um enfermeiro especialista.");
+                                    "Apenas um enfermeiro chefe pode atender ao pedido de enfermeiros auxiliares.");
                         }
                     case 0:
                         exitMenuUserInterface = true;

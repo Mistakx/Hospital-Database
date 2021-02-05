@@ -19,8 +19,6 @@ import Hospital_Database.UserInterface.ClearConsole;
 
 public class Nurse extends Person {
 
-    // TODO: Abstract?
-
     private Medic associatedMedic;
     private HashMap<Person, ArrayList<Remedy>> schedule;
     private int careerYears;
@@ -179,7 +177,6 @@ public class Nurse extends Person {
         }
     }
 
-    // Done
     public void listPacientsWaitingForCure() {
         // Prints the pacients awaiting cure to the console
 
@@ -199,7 +196,6 @@ public class Nurse extends Person {
         AwaitsUserInput.awaitsUserInput();
     }
 
-    // Done
     public void listPacientsWaitingForDiagnostic() {
         // Prints the pacients awaiting diagnostic to the console
 
@@ -217,7 +213,6 @@ public class Nurse extends Person {
         AwaitsUserInput.awaitsUserInput();
     }
 
-    // Done
     public void listMedicNurses(Hospital hospital) throws IDNotFoundException { // Lists all nurses associated with a
                                                                                 // medic
 
@@ -246,7 +241,7 @@ public class Nurse extends Person {
 
         // If medic exists, prints it's nurses to the console
         else {
-            
+
             ClearConsole.clearConsole();
 
             List<AuxiliaryNurse> medicAuxiliaryNurses = medic.getAuxiliaryNurses();

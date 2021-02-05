@@ -9,7 +9,7 @@ package Hospital_Database.Exceptions;
  *
  * @author mistakx
  */
-public class NoPacientsAwaitingCureException extends Exception{
+public class NoPacientsAwaitingCureException extends Exception {
         /**
      *
      */
