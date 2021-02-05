@@ -31,7 +31,7 @@ public class Menu {
         while (true) {
 
             try {
-
+                scanner.reset();
                 ClearConsole.clearConsole();
                 System.out.println("Selecione o menu que deseja:");
                 System.out.println("1 - Menu Médico");
@@ -60,9 +60,11 @@ public class Menu {
                 }
 
             } catch (IDNotFoundException exception) {
+                scanner.reset();
                 ClearConsole.clearConsole();
                 System.out.println(exception.getMessage());
                 scanner.next();
+ 
             }
 
         }
@@ -159,6 +161,7 @@ public class Menu {
                     break;
                 }
             } catch (Exception exception) {
+                scanner.reset();
                 ClearConsole.clearConsole();
                 System.out.println(exception.getMessage());
                 scanner.next();
@@ -246,6 +249,7 @@ public class Menu {
                     }
 
                 } catch (Exception exception) {
+                    scanner.reset();
                     ClearConsole.clearConsole();
                     System.out.println(exception.getMessage());
                     scanner.next();
@@ -358,9 +362,11 @@ public class Menu {
                 }
 
             } catch (Exception exception) {
+                scanner.reset();
                 ClearConsole.clearConsole();
                 System.out.println(exception.getMessage());
                 scanner.next();
+
             }
         }
 
