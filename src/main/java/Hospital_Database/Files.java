@@ -153,9 +153,7 @@ public class Files {
         } catch (IOException exception) {
             ClearConsole.clearConsole();
             System.out.println(exception.getMessage());
-            Scanner scanner = new Scanner(System.in);
-            scanner.next();
-            scanner.close();
+            Menu.scanner.next();
         }
 
     }

@@ -225,12 +225,8 @@ public class Medic extends Person {
     }
 
     public void requestAuxiliaryNurses(Hospital hospital)
-            throws IDNotFoundException, NotEnoughAuxiliaryNursesException { // Sends
-        // a
-        // request
-        // for
-        // auxiliary nurses to
-        // a chief nurse
+            throws IDNotFoundException, NotEnoughAuxiliaryNursesException { 
+                // Sends a request for auxiliary nurses to a chief nurse
 
         ClearConsole.clearConsole();
 
@@ -264,7 +260,7 @@ public class Medic extends Person {
 
             // Counts the number of auxiliary nurses with no medics associated
             for (AuxiliaryNurse tempAuxiliaryNurse : hospital.getAuxiliaryNurses()) {
-                if (tempAuxiliaryNurse.getAssociatedMedic() != null) {
+                if (tempAuxiliaryNurse.getAssociatedMedic() == null) {
                     numberOfFreeAuxiliaries++;
                 }
             }
@@ -281,7 +277,8 @@ public class Medic extends Person {
             // request
             else {
                 chiefNurse.getMedicAuxiliaryRequests().put(this, auxiliaryNursesRequested);
-                System.out.println("Foram requisitados " + Integer.toString(auxiliaryNursesRequested) + "\n");
+                ClearConsole.clearConsole();
+                System.out.println("Foram requisitados " + Integer.toString(auxiliaryNursesRequested) + " enfermeiros auxiliares\n");
                 AwaitsUserInput.awaitsUserInput();
             }
 

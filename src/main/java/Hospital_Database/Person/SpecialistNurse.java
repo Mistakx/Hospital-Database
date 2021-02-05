@@ -1,11 +1,13 @@
 package Hospital_Database.Person;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
 import Hospital_Database.Hospital;
+import Hospital_Database.Menu;
 import Hospital_Database.Exceptions.IDNotFoundException;
 import Hospital_Database.Exceptions.NoMedicRequestsExistException;
 import Hospital_Database.UserInterface.ClearConsole;
@@ -44,7 +46,16 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
         // If there medic requests for auxiliaries, print them to the console
         else {
-            System.out.println(medicRequests.toString());
+
+            ArrayList<Medic> medics = new ArrayList<>(medicRequests.keySet());
+
+            System.out.println("Pedidos de enfermeiros auxiliares\n");
+            
+            for(Medic medic : medics) {
+                System.out.println(medic.toString() + "\nNúmero de pedidos: " + String.valueOf(medicRequests.get(medic)) + "\n");
+            }
+
+
         }
 
     }
@@ -57,8 +68,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         // be called by a chief nurse.
 
         // Input medic ID to fulfil request
-        Scanner scanner = new Scanner(System.in);
-        int medicID = scanner.nextInt();
+        int medicID = Menu.scanner.nextInt();
 
         Queue<Medic> medicsAwaitingRequests = new LinkedList<>(medicRequests.keySet());
 
@@ -71,7 +81,6 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
         // If medic doesn't exist, throw an exception
         if (medic == null) {
-            scanner.close();
             throw new IDNotFoundException("Não existe nenhum médico com o ID introduzido.");
         }
 
@@ -85,7 +94,6 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
                 }
             }
         }
-        scanner.close();
 
     }
 
@@ -98,9 +106,8 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         ClearConsole.clearConsole();
 
         // ! Asks the user for the specialist nurse to attribute to a medic
-        Scanner scanner = new Scanner(System.in);
         System.out.println("ID do enfermeiro especialista a atribuir: ");
-        int specialistNurseID = scanner.nextInt();
+        int specialistNurseID = Menu.scanner.nextInt();
 
         SpecialistNurse specialistNurse = null;
 
@@ -116,7 +123,6 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
         // If the specialist nurse doesn't exist, throw an exception
         if (specialistNurse == null) {
-            scanner.close();
             throw new IDNotFoundException("Não existe um enfermeiro especialista com o ID " + specialistNurseID + ".");
         }
 
@@ -125,7 +131,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         else {
 
             System.out.println("ID do médico: ");
-            int medicID = scanner.nextInt();
+            int medicID = Menu.scanner.nextInt();
 
             // Check if a medic with the ID exists
             Medic medic = null;
@@ -140,7 +146,6 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
             // If the medic doesn't exist, throws an exception
             if (medic == null) {
-                scanner.close();
                 throw new IDNotFoundException("Não existe um médico com o ID " + medicID + ".");
             }
 
@@ -150,8 +155,6 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
             }
 
         }
-
-        scanner.close();
 
     }
 
