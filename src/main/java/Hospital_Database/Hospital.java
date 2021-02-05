@@ -10,9 +10,11 @@ import java.util.Scanner;
 import java.util.Set;
 
 import Hospital_Database.Exceptions.IDNotFoundException;
+import Hospital_Database.Exceptions.NoMedicRequestsExistException;
 import Hospital_Database.Exceptions.NoMedicsExistException;
 import Hospital_Database.Exceptions.NoNursesExistException;
 import Hospital_Database.Exceptions.NoPacientsAwaitingDischargeException;
+import Hospital_Database.Exceptions.NoPacientsInWaitingQueueException;
 import Hospital_Database.Exceptions.NoPacientsToDiagnoseException;
 import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.Exceptions.NotEnoughCareerYearsException;
@@ -271,7 +273,7 @@ public class Hospital {
             // List auxiliary nurses
             System.out.println("Enfermeiros auxiliares\n");
             for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
-                System.out.println(tempAuxiliaryNurse.toString()+ "\n");
+                System.out.println(tempAuxiliaryNurse.toString() + "\n");
             }
 
             // List specialist nurses
@@ -319,21 +321,23 @@ public class Hospital {
 
     }
 
-    public void listRequestsForAuxiliaryNurses() {
-        // Lists all requests for auxiliary nurses sent to the hospital, instead of a chief nurse
+    public void listRequestsForAuxiliaryNurses() throws NoMedicRequestsExistException {
+        // Lists all requests for auxiliary nurses sent to the hospital, in the case
+        // they couldn't be completed by a chief nurse
 
         ClearConsole.clearConsole();
 
-        // If there are no requests in the hospital
-        if (auxiliaryRequests.size() == 0){
-            throw new No
+        // If there are no requests in the hospital, throw an exception
+        if (auxiliaryRequests.size() == 0) {
+            throw new NoMedicRequestsExistException("Não existem pedidos de enfermeiros auxiliares no hospital.");
+        } else {
+            System.out.println(auxiliaryRequests.toString());
         }
+        // Wait for user input
+        scanner.next();
 
-        System.out.println(auxiliaryRequests.toString());
-        
     }
 
-    // TODO
     public void trashRequestsForAuxiliaryNurses() { // Trash 1 to all requests for auxiliary nurses
 
         Random random = new Random();
@@ -341,14 +345,19 @@ public class Hospital {
         int requestsToTrash = random.nextInt(numberOfTotalRequests - 1 + 1) + 1;
 
         for (int i = 0; i < requestsToTrash; i++) {
-
+            
         }
 
     }
 
     // TODO
     public void virusOutbreak() {
+        Random random = new Random();
+        int randomNumber = random.nextInt(6);
 
+        for (SpecialistNurse tempSpecialistNurse : ChiefNurse){
+            
+        }
     }
 
     // TODO
@@ -358,18 +367,31 @@ public class Hospital {
 
     // ! Medic menu related methods
     // Done
-    protected void listPacientsInHospitalQueue() {
+    protected void listPacientsInHospitalQueue() throws NoPacientsInWaitingQueueException {
         // * Also used in the administrator menu
 
         ClearConsole.clearConsole();
 
-        // Prints pacients information to console
-        System.out.println("Pacientes na lista de espera do hospital\n");
-        for (Person pacient : pacientsQueue) {
-            
-            System.out.println(pacient.toString() + "\n");
+        // If there aren't any pacients in the hospital waiting queue, throw exception
+        if (pacientsQueue.size() == 0) {
+            throw new NoPacientsInWaitingQueueException("Não existem pacientes na lista de espera.");
         }
+
+        // If there are pacients in the hospital waiting queue, print them to the
+        // console
+        else {
+
+            // Prints pacients information to console
+            System.out.println("Pacientes na lista de espera do hospital\n");
+            for (Person pacient : pacientsQueue) {
+                System.out.println(pacient.toString() + "\n");
+            }
+
+        }
+
+        // Waits for user input
         scanner.next();
+
     }
 
     // Done
@@ -550,7 +572,7 @@ public class Hospital {
     }
 
     // Done
-    protected void attributeSpecialistNurseToMedic(ChiefNurse chiefNurse) throws IDNotFoundException {
+    protected void attributeSpecialistNurseToMedic(ChiefNurse chiefNurse) throws IDNotFoundException { //
         // Attributes a specialist nurse to a medic. This method can only be called by a
         // chief nurse.
 

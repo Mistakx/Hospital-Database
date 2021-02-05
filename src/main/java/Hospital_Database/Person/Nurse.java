@@ -11,12 +11,13 @@ public class Nurse extends Person {
     // TODO: Abstract?
 
     private Medic associatedMedic; // TODO: Associate medic to nurse
-    private HashMap<Person, ArrayList<Remedy>> Schedule = new HashMap<Person, ArrayList<Remedy>>();
-    private int careerYears = 0;
+    private HashMap<Person, ArrayList<Remedy>> Schedule ;
+    private int careerYears ;
 
     public Nurse(int ID, String name, int birthdayYear, int careerYears) {
         super(ID, name, birthdayYear);
         this.careerYears = careerYears;
+        Schedule = new HashMap<Person, ArrayList<Remedy>>();
     }
 
     public int getCareerYears() {
@@ -74,4 +75,5 @@ public class Nurse extends Person {
         // TODO: List what medic the nurse is allocated to
         return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "\n" + "Anos de carreira: " + careerYears;
     }
+    
 }

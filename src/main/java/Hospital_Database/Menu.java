@@ -314,7 +314,7 @@ public class Menu {
                         break;
 
                     case 3:
-                        // hospital.attributeSpecialistNurseToMedic(SpecialistNurse chiefNurse);
+                         hospital.attributeSpecialistNurseToMedic(nurse);
                         break;
                     case 4:
                         hospital.applyCureToPacient();

@@ -40,6 +40,7 @@ public class Medic extends Person {
     }
 
     // ! Overriden methods
+    @Override
     public String toString() {
 
         // Adds all associated auxilary nurses IDs to a array list
@@ -58,7 +59,7 @@ public class Medic extends Person {
                 + auxiliaryNursesIDs.toString() + "\n" + "Specialist Nurses: " + specialistNursesIDs.toString();
 
     }
-
+    @Override
     public boolean equals(Object object) {
         if (this == object)
         return true;

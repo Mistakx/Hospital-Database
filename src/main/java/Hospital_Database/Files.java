@@ -154,7 +154,11 @@ public class Files {
             scanner.close();
 
         } catch (IOException exception) {
-            exception.printStackTrace();
+            ClearConsole.clearConsole();
+            System.out.println(exception.getMessage());
+            Scanner scanner = new Scanner(System.in);
+            scanner.next();
+            scanner.close();
         }
 
     }

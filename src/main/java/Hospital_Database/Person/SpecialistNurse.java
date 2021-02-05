@@ -7,6 +7,8 @@ import Hospital_Database.Exceptions.NoMedicRequestsExistException;
 
 public class SpecialistNurse extends Nurse implements ChiefNurse {
 
+    // If the specialist nurse is a chief nurse, it can receive requests from a
+    // medic for auxiliary nurses
     public HashMap<Medic, Integer> medicRequests = new HashMap<>();
 
     public SpecialistNurse(int ID, String name, int birthdayYear, int careerYears) {
@@ -27,13 +29,11 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         // If there no medic requests for auxiliaries, throw an exception
 
         if (medicRequests.size() == 0) {
-            throw new NoMedicRequestsExistException("Não tem nenhum requerimento de auxiliares.");
+            throw new NoMedicRequestsExistException("Não existe nenhum requisito de auxiliares.");
         }
-
 
         // If there medic requests for auxiliaries, print them to the console
         else {
-            // TODO: Check if toString is correct
             System.out.println(medicRequests.toString());
         }
 
@@ -44,7 +44,5 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         // TODO Auto-generated method stub
 
     }
-
-
 
 }

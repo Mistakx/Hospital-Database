@@ -2,7 +2,7 @@ package Hospital_Database;
 
 public class Main {
 
-    public static int main(String[] args) {
+    public static void main(String[] args) {
 
         // TODO: Check references
         // TODO: Check encapsulation
@@ -14,7 +14,7 @@ public class Main {
         
         Menu.mainMenuUserInterface(Hospital.getInstance());
 
-        return 0;
+        ;
     }
 
 }

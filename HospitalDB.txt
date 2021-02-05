@@ -2,9 +2,9 @@ Person,1,António,1999,36,1,true
 Person,2,João,2001,35,1,false
 Medic,3,Joaquim,2000
 Medic,4,André,2002
-SpecialistNurse,7,José,1998,1
-SpecialistNurse,8,Macaco,1997,2
-AuxiliaryNurse,9,Bernas,1999,3
-AuxiliaryNurse,10,Sergi,1979,4
-ChiefNurse,11,Sérgio,2000,5
-ChiefNurse,12,Hugo,2000,6
+SpecialistNurse,5,José,1998,1
+SpecialistNurse,6,Macaco,1997,2
+AuxiliaryNurse,7,Bernas,1999,3
+AuxiliaryNurse,8,Sergi,1979,4
+ChiefNurse,9,Sérgio,2000,5
+ChiefNurse,10,Hugo,2000,6
