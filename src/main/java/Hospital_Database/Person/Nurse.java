@@ -277,7 +277,7 @@ public class Nurse extends Person {
         // If the nurse is associated to a medic
         else {
             return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "\n" + "Anos de carreira: "
-                    + careerYears + "Alocado ao médico:\n" + "ID: " + associatedMedic.getID() + "\n" + "Nome: "
+                    + careerYears + "\nAlocado ao médico:\n" + "ID: " + associatedMedic.getID() + "\n" + "Nome: "
                     + associatedMedic.getName();
         }
 

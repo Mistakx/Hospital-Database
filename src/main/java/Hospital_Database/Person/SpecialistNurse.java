@@ -182,4 +182,14 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
     }
 
+    // ! Overriding object methods
+    @Override
+    public boolean equals(Object object) {
+        return super.equals(object);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

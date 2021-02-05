@@ -7,4 +7,14 @@ public class AuxiliaryNurse extends Nurse {
         super(ID, name, birthdayYear, careerYears);
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        return super.equals(object);
+    }
+
 }
