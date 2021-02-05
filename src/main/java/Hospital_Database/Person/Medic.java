@@ -88,7 +88,6 @@ public class Medic extends Person {
         return super.getID() == medic.getID();
     }
 
-    // Done
     public void listPacientsInHospitalQueue(Hospital hospital) throws NoPacientsInWaitingQueueException {
         // * Also used in the administrator menu
 
@@ -116,7 +115,6 @@ public class Medic extends Person {
 
     }
 
-    // Done
     public void listPacientsAwaitingDischarge() throws NoPacientsAwaitingDischargeException { // Lists all
         // pacients
         // waiting
@@ -149,7 +147,6 @@ public class Medic extends Person {
         AwaitsUserInput.awaitsUserInput();
     }
 
-    // TODO
     public void pacientDiagnostic(Hospital hospital)
             throws NoPacientsToDiagnoseException, NoSpecialistNursesAttributedToMedicException, MaximumCapacityFilled {
         // Starts the pacient's diagnostic process. The process needs a specialist
@@ -195,11 +192,38 @@ public class Medic extends Person {
 
     }
 
-    // TODO
-    public void dischargePacient() {
+    public void dischargePacient() throws NoPacientsAwaitingDischargeException {
+        // Sends the pacient to a specialist nurse, to verify if the pacient still has
+        // any symptoms
+
+        // If there are no pacients awaiting discharge, throw an exception
+        if (pacientsAwaitingDischarge.size() == 0) {
+            throw new NoPacientsAwaitingDischargeException("Não existem pacientes à espera de alta.");
+        }
+
+        // If there are pacients awaiting discharge, send the first to a specialist
+        // nurse, for a new diagnostic
+        else {
+
+            Person currentPacient = pacientsAwaitingDischarge.poll();
+
+            // Generate the person symptoms
+            Random random = new Random();
+
+            int temperature = 35 + random.nextInt(7);
+            double whiteBloodCellLevels = 0.05 + (Math.random() * (0.96));
+            boolean gastrointestinalSymptoms = Math.random() < 0.5;
+
+            currentPacient.setTemperature(temperature);
+            currentPacient.setWhiteBloodCellLevels(whiteBloodCellLevels);
+            currentPacient.setGastrointestinalSymptoms(gastrointestinalSymptoms);
+
+            // Sends the pacient to a specialist nurse
+            specialistNurses.get(0).getPacientsWaitingForDiagnostic().add(currentPacient);
+        }
+
     }
 
-    // TODO
     public void requestAuxiliaryNurses(Hospital hospital)
             throws IDNotFoundException, NotEnoughAuxiliaryNursesException { // Sends
         // a

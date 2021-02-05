@@ -11,6 +11,7 @@ import java.util.Scanner;
 import Hospital_Database.Exceptions.IDNotFoundException;
 import Hospital_Database.Exceptions.NotEnoughPermissionsException;
 import Hospital_Database.Person.AuxiliaryNurse;
+import Hospital_Database.Person.ChiefNurse;
 import Hospital_Database.Person.Medic;
 import Hospital_Database.Person.Nurse;
 import Hospital_Database.Person.SpecialistNurse;
@@ -264,9 +265,6 @@ public class Menu {
         System.out.println("Insira o seu ID: ");
         int nurseID = Integer.parseInt(scanner.next());
 
-        // TODO: Improve this code so if the nurse is found in a list, it isn't searched
-        // in the others.
-
         // Search for a nurse with the ID in all the nurses lists
         Nurse nurse = null;
         for (AuxiliaryNurse tempAuxiliaryNurse : hospital.getAuxiliaryNurses()) {
@@ -296,12 +294,14 @@ public class Menu {
         while (true) {
 
             try {
-
+                ClearConsole.clearConsole();
                 System.out.println("Selecione uma opção.");
                 System.out.println("1 - Listar enfermeiros de um médico.");
                 System.out.println("2 - Listar pacientes a aguardar curativo.");
                 System.out.println("3 - Atribuir enfermeiro-especialista a médico.");
                 System.out.println("4 - Aplicar curativo a um paciente.");
+                System.out.println("5 - Listar requisitos de enfermeiros auxiliares.");
+                System.out.println("5 - Atender aos requisitos de enfermeiros auxiliares.");
                 System.out.println("0 - Voltar ao menu anterior.");
 
                 boolean exitMenuUserInterface = false;
@@ -318,7 +318,7 @@ public class Menu {
                     case 3:
                         // Cast to chief nurse
                         try {
-                            ((SpecialistNurse) nurse).attributeSpecialistNurseToMedic(hospital);
+                            ((ChiefNurse) nurse).attributeSpecialistNurseToMedic(hospital);
                         } catch (ClassCastException exception) {
                             throw new NotEnoughPermissionsException(
                                     "Apenas um enfermeiro chefe pode atribuír um enfermeiro especialista.");
@@ -328,6 +328,22 @@ public class Menu {
                         nurse.applyCureToPacient(hospital);
 
                         break;
+                    case 5:
+                        // Cast to chief nurse
+                        try {
+                            ((ChiefNurse) nurse).listMedicAuxiliaryRequests();
+                        } catch (ClassCastException exception) {
+                            throw new NotEnoughPermissionsException(
+                                    "Apenas um enfermeiro chefe pode atribuír um enfermeiro especialista.");
+                        }
+                    case 6:
+                        // Cast to chief nurse
+                        try {
+                            ((ChiefNurse) nurse).fulfilMedicAuxiliaryRequest(hospital);
+                        } catch (ClassCastException exception) {
+                            throw new NotEnoughPermissionsException(
+                                    "Apenas um enfermeiro chefe pode atribuír um enfermeiro especialista.");
+                        }
                     case 0:
                         exitMenuUserInterface = true;
                         break;

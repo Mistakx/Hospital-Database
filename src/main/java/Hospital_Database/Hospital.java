@@ -27,8 +27,6 @@ public class Hospital {
     private static Hospital INSTANCE;
     private Scanner scanner = new Scanner(System.in);
 
-    
-
     public static Hospital getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new Hospital();
@@ -38,11 +36,11 @@ public class Hospital {
     }
 
     // ! Instance variables
-    
+
     private static int lastIDAttributed = 0;
     final private int NECESSARY_YEARS_FOR_PROMOTION = 20;
     private List<Medic> medics;
-    private List<AuxiliaryNurse> auxiliaryNurses ;
+    private List<AuxiliaryNurse> auxiliaryNurses;
     private List<SpecialistNurse> specialistNurses;
     private List<SpecialistNurse> chiefNurses;
     private Queue<Person> pacientsQueue;
@@ -272,7 +270,6 @@ public class Hospital {
 
     }
 
-    // Done
     public void listNurses() throws NoNursesExistException { // Prints all nurses in the hospital to the console
 
         ClearConsole.clearConsole();
@@ -310,7 +307,6 @@ public class Hospital {
 
     }
 
-    // Done
     public void listMedics() throws NoMedicsExistException { // Prints all medic in the hospital to the console
 
         ClearConsole.clearConsole();
@@ -387,7 +383,12 @@ public class Hospital {
         // int randomNumber2 = random.nextInt(3) + 4;
 
         // for (SpecialistNurse tempSpecialistNurse : chiefNurses) {
-        // // tempSpecialistNurse[randomNumber1];
+        // for (int i = 0; i < tempSpecialistNurse.size(); i++){
+        // if (i == randomNumber 1 or i == randomNumber2){
+
+        // }
+        // }
+        // tempSpecialistNurse[randomNumber1];
         // }
         // for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
 

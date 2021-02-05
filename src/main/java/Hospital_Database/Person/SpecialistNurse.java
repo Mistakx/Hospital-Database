@@ -1,6 +1,8 @@
 package Hospital_Database.Person;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 import Hospital_Database.Hospital;
@@ -48,9 +50,41 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
     }
 
     @Override
-    public void fulfilMedicAuxiliaryRequest(Hospital hospital) { // Fulfils a medics request for auxiliary nurses. This
-                                                                 // method can only
+    public void fulfilMedicAuxiliaryRequest(Hospital hospital) throws IDNotFoundException { // Fulfils a medics request
+                                                                                            // for auxiliary nurses.
+                                                                                            // This
+        // method can only
         // be called by a chief nurse.
+
+        // Input medic ID to fulfil request
+        Scanner scanner = new Scanner(System.in);
+        int medicID = scanner.nextInt();
+
+        Queue<Medic> medicsAwaitingRequests = new LinkedList<>(medicRequests.keySet());
+
+        Medic medic;
+        for (Medic tempMedic : medicsAwaitingRequests) {
+            if (tempMedic.getID() == medicID) {
+                medic = tempMedic;
+            }
+        }
+
+        // If medic doesn't exist, throw an exception
+        if (medic == null) {
+            scanner.close();
+            throw new IDNotFoundException("Não existe nenhum médico com o ID introduzido.");
+        }
+
+        // If medic exists, fulfils his requests
+        else {
+            for (AuxiliaryNurse tempAuxiliaryNurse : hospital.getAuxiliaryNurses()) {
+                // If the associated nurse doesn't have an associated medic already, attributes
+                // it to the medic
+                if (tempAuxiliaryNurse.getAssociatedMedic() == null) {
+                    medic.getAuxiliaryNurses().add(tempAuxiliaryNurse);
+                }
+            }
+        }
 
     }
 
@@ -119,8 +153,5 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         scanner.close();
 
     }
-
-    
-
 
 }

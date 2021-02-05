@@ -111,14 +111,14 @@ public class Nurse extends Person {
                 System.out.println("O paciente não tinha sintomas, e foi removido do hospital\n");
                 AwaitsUserInput.awaitsUserInput();
             }
-            
+
             // If the pacient has symptoms, add it to schedule
-            if(hasSymptoms){
+            if (hasSymptoms) {
                 schedule.put(currentPacient, remediesToApply);
                 System.out.println("O paciente tem sintomas, e foi adicionado à agenda de curativos.\n");
                 AwaitsUserInput.awaitsUserInput();
             }
-        
+
         }
     }
 
@@ -127,7 +127,8 @@ public class Nurse extends Person {
 
         ClearConsole.clearConsole();
 
-        List<Person> pacientsWaitingCure = new ArrayList<>(schedule.keySet());
+        // List<Person> pacientsWaitingCure = new ArrayList<>(schedule.keySet());
+        Queue<Person> pacientsWaitingCure = new LinkedList<>(schedule.keySet());
 
         // If there are no pacients waiting for cure, throw an exception
         if (pacientsWaitingCure.size() == 0) {
@@ -137,7 +138,7 @@ public class Nurse extends Person {
         // If there are pacients waiting for cure, apply cure to the first one
         else {
 
-            Person currentPacient = pacientsWaitingCure.get(0);
+            Person currentPacient = pacientsWaitingCure.poll();
 
             // Apply cure to first pacient
             System.out.println("Introduza a data do curativo: ");
@@ -166,10 +167,13 @@ public class Nurse extends Person {
 
             }
 
-            // If the cure is sucessful
+            // If the cure is sucessful, send to medic for discharge
             else {
-                pacientsWaitingCure.remove(currentPacient);
+                associatedMedic.getPacientsAwaitingDischarge().add(currentPacient);
+                System.out.println("Os curativos foram bem sucedidos, o paciente foi enviado de volta ao médico.");
+                scanner.next();
             }
+
             scanner.close();
 
         }
@@ -242,6 +246,9 @@ public class Nurse extends Person {
 
         // If medic exists, prints it's nurses to the console
         else {
+            
+            ClearConsole.clearConsole();
+
             List<AuxiliaryNurse> medicAuxiliaryNurses = medic.getAuxiliaryNurses();
             List<SpecialistNurse> medicSpecialistNurses = medic.getSpecialistNurses();
 
@@ -273,9 +280,21 @@ public class Nurse extends Person {
 
     @Override
     public String toString() {
-        return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "\n" + "Anos de carreira: " + careerYears
-                + "Alocado ao médico:\n" + "ID: " + associatedMedic.getID() + "\n" + "Nome: "
-                + associatedMedic.getName();
+
+        // If the nurse isn't associated to a medic
+        if (associatedMedic == null) {
+            return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "\n" + "Anos de carreira: "
+                    + careerYears;
+
+        }
+
+        // If the nurse is associated to a medic
+        else {
+            return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "\n" + "Anos de carreira: "
+                    + careerYears + "Alocado ao médico:\n" + "ID: " + associatedMedic.getID() + "\n" + "Nome: "
+                    + associatedMedic.getName();
+        }
+
     }
 
 }
