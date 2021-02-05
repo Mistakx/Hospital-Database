@@ -156,9 +156,6 @@ public class Nurse extends Person {
 
                 hospital.getRegistry().put(currentPacient, schedule.get(currentPacient));
 
-                associatedMedic.getPacientsAwaitingDiagnotic().remove(currentPacient);
-                pacientsWaitingCure.remove(currentPacient);
-
                 System.out.println("O paciente morreu após serem aplicados os curativos.");
                 Menu.scanner.next();
 

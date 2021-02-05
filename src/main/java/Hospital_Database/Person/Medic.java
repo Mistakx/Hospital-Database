@@ -153,8 +153,11 @@ public class Medic extends Person {
         // nurse, but its up to the medic to decide if there is a need to request
         // auxiliary nurses beforehand
 
+        pacientsAwaitingDiagnotic.add(hospital.getPacientQueue().poll());
+        Person currentPacient = pacientsAwaitingDiagnotic.poll();
+
         // If there are no pacients in the hospital waiting queue, throw an exception
-        if (hospital.getPacientQueue().size() == 0) {
+        if (pacientsAwaitingDiagnotic.size() == 0) {
             throw new NoPacientsToDiagnoseException("Não há pacientes por diagnosticar.");
         }
 
@@ -171,8 +174,6 @@ public class Medic extends Person {
 
         // If there are pacients in the hospital waiting queue, diagnose the first
         else {
-
-            Person currentPacient = pacientsAwaitingDiagnotic.poll();
 
             // Generate the person symptoms
             Random random = new Random();
@@ -225,8 +226,8 @@ public class Medic extends Person {
     }
 
     public void requestAuxiliaryNurses(Hospital hospital)
-            throws IDNotFoundException, NotEnoughAuxiliaryNursesException { 
-                // Sends a request for auxiliary nurses to a chief nurse
+            throws IDNotFoundException, NotEnoughAuxiliaryNursesException {
+        // Sends a request for auxiliary nurses to a chief nurse
 
         ClearConsole.clearConsole();
 
@@ -278,7 +279,8 @@ public class Medic extends Person {
             else {
                 chiefNurse.getMedicAuxiliaryRequests().put(this, auxiliaryNursesRequested);
                 ClearConsole.clearConsole();
-                System.out.println("Foram requisitados " + Integer.toString(auxiliaryNursesRequested) + " enfermeiros auxiliares\n");
+                System.out.println("Foram requisitados " + Integer.toString(auxiliaryNursesRequested)
+                        + " enfermeiros auxiliares\n");
                 AwaitsUserInput.awaitsUserInput();
             }
 
