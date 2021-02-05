@@ -1,7 +1,7 @@
 package Hospital_Database.Exceptions;
 
 public class NoMedicsExistException extends Exception {
-    
+
     /**
      *
      */
@@ -11,5 +11,5 @@ public class NoMedicsExistException extends Exception {
         super(message);
 
     }
-        
+
 }

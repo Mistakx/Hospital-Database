@@ -10,5 +10,5 @@ public class NotEnoughCareerYearsException extends Exception {
     public NotEnoughCareerYearsException(String message) {
         super(message);
     }
-    
+
 }

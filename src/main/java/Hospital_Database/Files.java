@@ -19,7 +19,6 @@ public class Files {
         // At the beginning of the program execution, reads a file and populates the
         // hospital accordingly.
         // The hospital last attributed ID is also synced with the file's max ID.
-
         List<Medic> medics = hospital.getMedics();
         List<AuxiliaryNurse> auxiliaryNurses = hospital.getAuxiliaryNurses();
         List<SpecialistNurse> specialistNurses = hospital.getSpecialistNurses();

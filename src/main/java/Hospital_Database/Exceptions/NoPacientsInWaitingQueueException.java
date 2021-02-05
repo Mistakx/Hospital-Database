@@ -1,6 +1,7 @@
 package Hospital_Database.Exceptions;
 
 public class NoPacientsInWaitingQueueException extends Exception {
+
     /**
      *
      */
@@ -9,5 +10,5 @@ public class NoPacientsInWaitingQueueException extends Exception {
     public NoPacientsInWaitingQueueException(String message) {
         super(message);
     }
-    
+
 }

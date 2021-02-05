@@ -12,6 +12,7 @@ import java.util.Random;
  * @author mistakx
  */
 public class Person implements Infectable {
+
     private int ID;
     private String name;
     private int birthdayYear;
@@ -86,7 +87,6 @@ public class Person implements Infectable {
     }
 
     // ! Overriding methods
-
     @Override
     public void infect() {
         // Generate the person symptoms
@@ -105,14 +105,17 @@ public class Person implements Infectable {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object)
+        if (this == object) {
             return true;
+        }
 
-        if (object == null)
+        if (object == null) {
             return false;
+        }
 
-        if (this.getClass() != object.getClass())
+        if (this.getClass() != object.getClass()) {
             return false;
+        }
 
         Person person = (Person) object;
         return ID == person.getID();

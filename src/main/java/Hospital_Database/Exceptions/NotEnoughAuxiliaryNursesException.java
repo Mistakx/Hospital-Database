@@ -11,6 +11,4 @@ public class NotEnoughAuxiliaryNursesException extends Exception {
         super(message);
     }
 
-    
-    
 }

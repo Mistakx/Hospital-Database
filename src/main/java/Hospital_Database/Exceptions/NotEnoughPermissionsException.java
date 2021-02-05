@@ -1,6 +1,7 @@
 package Hospital_Database.Exceptions;
 
-public class NotEnoughPermissionsException extends Exception{
+public class NotEnoughPermissionsException extends Exception {
+
     /**
      *
      */
@@ -9,6 +10,5 @@ public class NotEnoughPermissionsException extends Exception{
     public NotEnoughPermissionsException(String message) {
         super(message);
     }
-            
-    
+
 }

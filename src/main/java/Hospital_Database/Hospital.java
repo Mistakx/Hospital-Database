@@ -35,7 +35,6 @@ public class Hospital {
     }
 
     // ! Instance variables
-
     private static int lastIDAttributed = 0;
     final private int NECESSARY_YEARS_FOR_PROMOTION = 20;
     private List<Medic> medics;
@@ -47,7 +46,6 @@ public class Hospital {
     private HashMap<Person, ArrayList<Remedy>> registry;
 
     // ! Contrustor (private because its a singleton)
-
     private Hospital() {
         medics = new ArrayList<>();
         auxiliaryNurses = new ArrayList<>();
@@ -59,7 +57,6 @@ public class Hospital {
     }
 
     // ! Getters and setters
-
     public HashMap<Person, ArrayList<Remedy>> getRegistry() {
         return registry;
     }
@@ -106,7 +103,6 @@ public class Hospital {
     }
 
     // ! Administrator menu related methods
-
     public void addMedic() { // Creates and adds new medic to the hospital
 
         ClearConsole.clearConsole();
@@ -236,7 +232,7 @@ public class Hospital {
 
     public void progressNursesCareerYears() {
         // Add 1 to all nurse career years
-        
+
         // Progress specialist nurses career years
         for (int i = 0; i < specialistNurses.size(); i++) {
             SpecialistNurse tempSpecialistNurse = specialistNurses.get(i);
@@ -268,9 +264,7 @@ public class Hospital {
         // If no nurses exist in the hospital, throw an exception
         if ((specialistNurses.size() == 0) && (auxiliaryNurses.size() == 0) && (chiefNurses.size() == 0)) {
             throw new NoNursesExistException("Não existem enfermeiros no hospital.");
-        }
-
-        // If there are nurses in the hospital, print them to the console
+        } // If there are nurses in the hospital, print them to the console
         else {
 
             // List auxiliary nurses
@@ -305,9 +299,7 @@ public class Hospital {
         // If there are no medics in the hospital, throw an exception
         if (medics.size() == 0) {
             throw new NoMedicsExistException("Não existem médicos no hospital.");
-        }
-
-        // If there are medics in the hospital, print them to the console
+        } // If there are medics in the hospital, print them to the console
         else {
 
             // Prints all medics to the console
@@ -354,9 +346,7 @@ public class Hospital {
         // If there aren't any requests, throw exception
         if (auxiliaryRequests.size() == 0) {
             throw new NoMedicRequestsExistException("Não existem pedidos de enfermeiros auxiliares.");
-        }
-
-        // If there are requests in the hospital, trash a random number of them
+        } // If there are requests in the hospital, trash a random number of them
         else {
 
             Random random = new Random();
@@ -422,7 +412,7 @@ public class Hospital {
                 pacientsQueue.add(specialistNurse);
                 specialistNurses.remove(specialistNurse);
                 peopleInfected++;
-                
+
             }
 
         }
@@ -466,9 +456,7 @@ public class Hospital {
 
             if (pacient.isDead()) {
                 numberOfDeaths++;
-            }
-
-            else {
+            } else {
                 numberOfMedicalDischarges++;
             }
         }
@@ -490,9 +478,7 @@ public class Hospital {
         // If there aren't any pacients in the hospital waiting queue, throw exception
         if (pacientsQueue.size() == 0) {
             throw new NoPacientsInWaitingQueueException("Não existem pacientes na lista de espera.");
-        }
-
-        // If there are pacients in the hospital waiting queue, print them to the
+        } // If there are pacients in the hospital waiting queue, print them to the
         // console
         else {
 
@@ -531,9 +517,7 @@ public class Hospital {
         if (medic == null) {
             throw new NoMedicRequestsExistException(
                     "Não existe nenhum médico com o ID introduzido à espera de auxiliares.");
-        }
-
-        // If medic exists, fulfils his requests
+        } // If medic exists, fulfils his requests
         else {
 
             int numberOfFreeAuxiliaries = 0;
@@ -549,9 +533,7 @@ public class Hospital {
             // If there aren't enough auxiliares, throw error
             if (numberOfFreeAuxiliaries < numberOfRequestedAuxiliaries) {
                 throw new NotEnoughAuxiliaryNursesException("Não existem auxiliares suficientes.");
-            }
-
-            // If there are enough auxiliares, fulfil request
+            } // If there are enough auxiliares, fulfil request
             else {
                 int numberOfAuxiliariesAttributed = 0;
                 for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {

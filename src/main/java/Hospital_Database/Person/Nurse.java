@@ -60,7 +60,6 @@ public class Nurse extends Person {
     }
 
     // ! Nurse menu related methods
-
     public void helpsDiagnostic(Hospital hospital) throws NoPacientsToDiagnoseException {
 
         ClearConsole.clearConsole();
@@ -68,9 +67,7 @@ public class Nurse extends Person {
         // If there aren't any pacients waiting for diagnostic, throw an exception
         if (pacientsWaitingForDiagnostic.size() == 0) {
             throw new NoPacientsToDiagnoseException("Não existem pacientes à espera de diagnóstico.");
-        }
-
-        // If there are pacients waiting for diagnostic, diagnose the first one
+        } // If there are pacients waiting for diagnostic, diagnose the first one
         else {
             Person currentPacient = pacientsWaitingForDiagnostic.poll();
 
@@ -133,9 +130,7 @@ public class Nurse extends Person {
         // If there are no pacients waiting for cure, throw an exception
         if (pacientsWaitingCure.size() == 0) {
             throw new NoPacientsAwaitingCureException("Não existe nenhum paciente à espera de cura.\n");
-        }
-
-        // If there are pacients waiting for cure, apply cure to the first one
+        } // If there are pacients waiting for cure, apply cure to the first one
         else {
 
             Person currentPacient = pacientsWaitingCure.poll();
@@ -161,9 +156,7 @@ public class Nurse extends Person {
                 System.out.println("O paciente morreu após serem aplicados os curativos.");
                 Menu.scanner.next();
 
-            }
-
-            // If the cure is sucessful, send to medic for discharge
+            } // If the cure is sucessful, send to medic for discharge
             else {
                 associatedMedic.getPacientsAwaitingDischarge().add(currentPacient);
                 System.out.println("Os curativos foram bem sucedidos, o paciente foi enviado de volta ao médico.");
@@ -209,7 +202,7 @@ public class Nurse extends Person {
         AwaitsUserInput.awaitsUserInput();
     }
 
-    public void listMedicNurses(Hospital hospital) throws IDNotFoundException { 
+    public void listMedicNurses(Hospital hospital) throws IDNotFoundException {
         // Lists all nurses associated with a medic
 
         ClearConsole.clearConsole();
@@ -230,9 +223,7 @@ public class Nurse extends Person {
         // If medic doesn't exist, throws an exception
         if (medic == null) {
             throw new IDNotFoundException("Não existe um médico com o ID " + medicID + ".");
-        }
-
-        // If medic exists, prints it's nurses to the console
+        } // If medic exists, prints it's nurses to the console
         else {
 
             ClearConsole.clearConsole();
@@ -272,9 +263,7 @@ public class Nurse extends Person {
             return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "\n" + "Anos de carreira: "
                     + careerYears;
 
-        }
-
-        // If the nurse is associated to a medic
+        } // If the nurse is associated to a medic
         else {
             return "ID: " + super.getID() + "\n" + "Nome: " + super.getName() + "\n" + "Anos de carreira: "
                     + careerYears + "\nAlocado ao médico:\n" + "ID: " + associatedMedic.getID() + "\n" + "Nome: "

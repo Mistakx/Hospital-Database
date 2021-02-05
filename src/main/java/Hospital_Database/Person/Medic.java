@@ -35,7 +35,6 @@ public class Medic extends Person {
     }
 
     // ! Getters
-
     public Queue<Person> getPacientsAwaitingDiagnotic() {
         return pacientsAwaitingDiagnotic;
     }
@@ -75,21 +74,23 @@ public class Medic extends Person {
 
     @Override
     public boolean equals(Object object) {
-        if (this == object)
+        if (this == object) {
             return true;
+        }
 
-        if (object == null)
+        if (object == null) {
             return false;
+        }
 
-        if (this.getClass() != object.getClass())
+        if (this.getClass() != object.getClass()) {
             return false;
+        }
 
         Medic medic = (Medic) object;
         return super.getID() == medic.getID();
     }
 
     // ! User interface related methods
-
     public void listPacientsWaitingForDiagnostic() throws NoPacientsWaitingForDiagnosticException {
         // Lists all pacients waiting for discharge
 
@@ -98,8 +99,7 @@ public class Medic extends Person {
         // If there are no pacients waiting for diagnostic, throw exception
         if (pacientsAwaitingDiagnotic.size() == 0) {
             throw new NoPacientsWaitingForDiagnosticException("Não existem pacientes à espera de diagnóstico.");
-        }
-        // If there are pacients waiting for diagnostic, print them to the console
+        } // If there are pacients waiting for diagnostic, print them to the console
         else {
 
             System.out.println("Pacientes à espera de diagnóstico\n");
@@ -122,9 +122,7 @@ public class Medic extends Person {
         // If there aren't any pacients in the hospital waiting queue, throw exception
         if (hospital.getPacientQueue().size() == 0) {
             throw new NoPacientsInWaitingQueueException("Não existem pacientes na lista de espera.");
-        }
-
-        // If there are pacients in the hospital waiting queue, print them to the
+        } // If there are pacients in the hospital waiting queue, print them to the
         // console
         else {
 
@@ -149,9 +147,7 @@ public class Medic extends Person {
         // If the medic doesn't have pacients awaiting discharge
         if (pacientsAwaitingDischarge.size() == 0) {
             throw new NoPacientsAwaitingDischargeException("O médico não tem pacientes a aguardar alta.");
-        }
-
-        // If the medic has pacients awaiting discharge
+        } // If the medic has pacients awaiting discharge
         else {
 
             System.out.println("Pacientes à espera de alta\n");
@@ -192,9 +188,7 @@ public class Medic extends Person {
         // If there are no pacients to diagnose, throw an exception
         if (currentPacient == null) {
             throw new NoPacientsToDiagnoseException("Não há pacientes por diagnosticar.");
-        }
-
-        // If there are pacients in the hospital waiting queue, diagnose the first
+        } // If there are pacients in the hospital waiting queue, diagnose the first
         else {
 
             // Generate the person symptoms
@@ -218,9 +212,7 @@ public class Medic extends Person {
         // If there are no pacients awaiting discharge, throw an exception
         if (pacientsAwaitingDischarge.size() == 0) {
             throw new NoPacientsAwaitingDischargeException("Não existem pacientes à espera de alta.");
-        }
-
-        // If there are pacients awaiting discharge, send the first to a specialist
+        } // If there are pacients awaiting discharge, send the first to a specialist
         // nurse, for a new diagnostic
         else {
 
@@ -261,9 +253,7 @@ public class Medic extends Person {
         // If the chief nurse doesn't exist, throw an exception
         if (chiefNurse == null) {
             throw new IDNotFoundException("Não existe nenhum enfermeiro chefe com o ID inserido.");
-        }
-
-        // If the chief nurse exists, send the request for auxiliary nurses
+        } // If the chief nurse exists, send the request for auxiliary nurses
         else {
             ClearConsole.clearConsole();
             System.out.println("Quantos enfermeiros auxiliares necessita: ");
@@ -287,9 +277,7 @@ public class Medic extends Person {
                 hospital.getAuxiliaryRequests().put(this, auxiliaryNursesRequested);
                 throw new NotEnoughAuxiliaryNursesException(
                         "Não existem enfermeiros auxiliares suficientes. O pedido foi enviado para o hospital.");
-            }
-
-            // If there are enough auxiliary nurses to complete the request, send the
+            } // If there are enough auxiliary nurses to complete the request, send the
             // request
             else {
                 chiefNurse.getMedicAuxiliaryRequests().put(this, auxiliaryNursesRequested);

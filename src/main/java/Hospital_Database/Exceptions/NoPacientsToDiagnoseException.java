@@ -10,5 +10,5 @@ public class NoPacientsToDiagnoseException extends Exception {
     public NoPacientsToDiagnoseException(String message) {
         super(message);
     }
-    
+
 }

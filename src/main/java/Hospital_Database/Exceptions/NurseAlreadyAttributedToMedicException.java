@@ -1,6 +1,7 @@
 package Hospital_Database.Exceptions;
 
 public class NurseAlreadyAttributedToMedicException extends Exception {
+
     /**
      *
      */

@@ -10,6 +10,5 @@ public class NoPacientsWaitingForDiagnosticException extends Exception {
     public NoPacientsWaitingForDiagnosticException(String message) {
         super(message);
     }
-    
-    
+
 }

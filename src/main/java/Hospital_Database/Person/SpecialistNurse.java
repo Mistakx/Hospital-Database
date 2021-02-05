@@ -31,7 +31,6 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
     }
 
     // ! Overriding the interface methods
-
     @Override
     public void listMedicAuxiliaryRequests() throws NoMedicRequestsExistException {
         // Prints all medic requests for auxiliares.
@@ -40,12 +39,9 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         ClearConsole.clearConsole();
 
         // If there no medic requests for auxiliaries, throw an exception
-
         if (medicRequests.size() == 0) {
             throw new NoMedicRequestsExistException("Não existe nenhum requisito de auxiliares.");
-        }
-
-        // If there medic requests for auxiliaries, print them to the console
+        } // If there medic requests for auxiliaries, print them to the console
         else {
 
             ArrayList<Medic> medics = new ArrayList<>(medicRequests.keySet());
@@ -88,9 +84,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         if (medic == null) {
             throw new NoMedicRequestsExistException(
                     "Não existe nenhum médico com o ID introduzido à espera de auxiliares.");
-        }
-
-        // If medic exists, fulfils his requests
+        } // If medic exists, fulfils his requests
         else {
             int numberOfRequestedAuxiliaries = medicRequests.get(medic);
             int numberOfAuxiliariesAttributed = 0;
@@ -144,9 +138,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         // If the specialist nurse doesn't exist, throw an exception
         if (specialistNurse == null) {
             throw new IDNotFoundException("Não existe um enfermeiro especialista com o ID " + specialistNurseID + ".");
-        }
-
-        // ! If the specialist nurse exists, asks the user for Medic and checks if it
+        } // ! If the specialist nurse exists, asks the user for Medic and checks if it
         // exists
         else {
             ClearConsole.clearConsole();
@@ -167,9 +159,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
             // If the medic doesn't exist, throws an exception
             if (medic == null) {
                 throw new IDNotFoundException("Não existe um médico com o ID " + medicID + ".");
-            }
-
-            // If the medic exists, attribute the specialist to the found medic
+            } // If the medic exists, attribute the specialist to the found medic
             else {
                 specialistNurse.setAssociatedMedic(medic);
                 medic.getSpecialistNurses().add(specialistNurse);

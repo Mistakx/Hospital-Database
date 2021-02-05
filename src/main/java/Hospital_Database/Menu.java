@@ -1,4 +1,3 @@
-
 package Hospital_Database;
 
 import Hospital_Database.UserInterface.ClearConsole;
@@ -187,9 +186,7 @@ public class Menu {
 
             throw new IDNotFoundException("Não existe nenhum médico com o ID " + String.valueOf(medicID) + ".");
 
-        }
-
-        // If medic with the ID exists
+        } // If medic with the ID exists
         else {
 
             while (true) {

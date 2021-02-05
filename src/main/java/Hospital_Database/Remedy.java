@@ -1,10 +1,10 @@
 package Hospital_Database;
 
-
 public class Remedy {
+
     private String name;
     private String dateApplied;
-    
+
     public Remedy(String name) {
         this.name = name;
     }
@@ -12,6 +12,7 @@ public class Remedy {
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -19,7 +20,8 @@ public class Remedy {
     public void setDateApplied(String dateApplied) {
         this.dateApplied = dateApplied;
     }
+
     public String getDateApplied() {
-    return dateApplied;
-}
+        return dateApplied;
+    }
 }
