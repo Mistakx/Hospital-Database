@@ -70,6 +70,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
         // This method can only be called by a chief nurse.
 
         // Input medic ID to fulfil request
+        System.out.println("ID do médico que requisitou auxiliares: ");
         int medicID = Menu.scanner.nextInt();
 
         Queue<Medic> medicsAwaitingRequests = new LinkedList<>(medicRequests.keySet());

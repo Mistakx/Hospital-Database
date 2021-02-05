@@ -15,7 +15,6 @@ import Hospital_Database.Exceptions.NoPacientsInWaitingQueueException;
 import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.Exceptions.NotEnoughCareerYearsException;
 import Hospital_Database.Person.AuxiliaryNurse;
-import Hospital_Database.Person.ChiefNurse;
 import Hospital_Database.Person.Medic;
 import Hospital_Database.Person.Person;
 import Hospital_Database.Person.SpecialistNurse;
@@ -514,7 +513,7 @@ public class Hospital {
         ClearConsole.clearConsole();
 
         // Input medic ID to fulfil request
-        System.out.println("Introduza o ID do médico: ");
+        System.out.println("Introduza o ID do médico que requisitou auxiliares: ");
         int medicID = Menu.scanner.nextInt();
 
         Queue<Medic> medicsAwaitingRequests = new LinkedList<>(auxiliaryRequests.keySet());
