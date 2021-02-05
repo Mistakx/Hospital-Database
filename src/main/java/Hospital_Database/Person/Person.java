@@ -87,6 +87,7 @@ public class Person implements Infectable {
 
     // ! Overriding methods
 
+    @Override
     public void infect() {
         // Generate the person symptoms
         Random random = new Random();

@@ -283,4 +283,8 @@ public class Nurse extends Person {
 
     }
 
+    @Override
+    public boolean equals(Object object) {
+        return super.equals(object);
+    }
 }
