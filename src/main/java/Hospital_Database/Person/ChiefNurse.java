@@ -23,6 +23,6 @@ public interface ChiefNurse {
 
     public abstract void listMedicAuxiliaryRequests() throws NoMedicRequestsExistException;
 
-    public abstract void fulfilMedicAuxiliaryRequest(Hospital hospital);
+    public abstract void fulfilMedicAuxiliaryRequest(Hospital hospital) throws IDNotFoundException;
 
 }

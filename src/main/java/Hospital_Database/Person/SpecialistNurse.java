@@ -62,7 +62,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
         Queue<Medic> medicsAwaitingRequests = new LinkedList<>(medicRequests.keySet());
 
-        Medic medic;
+        Medic medic = null;
         for (Medic tempMedic : medicsAwaitingRequests) {
             if (tempMedic.getID() == medicID) {
                 medic = tempMedic;
@@ -85,6 +85,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
                 }
             }
         }
+        scanner.close();
 
     }
 
