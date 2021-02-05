@@ -175,12 +175,10 @@ public class Medic extends Person {
         // nurse, but its up to the medic to decide if there is a need to request
         // auxiliary nurses beforehand
 
-        pacientsAwaitingDiagnotic.add(hospital.getPacientQueue().poll());
-        Person currentPacient = pacientsAwaitingDiagnotic.poll();
-
-        // If there are no pacients to diagnose, throw an exception
-        if (currentPacient == null) {
-            throw new NoPacientsToDiagnoseException("Não há pacientes por diagnosticar.");
+        // If the medic doesn't have a specialist nurse attributed
+        if (specialistNurses.size() == 0) {
+            throw new NoSpecialistNursesAttributedToMedicException(
+                    "Não tem enfermeiros especialistas atribuídos para começar o diagnóstico.");
         }
 
         // If the medic already has 3 pacients associated
@@ -188,10 +186,12 @@ public class Medic extends Person {
             throw new MaximumCapacityFilled("O médico já tem 3 pacientes.");
         }
 
-        // If the medic doesn't have a specialist nurse attributed
-        if (specialistNurses.size() == 0) {
-            throw new NoSpecialistNursesAttributedToMedicException(
-                    "Não tem enfermeiros especialistas atribuídos para começar o diagnóstico.");
+        pacientsAwaitingDiagnotic.add(hospital.getPacientQueue().poll());
+        Person currentPacient = pacientsAwaitingDiagnotic.poll();
+
+        // If there are no pacients to diagnose, throw an exception
+        if (currentPacient == null) {
+            throw new NoPacientsToDiagnoseException("Não há pacientes por diagnosticar.");
         }
 
         // If there are pacients in the hospital waiting queue, diagnose the first
