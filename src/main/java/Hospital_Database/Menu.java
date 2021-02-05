@@ -22,7 +22,7 @@ import Hospital_Database.Person.SpecialistNurse;
  */
 public class Menu {
 
-    private static Scanner scanner = new Scanner(System.in);
+    public static Scanner scanner = new Scanner(System.in);
     private static int option;
 
     public static void mainMenuUserInterface(Hospital hospital) {

@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Set;
 
 import Hospital_Database.Hospital;
+import Hospital_Database.Menu;
 import Hospital_Database.Remedy;
 import Hospital_Database.Exceptions.IDNotFoundException;
 import Hospital_Database.Exceptions.NoPacientsAwaitingCureException;
@@ -140,8 +140,7 @@ public class Nurse extends Person {
 
             // Apply cure to first pacient
             System.out.println("Introduza a data do curativo: ");
-            Scanner scanner = new Scanner(System.in);
-            String cureDate = scanner.next();
+            String cureDate = Menu.scanner.next();
 
             // Sets the date of the remedy
             for (Remedy remedyToApply : schedule.get(currentPacient)) {
@@ -161,7 +160,7 @@ public class Nurse extends Person {
                 pacientsWaitingCure.remove(currentPacient);
 
                 System.out.println("O paciente morreu após serem aplicados os curativos.");
-                scanner.next();
+                Menu.scanner.next();
 
             }
 
@@ -169,10 +168,8 @@ public class Nurse extends Person {
             else {
                 associatedMedic.getPacientsAwaitingDischarge().add(currentPacient);
                 System.out.println("Os curativos foram bem sucedidos, o paciente foi enviado de volta ao médico.");
-                scanner.next();
+                Menu.scanner.next();
             }
-
-            scanner.close();
 
         }
     }
@@ -218,10 +215,8 @@ public class Nurse extends Person {
 
         ClearConsole.clearConsole();
 
-        Scanner scanner = new Scanner(System.in);
-        int medicID;
         System.out.println("ID do médico: ");
-        medicID = scanner.nextInt();
+        int medicID = Menu.scanner.nextInt();
 
         // Check if a medic with the ID exists
         Medic medic = null;
@@ -235,7 +230,6 @@ public class Nurse extends Person {
 
         // If medic doesn't exist, throws an exception
         if (medic == null) {
-            scanner.close();
             throw new IDNotFoundException("Não existe um médico com o ID " + medicID + ".");
         }
 
@@ -268,8 +262,6 @@ public class Nurse extends Person {
 
         // Waits for user input
         AwaitsUserInput.awaitsUserInput();
-
-        scanner.close();
 
     }
 

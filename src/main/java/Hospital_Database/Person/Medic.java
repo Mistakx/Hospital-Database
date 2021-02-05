@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
-import java.util.Scanner;
 
 import Hospital_Database.Hospital;
+import Hospital_Database.Menu;
 import Hospital_Database.Exceptions.IDNotFoundException;
 import Hospital_Database.Exceptions.MaximumCapacityFilled;
 import Hospital_Database.Exceptions.NoPacientsAwaitingDischargeException;
@@ -236,8 +236,7 @@ public class Medic extends Person {
 
         // Input the chief nurse to send the request to
         System.out.println("ID do chefe enfermeiro: ");
-        Scanner scanner = new Scanner(System.in);
-        int chiefNurseID = scanner.nextInt();
+        int chiefNurseID = Menu.scanner.nextInt();
 
         // Check if the chief nurse exists
         SpecialistNurse chiefNurse = null;
@@ -249,7 +248,6 @@ public class Medic extends Person {
 
         // If the chief nurse doesn't exist, throw an exception
         if (chiefNurse == null) {
-            scanner.close();
             throw new IDNotFoundException("Não existe nenhum enfermeiro chefe com o ID inserido.");
         }
 
@@ -257,7 +255,7 @@ public class Medic extends Person {
         else {
             ClearConsole.clearConsole();
             System.out.println("Quantos enfermeiros auxiliares necessita: ");
-            int auxiliaryNursesRequested = scanner.nextInt();
+            int auxiliaryNursesRequested = Menu.scanner.nextInt();
 
             // If there are not enough free auxiliary nurses to complete the request, throw
             // an
@@ -274,7 +272,6 @@ public class Medic extends Person {
             // If there are not enough auxiliary nurses to complete the request, send the
             // request to the hospital
             if (auxiliaryNursesRequested > numberOfFreeAuxiliaries) {
-                scanner.close();
                 hospital.getAuxiliaryRequests().put(this, auxiliaryNursesRequested);
                 throw new NotEnoughAuxiliaryNursesException(
                         "Não existem enfermeiros auxiliares suficientes. O pedido foi enviado para o hospital.");
@@ -289,8 +286,6 @@ public class Medic extends Person {
             }
 
         }
-
-        scanner.close();
     }
 
 }
