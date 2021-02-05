@@ -63,6 +63,8 @@ public class Nurse extends Person {
 
     public void helpsDiagnostic(Hospital hospital) throws NoPacientsToDiagnoseException {
 
+        ClearConsole.clearConsole();
+
         // If there aren't any pacients waiting for diagnostic, throw an exception
         if (pacientsWaitingForDiagnostic.size() == 0) {
             throw new NoPacientsToDiagnoseException("Não existem paciente à espera de diagnóstico.");

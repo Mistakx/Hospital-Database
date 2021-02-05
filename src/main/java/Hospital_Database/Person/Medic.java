@@ -88,6 +88,8 @@ public class Medic extends Person {
         return super.getID() == medic.getID();
     }
 
+    // ! User interface related methods
+
     public void listPacientsInHospitalQueue(Hospital hospital) throws NoPacientsInWaitingQueueException {
         // * Also used in the administrator menu
 
@@ -189,7 +191,8 @@ public class Medic extends Person {
             // Sends the pacient to a specialist nurse, to help with the diagnostic
             specialistNurses.get(0).getPacientsWaitingForDiagnostic().add(currentPacient);
 
-            System.out.println("Paciente enviado para diagosticar ao enfermeiro " + specialistNurses.get(0).getID());
+            ClearConsole.clearConsole();
+            System.out.println("Paciente enviado para diagosticar ao enfermeiro " + specialistNurses.get(0).getID() + ".");
             Menu.scanner.next();
         }
 

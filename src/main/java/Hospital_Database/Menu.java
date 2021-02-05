@@ -308,6 +308,8 @@ public class Menu {
                 System.out.println("4 - Aplicar curativo a um paciente.");
                 System.out.println("5 - Listar requisitos de enfermeiros auxiliares.");
                 System.out.println("6 - Atender aos requisitos de enfermeiros auxiliares.");
+                System.out.println("7 - Diagnóstico ao paciente.");
+                System.out.println("8 - Listar pacientes à espera de diagnóstico.");
                 System.out.println("0 - Voltar ao menu anterior.");
 
                 boolean exitMenuUserInterface = false;
@@ -328,7 +330,6 @@ public class Menu {
                         } else {
                             throw new NotEnoughPermissionsException(
                                     "Apenas um enfermeiro chefe pode atribuír um enfermeiro especialista.");
-
                         }
                         break;
                     case 4:
@@ -337,12 +338,12 @@ public class Menu {
                         break;
                     case 5:
                         if (nurseIsChief) {
-
                             ((ChiefNurse) nurse).listMedicAuxiliaryRequests();
                         } else {
                             throw new NotEnoughPermissionsException(
                                     "Apenas um enfermeiro chefe pode ver os pedidos por auxiliares.");
                         }
+                        break;
                     case 6:
                         if (nurseIsChief) {
                             ((ChiefNurse) nurse).fulfilMedicAuxiliaryRequest(hospital);
@@ -350,6 +351,13 @@ public class Menu {
                             throw new NotEnoughPermissionsException(
                                     "Apenas um enfermeiro chefe pode atender ao pedido de enfermeiros auxiliares.");
                         }
+                        break;
+                    case 7:
+                        nurse.helpsDiagnostic(hospital);
+                        break;
+                    case 8:
+                        nurse.listPacientsWaitingForDiagnostic();
+                        break;
                     case 0:
                         exitMenuUserInterface = true;
                         break;
