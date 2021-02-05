@@ -7,23 +7,19 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 
 import Hospital_Database.Exceptions.IDNotFoundException;
 import Hospital_Database.Exceptions.NoMedicRequestsExistException;
 import Hospital_Database.Exceptions.NoMedicsExistException;
 import Hospital_Database.Exceptions.NoNursesExistException;
-import Hospital_Database.Exceptions.NoPacientsAwaitingDischargeException;
 import Hospital_Database.Exceptions.NoPacientsInWaitingQueueException;
-import Hospital_Database.Exceptions.NoPacientsToDiagnoseException;
-import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.Exceptions.NotEnoughCareerYearsException;
 import Hospital_Database.Person.AuxiliaryNurse;
-import Hospital_Database.Person.ChiefNurse;
 import Hospital_Database.Person.Medic;
-import Hospital_Database.Person.Nurse;
 import Hospital_Database.Person.Person;
 import Hospital_Database.Person.SpecialistNurse;
+import Hospital_Database.UserInterface.AwaitsUserInput;
+import Hospital_Database.UserInterface.ClearConsole;
 
 public class Hospital {
 
@@ -338,26 +334,48 @@ public class Hospital {
 
     }
 
-    public void trashRequestsForAuxiliaryNurses() { // Trash 1 to all requests for auxiliary nurses
+    // Done
+    public void trashRequestsForAuxiliaryNurses() throws NoMedicRequestsExistException { // Trash 1 to all requests for
+                                                                                         // auxiliary nurses
 
-        Random random = new Random();
-        int numberOfTotalRequests = auxiliaryRequests.size();
-        int requestsToTrash = random.nextInt(numberOfTotalRequests - 1 + 1) + 1;
-
-        for (int i = 0; i < requestsToTrash; i++) {
-            
+        // If there aren't any requests, throw exception
+        if (auxiliaryRequests.size() == 0) {
+            throw new NoMedicRequestsExistException("Não existem pedidos de enfermeiros auxiliares.");
         }
 
+        // If there are requests, trash a random number of them
+        else {
+
+            Random random = new Random();
+            int numberOfTotalRequests = auxiliaryRequests.size();
+            int requestsToTrash = random.nextInt(numberOfTotalRequests - 1 + 1) + 1;
+
+            for (int i = 0; i < requestsToTrash; i++) {
+                auxiliaryRequests.remove(auxiliaryRequests.keySet().iterator().next());
+            }
+
+            System.out.println("Foram removidos " + requestsToTrash + "pedidos de auxiliares.\n");
+
+            // Waits for user input
+            scanner.next();
+        }
     }
 
     // TODO
     public void virusOutbreak() {
-        Random random = new Random();
-        int randomNumber = random.nextInt(6);
+        // Random random = new Random();
+        // int randomNumber1 = random.nextInt(2);
+        // int randomNumber2 = random.nextInt(3) + 4;
 
-        for (SpecialistNurse tempSpecialistNurse : ChiefNurse){
-            
-        }
+        // for (SpecialistNurse tempSpecialistNurse : chiefNurses) {
+        // // tempSpecialistNurse[randomNumber1];
+        // }
+        // for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
+
+        // }
+        // for (Medic tempMedic : medics) {
+
+        // }
     }
 
     // TODO
@@ -365,10 +383,8 @@ public class Hospital {
 
     }
 
-    // ! Medic menu related methods
     // Done
-    protected void listPacientsInHospitalQueue() throws NoPacientsInWaitingQueueException {
-        // * Also used in the administrator menu
+    public void listPacientsInHospitalQueue() throws NoPacientsInWaitingQueueException {
 
         ClearConsole.clearConsole();
 
@@ -390,291 +406,7 @@ public class Hospital {
         }
 
         // Waits for user input
-        scanner.next();
-
-    }
-
-    // Done
-    protected void listPacientsAwaitingDischarge(Medic medic) throws NoPacientsAwaitingDischargeException { // Lists all
-                                                                                                            // pacients
-                                                                                                            // waiting
-                                                                                                            // for
-                                                                                                            // discharge,
-                                                                                                            // for a
-                                                                                                            // given
-                                                                                                            // medic
-
-        ClearConsole.clearConsole();
-
-        // If the medic doesn't have pacients awaiting discharge
-        if (medic.getPacientsAwaitingDischarge().size() == 0) {
-            throw new NoPacientsAwaitingDischargeException("O médico não tem pacientes a aguardar alta.");
-        }
-
-        // If the medic has pacients awaiting discharge
-        else {
-
-            // Prints all pacients waiting for discharge
-            for (Person pacient : medic.getPacientsAwaitingDischarge()) {
-
-                System.out.println("Pacient\n" + pacient.toString() + "\n");
-
-            }
-
-        }
-
-        // Waits for user input
-        scanner.next();
-    }
-
-    // TODO
-    protected void pacientDiagnostic(Medic medic) throws NoPacientsToDiagnoseException {
-
-        if (pacientsQueue.size() != 0) {
-            Person currentPacient = pacientsQueue.poll();
-        }
-
-        else {
-            throw new NoPacientsToDiagnoseException("Não há pacientes por diagnosticar.");
-        }
-
-    }
-
-    // TODO
-    protected void dischargePacient(Medic medic) {
-    }
-
-    // TODO
-    protected void requestAuxiliaryNurses(Medic medic) throws IDNotFoundException, NotEnoughAuxiliaryNursesException { // Sends
-                                                                                                                       // a
-                                                                                                                       // request
-                                                                                                                       // for
-        // auxiliary nurses to
-        // a chief nurse
-
-        ClearConsole.clearConsole();
-
-        // Input the chief nurse to send the request to
-        System.out.println("ID do chefe enfermeiro: ");
-        int chiefNurseID = scanner.nextInt();
-
-        // Check if the chief nurse exists
-        SpecialistNurse chiefNurse = null;
-        for (SpecialistNurse tempChiefNurse : chiefNurses) {
-            if (tempChiefNurse.getID() == chiefNurseID) {
-                chiefNurse = tempChiefNurse;
-            }
-        }
-
-        // If the chief nurse doesn't exist, throw an exception
-        if (chiefNurse == null) {
-            throw new IDNotFoundException("Não existe nenhum enfermeiro chefe com o ID inserido.");
-        }
-
-        // If the chief nurse exists, send the request for auxiliary nurses
-        else {
-            System.out.println("Quantos enfermeiros auxiliares necessita: ");
-            int auxiliaryNursesRequested = scanner.nextInt();
-
-            // If there are not enough auxiliary nurses to complete the request, throw an
-            // exception
-            if (auxiliaryNursesRequested > auxiliaryNurses.size()) {
-                // TODO: Request auxiliary nurses exception behaviour
-                throw new NotEnoughAuxiliaryNursesException(
-                        "Não existem enfermeiros auxiliares suficientes no hospital.");
-            }
-
-            // If there are enough auxiliary nurses to complete the request, send the
-            // request
-            else {
-                // TODO: Continue
-                chiefNurse.getMedicRequests();
-
-            }
-
-        }
-    }
-
-    // ! Nurse menu related methods
-
-    // Done
-    protected void listMedicNurses() throws IDNotFoundException { // Lists all nurses associated with a medic
-
-        ClearConsole.clearConsole();
-
-        int medicID;
-        System.out.println("ID do médico: ");
-        medicID = scanner.nextInt();
-
-        // Check if a medic with the ID exists
-        Medic medic = null;
-        for (Medic tempMedic : medics) {
-
-            if (tempMedic.getID() == medicID) {
-                medic = tempMedic;
-            }
-
-        }
-
-        // If medic doesn't exist, throws an exception
-        if (medic == null) {
-            throw new IDNotFoundException("Não existe um médico com o ID " + medicID + ".");
-        }
-
-        // If medic exists, prints it's nurses to the console
-        else {
-            List<AuxiliaryNurse> medicAuxiliaryNurses = medic.getAuxiliaryNurses();
-            List<SpecialistNurse> medicSpecialistNurses = medic.getSpecialistNurses();
-
-            System.out.println("Médico (ID: " + medicID + ").\n");
-            System.out.println("Enfermeiros auxiliares\n");
-
-            for (AuxiliaryNurse tempAuxiliaryNurse : medicAuxiliaryNurses) {
-
-                System.out.println(tempAuxiliaryNurse.toString() + "\n");
-
-            }
-
-            System.out.println("Enfermeiros especialistas\n");
-
-            for (SpecialistNurse tempSpecialistNurse : medicSpecialistNurses) {
-
-                System.out.println(tempSpecialistNurse.toString() + "\n");
-
-            }
-
-        }
-
-        // Waits for user input
-        scanner.next();
-
-    }
-
-    // Done
-    protected void listPacientsWaitingForCure(Nurse nurse) throws IDNotFoundException {
-        // Prints the pacients awaiting cure to the console
-
-        ClearConsole.clearConsole();
-
-        Set<Person> pacientsWaitingCure = nurse.getSchedule().keySet();
-
-        System.out.println("Pacientes a aguardar cura");
-
-        for (Person pacient : pacientsWaitingCure) {
-
-            System.out.println(pacient.toString());
-
-        }
-
-        // Awaits for user input
-        scanner.next();
-
-    }
-
-    // Done
-    protected void attributeSpecialistNurseToMedic(ChiefNurse chiefNurse) throws IDNotFoundException { //
-        // Attributes a specialist nurse to a medic. This method can only be called by a
-        // chief nurse.
-
-        ClearConsole.clearConsole();
-
-        // ! Asks the user for the specialist nurse to attribute to a medic
-        System.out.println("ID do enfermeiro especialista a atribuir: ");
-        int specialistNurseID = scanner.nextInt();
-
-        SpecialistNurse specialistNurse = null;
-
-        // Check if a specialist nurse with the ID exists
-        for (SpecialistNurse tempSpecialistNurse : specialistNurses) {
-
-            if (tempSpecialistNurse.getID() == specialistNurseID) {
-                specialistNurse = tempSpecialistNurse;
-                break;
-            }
-
-        }
-
-        // If the specialist nurse doesn't exist, throw an exception
-        if (specialistNurse == null) {
-            throw new IDNotFoundException("Não existe um enfermeiro especialista com o ID " + specialistNurseID + ".");
-        }
-
-        // ! If the specialist nurse exists, asks the user for Medic and checks if it
-        // exists
-        else {
-
-            System.out.println("ID do médico: ");
-            int medicID = scanner.nextInt();
-
-            // Check if a medic with the ID exists
-            Medic medic = null;
-            for (Medic tempMedic : medics) {
-
-                if (tempMedic.getID() == medicID) {
-                    medic = tempMedic;
-                    break;
-                }
-
-            }
-
-            // If the medic doesn't exist, throws an exception
-            if (medic == null) {
-                throw new IDNotFoundException("Não existe um médico com o ID " + medicID + ".");
-            }
-
-            // If the medic exists, attribute the specialist to the found medic
-            else {
-                medic.attributeSpecialistNurse(specialistNurse);
-            }
-
-        }
-    }
-
-    protected void applyCureToPacient() throws IDNotFoundException {
-
-        ClearConsole.clearConsole();
-
-        // Input nurse ID
-        System.out.println("Insira o ID do enfermeiro a aplicar curativo: ");
-        int nurseID = scanner.nextInt();
-
-        // Check if the nurse exists
-        Nurse nurse = null;
-        for (Nurse tempAuxiliaryNurse : auxiliaryNurses) {
-            if (tempAuxiliaryNurse.getID() == nurseID) {
-                nurse = tempAuxiliaryNurse;
-                break;
-            }
-        }
-        for (Nurse tempSpecialistNurse : specialistNurses) {
-            if (tempSpecialistNurse.getID() == nurseID) {
-                nurse = tempSpecialistNurse;
-                break;
-            }
-        }
-        for (Nurse tempChiefNurse : chiefNurses) {
-            if (tempChiefNurse.getID() == nurseID) {
-                nurse = tempChiefNurse;
-                break;
-            }
-        }
-
-        // If the nurse doesn't exist, throw an exception
-        if (nurse == null) {
-            throw new IDNotFoundException("Não existe nenhum enfermeiro com o ID inserido.");
-        }
-
-        // If the nurse exists, list one pacient waiting for cure
-        else {
-
-            Set<Person> pacientsWaitingCure = nurse.getSchedule().keySet();
-            for (int i = 0; i < 1; i++) {
-                System.out.println(pacientsWaitingCure.iterator().next());
-                // TODO: Check this out
-                pacientsWaitingCure.remove(i);
-            }
-
-        }
+        AwaitsUserInput.awaitsUserInput();
 
     }
 }

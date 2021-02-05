@@ -5,9 +5,11 @@
  */
 package Hospital_Database;
 
+import Hospital_Database.UserInterface.ClearConsole;
 import java.util.Scanner;
 
 import Hospital_Database.Exceptions.IDNotFoundException;
+import Hospital_Database.Exceptions.NotEnoughPermissionsException;
 import Hospital_Database.Person.AuxiliaryNurse;
 import Hospital_Database.Person.Medic;
 import Hospital_Database.Person.Nurse;
@@ -212,20 +214,20 @@ public class Menu {
                     switch (option) {
 
                         case 1:
-                            hospital.listPacientsInHospitalQueue();
+                            medic.listPacientsInHospitalQueue(hospital);
                             break;
                         case 2:
-                            hospital.listPacientsAwaitingDischarge(medic);
+                            medic.listPacientsAwaitingDischarge();
                             ;
                             break;
                         case 3:
-                            hospital.pacientDiagnostic(medic);
+                            medic.pacientDiagnostic(hospital);
                             break;
                         case 4:
-                            hospital.dischargePacient(medic);
+                            medic.dischargePacient();
                             break;
                         case 5:
-                            hospital.requestAuxiliaryNurses(medic);
+                            medic.requestAuxiliaryNurses(hospital);
                             break;
                         case 0:
                             exitMenuUserInterface = true;
@@ -307,19 +309,26 @@ public class Menu {
 
                 switch (option) {
                     case 1:
-                        hospital.listMedicNurses();
+                        nurse.listMedicNurses(hospital);
                         break;
                     case 2:
-                        hospital.listPacientsWaitingForCure(nurse);
+                        nurse.listPacientsWaitingForCure();
                         break;
 
                     case 3:
-                         hospital.attributeSpecialistNurseToMedic(nurse);
+                        // Cast to chief nurse
+                        try {
+                            ((SpecialistNurse) nurse).attributeSpecialistNurseToMedic(hospital);
+                        } catch (ClassCastException exception) {
+                            throw new NotEnoughPermissionsException(
+                                    "Apenas um enfermeiro chefe pode atribuír um enfermeiro especialista.");
+                        }
                         break;
                     case 4:
-                        hospital.applyCureToPacient();
+                        nurse.applyCureToPacient();
+
                         break;
-                    case 5:
+                    case 0:
                         exitMenuUserInterface = true;
                         break;
 

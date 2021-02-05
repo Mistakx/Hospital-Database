@@ -5,23 +5,17 @@
  */
 package Hospital_Database.UserInterface;
 
+import java.util.Scanner;
+
 /**
  *
  * @author mistakx
  */
-
-public class ClearConsole {
-
-    public static void clearConsole() {
-
-        // for (int i = 0; i < 50; i++) {
-        //     System.out.println("\n");
-        // }
-
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-
-
-    }
-
-};
+public class AwaitsUserInput {
+    private static Scanner scanner = new Scanner(System.in);
+    
+    public static void awaitsUserInput() {
+        scanner.next();
+    } 
+    
+}

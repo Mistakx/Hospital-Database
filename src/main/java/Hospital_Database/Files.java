@@ -5,6 +5,7 @@
  */
 package Hospital_Database;
 
+import Hospital_Database.UserInterface.ClearConsole;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
