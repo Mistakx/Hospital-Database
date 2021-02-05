@@ -156,8 +156,8 @@ public class Medic extends Person {
         pacientsAwaitingDiagnotic.add(hospital.getPacientQueue().poll());
         Person currentPacient = pacientsAwaitingDiagnotic.poll();
 
-        // If there are no pacients in the hospital waiting queue, throw an exception
-        if (pacientsAwaitingDiagnotic.size() == 0) {
+        // If there are no pacients to diagnose, throw an exception
+        if (currentPacient == null) {
             throw new NoPacientsToDiagnoseException("Não há pacientes por diagnosticar.");
         }
 
