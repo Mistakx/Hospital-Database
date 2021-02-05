@@ -15,6 +15,7 @@ import Hospital_Database.Exceptions.NoPacientsInWaitingQueueException;
 import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.Exceptions.NotEnoughCareerYearsException;
 import Hospital_Database.Person.AuxiliaryNurse;
+import Hospital_Database.Person.ChiefNurse;
 import Hospital_Database.Person.Medic;
 import Hospital_Database.Person.Person;
 import Hospital_Database.Person.SpecialistNurse;
@@ -378,26 +379,70 @@ public class Hospital {
         }
     }
 
-    // TODO: virusOutbreak
     public void virusOutbreak() {
-        // Random random = new Random();
-        // int randomNumber1 = random.nextInt(2);
-        // int randomNumber2 = random.nextInt(3) + 4;
+        // Infects random amount of staff
 
-        // for (SpecialistNurse tempSpecialistNurse : chiefNurses) {
-        // for (int i = 0; i < tempSpecialistNurse.size(); i++){
-        // if (i == randomNumber 1 or i == randomNumber2){
+        Random random = new Random();
+        int probabilityOfInfection;
 
-        // }
-        // }
-        // tempSpecialistNurse[randomNumber1];
-        // }
-        // for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
+        int peopleInfected = 0;
 
-        // }
-        // for (Medic tempMedic : medics) {
+        // Infects medics
+        for (Medic medic : medics) {
+            probabilityOfInfection = random.nextInt(10 - 1 + 1) + 1;
 
-        // }
+            if (probabilityOfInfection == 1) {
+                medic.infect();
+                pacientsQueue.add(medic);
+                medics.remove(medic);
+                peopleInfected++;
+            }
+
+        }
+
+        // Infects auxiliary nurses
+        for (AuxiliaryNurse auxiliaryNurse : auxiliaryNurses) {
+            probabilityOfInfection = random.nextInt(10 - 1 + 1) + 1;
+
+            if (probabilityOfInfection == 1) {
+                auxiliaryNurse.infect();
+                pacientsQueue.add(auxiliaryNurse);
+                auxiliaryNurses.remove(auxiliaryNurse);
+                peopleInfected++;
+
+            }
+
+        }
+
+        for (SpecialistNurse specialistNurse : specialistNurses) {
+            probabilityOfInfection = random.nextInt(10 - 1 + 1) + 1;
+
+            if (probabilityOfInfection == 1) {
+                specialistNurse.infect();
+                pacientsQueue.add(specialistNurse);
+                specialistNurses.remove(specialistNurse);
+                peopleInfected++;
+                
+            }
+
+        }
+
+        for (SpecialistNurse chiefNurse : chiefNurses) {
+            probabilityOfInfection = random.nextInt(10 - 1 + 1) + 1;
+
+            if (probabilityOfInfection == 1) {
+                chiefNurse.infect();
+                pacientsQueue.add(chiefNurse);
+                chiefNurses.remove(chiefNurse);
+                peopleInfected++;
+
+            }
+
+        }
+
+        System.out.println("Foram infetadas " + peopleInfected + " pessoas.");
+        AwaitsUserInput.awaitsUserInput();
+
     }
 
     public void hospitalReports() {
