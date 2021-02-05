@@ -67,7 +67,7 @@ public class Nurse extends Person {
 
         // If there aren't any pacients waiting for diagnostic, throw an exception
         if (pacientsWaitingForDiagnostic.size() == 0) {
-            throw new NoPacientsToDiagnoseException("Não existem paciente à espera de diagnóstico.");
+            throw new NoPacientsToDiagnoseException("Não existem pacientes à espera de diagnóstico.");
         }
 
         // If there are pacients waiting for diagnostic, diagnose the first one
@@ -209,8 +209,8 @@ public class Nurse extends Person {
         AwaitsUserInput.awaitsUserInput();
     }
 
-    public void listMedicNurses(Hospital hospital) throws IDNotFoundException { // Lists all nurses associated with a
-                                                                                // medic
+    public void listMedicNurses(Hospital hospital) throws IDNotFoundException { 
+        // Lists all nurses associated with a medic
 
         ClearConsole.clearConsole();
 

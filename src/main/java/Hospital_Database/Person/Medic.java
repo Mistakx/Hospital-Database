@@ -3,7 +3,6 @@ package Hospital_Database.Person;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Random;
 
 import Hospital_Database.Hospital;
 import Hospital_Database.Menu;
@@ -199,15 +198,7 @@ public class Medic extends Person {
         else {
 
             // Generate the person symptoms
-            Random random = new Random();
-
-            int temperature = 35 + random.nextInt(7);
-            double whiteBloodCellLevels = 0.05 + (Math.random() * (0.96));
-            boolean gastrointestinalSymptoms = Math.random() < 0.5;
-
-            currentPacient.setTemperature(temperature);
-            currentPacient.setWhiteBloodCellLevels(whiteBloodCellLevels);
-            currentPacient.setGastrointestinalSymptoms(gastrointestinalSymptoms);
+            currentPacient.infect();
 
             // Sends the pacient to a specialist nurse, to help with the diagnostic
             specialistNurses.get(0).getPacientsWaitingForDiagnostic().add(currentPacient);
@@ -236,15 +227,7 @@ public class Medic extends Person {
             Person currentPacient = pacientsAwaitingDischarge.poll();
 
             // Generate the person symptoms
-            Random random = new Random();
-
-            int temperature = 35 + random.nextInt(7);
-            double whiteBloodCellLevels = 0.05 + (Math.random() * (0.96));
-            boolean gastrointestinalSymptoms = Math.random() < 0.5;
-
-            currentPacient.setTemperature(temperature);
-            currentPacient.setWhiteBloodCellLevels(whiteBloodCellLevels);
-            currentPacient.setGastrointestinalSymptoms(gastrointestinalSymptoms);
+            currentPacient.infect();
 
             // Sends the pacient to a specialist nurse
             specialistNurses.get(0).getPacientsWaitingForDiagnostic().add(currentPacient);

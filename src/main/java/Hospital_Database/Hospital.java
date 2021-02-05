@@ -12,6 +12,7 @@ import Hospital_Database.Exceptions.NoMedicRequestsExistException;
 import Hospital_Database.Exceptions.NoMedicsExistException;
 import Hospital_Database.Exceptions.NoNursesExistException;
 import Hospital_Database.Exceptions.NoPacientsInWaitingQueueException;
+import Hospital_Database.Exceptions.NotEnoughAuxiliaryNursesException;
 import Hospital_Database.Exceptions.NotEnoughCareerYearsException;
 import Hospital_Database.Person.AuxiliaryNurse;
 import Hospital_Database.Person.Medic;
@@ -462,7 +463,7 @@ public class Hospital {
 
     }
 
-    public void fulfilMedicAuxiliaryRequest() throws NoMedicRequestsExistException {
+    public void fulfilMedicAuxiliaryRequest() throws NoMedicRequestsExistException, NotEnoughAuxiliaryNursesException {
         // Fulfils a medics request for auxiliary nurses.
 
         ClearConsole.clearConsole();
@@ -482,18 +483,48 @@ public class Hospital {
 
         // If medic doesn't exist, throw an exception
         if (medic == null) {
-            throw new NoMedicRequestsExistException("Não existe nenhum médico com o ID introduzido à espera de auxiliares.");
+            throw new NoMedicRequestsExistException(
+                    "Não existe nenhum médico com o ID introduzido à espera de auxiliares.");
         }
 
         // If medic exists, fulfils his requests
         else {
-            for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
-                // If the associated nurse doesn't have an associated medic already, attributes
-                // it to the medic
-                if (tempAuxiliaryNurse.getAssociatedMedic() == null) {
-                    medic.getAuxiliaryNurses().add(tempAuxiliaryNurse);
-                    tempAuxiliaryNurse.setAssociatedMedic(medic);
+
+            int numberOfFreeAuxiliaries = 0;
+
+            for (AuxiliaryNurse auxiliaryNurse : auxiliaryNurses) {
+                if (auxiliaryNurse.getAssociatedMedic() == null) {
+                    numberOfFreeAuxiliaries++;
                 }
+            }
+
+            int numberOfRequestedAuxiliaries = auxiliaryRequests.get(medic);
+
+            // If there aren't enough auxiliares, throw error
+            if (numberOfFreeAuxiliaries < numberOfRequestedAuxiliaries) {
+                throw new NotEnoughAuxiliaryNursesException("Não existem auxiliares suficientes.");
+            }
+
+            // If there are enough auxiliares, fulfil request
+            else {
+                int numberOfAuxiliariesAttributed = 0;
+                for (AuxiliaryNurse tempAuxiliaryNurse : auxiliaryNurses) {
+                    // If the associated nurse doesn't have an associated medic already, attributes
+                    // it to the medic
+                    if (tempAuxiliaryNurse.getAssociatedMedic() == null) {
+                        medic.getAuxiliaryNurses().add(tempAuxiliaryNurse);
+                        tempAuxiliaryNurse.setAssociatedMedic(medic);
+                        numberOfAuxiliariesAttributed++;
+
+                        if (numberOfAuxiliariesAttributed == numberOfRequestedAuxiliaries) {
+                            break;
+                        }
+                    }
+                }
+
+                System.out.println("Auxiliares atribuídos");
+                AwaitsUserInput.awaitsUserInput();
+
             }
         }
 

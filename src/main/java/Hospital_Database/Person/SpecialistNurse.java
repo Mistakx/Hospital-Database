@@ -9,6 +9,7 @@ import Hospital_Database.Hospital;
 import Hospital_Database.Menu;
 import Hospital_Database.Exceptions.IDNotFoundException;
 import Hospital_Database.Exceptions.NoMedicRequestsExistException;
+import Hospital_Database.UserInterface.AwaitsUserInput;
 import Hospital_Database.UserInterface.ClearConsole;
 
 public class SpecialistNurse extends Nurse implements ChiefNurse {
@@ -32,9 +33,9 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
     // ! Overriding the interface methods
 
     @Override
-    public void listMedicAuxiliaryRequests() throws NoMedicRequestsExistException { // Prints all medic requests for
-                                                                                    // auxiliares. This method can only
-                                                                                    // be called by a chief nurse.
+    public void listMedicAuxiliaryRequests() throws NoMedicRequestsExistException {
+        // Prints all medic requests for auxiliares.
+        // This method can only be called by a chief nurse.
 
         ClearConsole.clearConsole();
 
@@ -58,6 +59,9 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
         }
 
+        // Waits for user input
+        AwaitsUserInput.awaitsUserInput();
+
     }
 
     @Override
@@ -79,19 +83,34 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
         // If medic doesn't exist, throw an exception
         if (medic == null) {
-            throw new NoMedicRequestsExistException("Não existe nenhum médico com o ID introduzido à espera de auxiliares.");
+            throw new NoMedicRequestsExistException(
+                    "Não existe nenhum médico com o ID introduzido à espera de auxiliares.");
         }
 
         // If medic exists, fulfils his requests
         else {
+
+            int numberOfRequestedAuxiliaries = hospital.getAuxiliaryRequests().get(medic);
+            int numberOfAuxiliariesAttributed = 0;
+
             for (AuxiliaryNurse tempAuxiliaryNurse : hospital.getAuxiliaryNurses()) {
                 // If the associated nurse doesn't have an associated medic already, attributes
                 // it to the medic
                 if (tempAuxiliaryNurse.getAssociatedMedic() == null) {
                     medic.getAuxiliaryNurses().add(tempAuxiliaryNurse);
                     tempAuxiliaryNurse.setAssociatedMedic(medic);
+                    numberOfAuxiliariesAttributed++;
+
+                    if (numberOfAuxiliariesAttributed == numberOfRequestedAuxiliaries) {
+                        break;
+                    }
+
                 }
             }
+
+            System.out.println("Auxiliares atribuídos");
+            AwaitsUserInput.awaitsUserInput();
+
         }
 
     }

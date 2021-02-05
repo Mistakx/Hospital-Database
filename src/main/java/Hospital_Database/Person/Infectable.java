@@ -12,9 +12,6 @@ package Hospital_Database.Person;
 
 public interface Infectable {
 
-    // public abstract void infect();  
-
-    // public abstract void cure();
-
-    // TODO: Interface infectable
+    public abstract void infect();
+    
 }

@@ -5,6 +5,8 @@
  */
 package Hospital_Database.Person;
 
+import java.util.Random;
+
 /**
  *
  * @author mistakx
@@ -83,7 +85,18 @@ public class Person implements Infectable {
         this.name = name;
     }
 
-    // ! Overriding object methods
+    // ! Overriding methods
+
+    public void infect() {
+        // Generate the person symptoms
+        Random random = new Random();
+
+        temperature = 35 + random.nextInt(7);
+        whiteBloodCellLevels = 0.05 + (Math.random() * (0.96));
+        gastrointestinalSymptoms = Math.random() < 0.5;
+
+    }
+
     @Override
     public String toString() {
         return "ID: " + ID + "\n" + "Nome: " + name + "\n" + "Ano de nascimento: " + birthdayYear + ".";
