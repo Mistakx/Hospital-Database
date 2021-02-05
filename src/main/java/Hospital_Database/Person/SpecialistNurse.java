@@ -61,7 +61,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
     }
 
     @Override
-    public void fulfilMedicAuxiliaryRequest(Hospital hospital) throws IDNotFoundException {
+    public void fulfilMedicAuxiliaryRequest(Hospital hospital) throws NoMedicRequestsExistException {
         // Fulfils a medics request for auxiliary nurses.
         // This method can only be called by a chief nurse.
 
@@ -79,7 +79,7 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
 
         // If medic doesn't exist, throw an exception
         if (medic == null) {
-            throw new IDNotFoundException("Não existe nenhum médico com o ID introduzido.");
+            throw new NoMedicRequestsExistException("Não existe nenhum médico com o ID introduzido à espera de auxiliares.");
         }
 
         // If medic exists, fulfils his requests

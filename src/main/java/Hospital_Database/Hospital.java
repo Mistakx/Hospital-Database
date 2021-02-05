@@ -462,7 +462,7 @@ public class Hospital {
 
     }
 
-    public void fulfilMedicAuxiliaryRequest() throws IDNotFoundException {
+    public void fulfilMedicAuxiliaryRequest() throws NoMedicRequestsExistException {
         // Fulfils a medics request for auxiliary nurses.
 
         ClearConsole.clearConsole();
@@ -482,7 +482,7 @@ public class Hospital {
 
         // If medic doesn't exist, throw an exception
         if (medic == null) {
-            throw new IDNotFoundException("Não existe nenhum médico com o ID introduzido.");
+            throw new NoMedicRequestsExistException("Não existe nenhum médico com o ID introduzido à espera de auxiliares.");
         }
 
         // If medic exists, fulfils his requests
