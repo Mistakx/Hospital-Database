@@ -92,7 +92,7 @@ public class Menu {
                 System.out.println("10 - Listar pacientes em espera no hospital.");
                 System.out.println("11 - Atirar pedidos para enfermeiros-aulixiares para trituradora.");
                 System.out.println("12 - Virus Outbreak.");
-                System.out.println("13 - N-ésimo relatório hospitalar.");
+                System.out.println("13 - Gerar relatório hospitalar.");
                 System.out.println("14 - Sair do programa");
                 System.out.println("0 - Voltar ao menu anterior.\n");
 

@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Random;
-import java.util.Scanner;
 
 import Hospital_Database.Exceptions.IDNotFoundException;
 import Hospital_Database.Exceptions.NoMedicRequestsExistException;
@@ -191,11 +190,8 @@ public class Hospital {
 
     }
 
-    public void promoteSpecialistNurseToChief() throws NotEnoughCareerYearsException, IDNotFoundException { // Promotes
-                                                                                                            // a
-                                                                                                            // specialist
-                                                                                                            // nurse to
-                                                                                                            // chief
+    public void promoteSpecialistNurseToChief() throws NotEnoughCareerYearsException, IDNotFoundException {
+        // Promotes a specialist nurse to chief
 
         ClearConsole.clearConsole();
 
@@ -403,9 +399,41 @@ public class Hospital {
         // }
     }
 
-    // TODO: HospitalReports
     public void hospitalReports() {
+        // Generates a hospital report, and prints it to the console
 
+        ClearConsole.clearConsole();
+
+        System.out.println("---------------------------------------------------------------------------");
+        System.out.println("                      **RELATORIO HOSPITALAR**");
+        System.out.println("---------------------------------------------------------------------------");
+
+        int numberOfDeaths = 0;
+        int numberOfMedicalDischarges = 0;
+        int totalPacients = numberOfDeaths + numberOfMedicalDischarges;
+        int numberOfRemediesApplied = 0;
+
+        ArrayList<Person> pacientsInRegistry = new ArrayList<>(registry.keySet());
+
+        for (Person pacient : pacientsInRegistry) {
+
+            numberOfRemediesApplied += registry.get(pacient).size();
+
+            if (pacient.isDead()) {
+                numberOfDeaths++;
+            }
+
+            else {
+                numberOfMedicalDischarges++;
+            }
+        }
+
+        System.out.println("Total de pacientes recebidos: " + totalPacients + ".\n");
+        System.out.println("Altas: " + numberOfMedicalDischarges + ".\n");
+        System.out.println("Óbitos: " + numberOfDeaths + ".\n");
+        System.out.println("Numero de curativos administrados: " + String.valueOf(numberOfRemediesApplied) + "\n");
+
+        AwaitsUserInput.awaitsUserInput();
     }
 
     public void listPacientsInHospitalQueue() throws NoPacientsInWaitingQueueException {
