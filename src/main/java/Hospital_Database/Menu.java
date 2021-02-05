@@ -88,7 +88,7 @@ public class Menu {
                 System.out.println("6 - Aumentar anos de carreira de todos os enfermeiros.");
                 System.out.println("7 - Listar enfermeiros.");
                 System.out.println("8 - Listar médicos.");
-                System.out.println("9 - Listar pedidos para enfermeiros-especialistas.");
+                System.out.println("9 - Listar pedidos para enfermeiros-auxiliares, feitos ao hospital.");
                 System.out.println("10 - Listar pacientes em espera no hospital.");
                 System.out.println("11 - Atirar pedidos para enfermeiros-aulixiares para trituradora.");
                 System.out.println("12 - Virus Outbreak.");

@@ -25,7 +25,6 @@ public class Hospital {
 
     // ! Class-based singleton implementation
     private static Hospital INSTANCE;
-    private Scanner scanner = new Scanner(System.in);
 
     public static Hospital getInstance() {
         if (INSTANCE == null) {
@@ -114,11 +113,11 @@ public class Hospital {
 
         // Input medic name
         System.out.println("Nome do médico: ");
-        String name = scanner.next();
+        String name = Menu.scanner.next();
 
         // Input medic birthday year
         System.out.println("Ano de nascimento do médico: ");
-        int birthdayYear = scanner.nextInt();
+        int birthdayYear = Menu.scanner.nextInt();
 
         // Create medic, add medic to the list, and add 1 to the last ID
         Medic newMedic = new Medic(lastIDAttributed + 1, name, birthdayYear);
@@ -133,15 +132,15 @@ public class Hospital {
 
         // Input specialist nurse name
         System.out.println("Nome do enfermeiro especialista: ");
-        String name = scanner.next();
+        String name = Menu.scanner.next();
 
         // Input specialist nurse birthday year
         System.out.println("Ano de nascimento do enfermeiro especialista: ");
-        int birthdayYear = scanner.nextInt();
+        int birthdayYear = Menu.scanner.nextInt();
 
         // Input specialist nurse career years
         System.out.println("Anos de carreira do enfermeiro especialista: ");
-        int careerYears = scanner.nextInt();
+        int careerYears = Menu.scanner.nextInt();
 
         // Create new specialist nurse, add it to the list and add 1 to last ID.
         SpecialistNurse newSpecialistNurse = new SpecialistNurse(lastIDAttributed + 1, name, birthdayYear, careerYears);
@@ -156,15 +155,15 @@ public class Hospital {
 
         // Input auxiliary nurse name
         System.out.println("Insira o nome do enfermeiro auxiliar: ");
-        String name = scanner.next();
+        String name = Menu.scanner.next();
 
         // Input auxiliary nurse birthday year
         System.out.println("Ano de nascimento do enfermeiro auxiliar: ");
-        int birthdayYear = scanner.nextInt();
+        int birthdayYear = Menu.scanner.nextInt();
 
         // Input auxiliary nurse career years
         System.out.println("Ano de carreira do enfermeiro auxiliar: ");
-        int careerYears = scanner.nextInt();
+        int careerYears = Menu.scanner.nextInt();
 
         // Create new auxiliary nurse, add it to the list, and add 1 to the last ID.
         AuxiliaryNurse newAuxiliaryNurse = new AuxiliaryNurse(lastIDAttributed + 1, name, birthdayYear, careerYears);
@@ -179,11 +178,11 @@ public class Hospital {
 
         // Input pacient name
         System.out.println("Insira o nome do paciente: ");
-        String name = scanner.next();
+        String name = Menu.scanner.next();
 
         // Input pacient birthday year
         System.out.println("Ano de nascimento do novo paciente: ");
-        int birthdayYear = scanner.nextInt();
+        int birthdayYear = Menu.scanner.nextInt();
 
         // Create pacient, add pacient to list, and add 1 to the last ID generated
         Person newPacient = new Person(lastIDAttributed, name, birthdayYear);
@@ -203,7 +202,7 @@ public class Hospital {
         // Input ID of specialist nurse to be promoted
         int specialistNurseID;
         System.out.println("ID do enfermeiro especialista que deseja promover a chefe: ");
-        specialistNurseID = scanner.nextInt();
+        specialistNurseID = Menu.scanner.nextInt();
 
         // Check if a specialist nurse with the ID exists
         boolean specialistNurseExists = false;
@@ -260,7 +259,7 @@ public class Hospital {
 
         ClearConsole.clearConsole();
         System.out.println("Foi adicionado 1 ano de carreira a todos os enfermeiros existentes.");
-        scanner.next();
+        Menu.scanner.next();
 
     }
 
@@ -297,7 +296,7 @@ public class Hospital {
         }
 
         // Waits for user input
-        scanner.next();
+        Menu.scanner.next();
 
     }
 
@@ -322,7 +321,7 @@ public class Hospital {
         }
 
         // Waits for user input
-        scanner.next();
+        Menu.scanner.next();
 
     }
 
@@ -336,36 +335,62 @@ public class Hospital {
         if (auxiliaryRequests.size() == 0) {
             throw new NoMedicRequestsExistException("Não existem pedidos de enfermeiros auxiliares no hospital.");
         } else {
-            System.out.println(auxiliaryRequests.toString());
+
+            ArrayList<Medic> medics = new ArrayList<>(auxiliaryRequests.keySet());
+            System.out.println("Pedidos de enfermeiros auxiliares\n");
+
+            for (Medic medic : medics) {
+                System.out.println(medic.toString() + "\nNúmero de pedidos: "
+                        + String.valueOf(auxiliaryRequests.get(medic)) + "\n");
+            }
+
         }
         // Wait for user input
-        scanner.next();
+        Menu.scanner.next();
 
     }
 
-    public void trashRequestsForAuxiliaryNurses() throws NoMedicRequestsExistException { // Trash 1 to all requests for
-                                                                                         // auxiliary nurses
+    public void trashRequestsForAuxiliaryNurses() throws NoMedicRequestsExistException {
+        // Trash a random amount of requests for auxiliary nurses made to the hospital
+
+        // Count total number of requests made to the hospital
+        int totalNumberOfRequests = 0;
+        ArrayList<Medic> medics = new ArrayList<>(auxiliaryRequests.keySet());
+        for (Medic medic : medics) {
+
+            totalNumberOfRequests += auxiliaryRequests.get(medic);
+
+        }
 
         // If there aren't any requests, throw exception
-        if (auxiliaryRequests.size() == 0) {
+        if (totalNumberOfRequests == 0) {
             throw new NoMedicRequestsExistException("Não existem pedidos de enfermeiros auxiliares.");
         }
 
-        // If there are requests, trash a random number of them
+        // If there are requests in the hospital, trash a random number of them
         else {
 
             Random random = new Random();
-            int numberOfTotalRequests = auxiliaryRequests.size();
-            int requestsToTrash = random.nextInt(numberOfTotalRequests - 1 + 1) + 1;
 
-            for (int i = 0; i < requestsToTrash; i++) {
-                auxiliaryRequests.remove(auxiliaryRequests.keySet().iterator().next());
+            int totalRequestsTrashed = 0;
+
+            for (Medic medic : medics) {
+
+                int amountOfMedicRequests = auxiliaryRequests.get(medic);
+                int requestsToTrash = random.nextInt(amountOfMedicRequests - 1 + 1) + 1;
+                totalRequestsTrashed += requestsToTrash;
+
+                for (int i = 0; i < requestsToTrash; i++) {
+                    auxiliaryRequests.remove(auxiliaryRequests.keySet().iterator().next());
+                }
+
             }
 
-            System.out.println("Foram removidos " + requestsToTrash + "pedidos de auxiliares.\n");
+            ClearConsole.clearConsole();
+            System.out.println("Foram removidos " + totalRequestsTrashed + " pedidos de auxiliares.\n");
 
             // Waits for user input
-            scanner.next();
+            Menu.scanner.next();
         }
     }
 

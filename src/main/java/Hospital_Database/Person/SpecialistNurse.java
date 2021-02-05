@@ -50,11 +50,11 @@ public class SpecialistNurse extends Nurse implements ChiefNurse {
             ArrayList<Medic> medics = new ArrayList<>(medicRequests.keySet());
 
             System.out.println("Pedidos de enfermeiros auxiliares\n");
-            
-            for(Medic medic : medics) {
-                System.out.println(medic.toString() + "\nNúmero de pedidos: " + String.valueOf(medicRequests.get(medic)) + "\n");
-            }
 
+            for (Medic medic : medics) {
+                System.out.println(
+                        medic.toString() + "\nNúmero de pedidos: " + String.valueOf(medicRequests.get(medic)) + "\n");
+            }
 
         }
 
